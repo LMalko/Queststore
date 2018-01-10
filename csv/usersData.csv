@@ -1,2 +1,4 @@
 id,login,password,status
 0,admin,admin,admin
+1,student,student,student
+2,mentor,mentor,mentor

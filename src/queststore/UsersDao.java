@@ -39,7 +39,17 @@ class UsersDao {
         String login = personData[1];
         String password = personData[2];
         String status = personData[3];
-        User person = new User(login, password, status);
+        User person = null;
+
+        if(status.equals("admin")){
+            person = new Admin(login, password, status);
+        }
+        else if(status.equals("mentor")){
+            person = new Mentor(login, password, status);
+        }
+        else if(status.equals("student")){
+            person = new Student(login, password, status);
+        }
         return person;
     }
 
