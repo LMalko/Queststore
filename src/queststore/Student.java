@@ -24,4 +24,8 @@ public class Student extends User{
     public Integer getStudentExperiance(){
         return experiance;
     }
+
+    public String getStudentGroup(){
+        return this.group;
+    }
 }
