@@ -28,6 +28,9 @@ public class ItemCollection<T>{
         itemCollection.remove(item);
     }
     
+    public class CollectionIterator<T> implements Iterable<T>{
+        
+    }
 
 
 }
