@@ -12,11 +12,8 @@ class LoginController{
         String userPassword = view.getPassword();
         String userStatus = getUserStatus(userLogin, userPassword);
         if (checkIfUserExists(userLogin) && checkUserPassword(userLogin, userPassword)){
-            User user = new User(userLogin, userPassword, userStatus);
-            System.out.println("Zalogowany!");
-            System.exit(0);
+            runProperUserPanel(userLogin, userPassword, userStatus);
         }
-        System.out.println("Nie zalogowano!");
     }
 
     private void getUsersFromDao(){
@@ -50,5 +47,23 @@ class LoginController{
             }
         }
         return null;
+    }
+
+    private void runProperUserPanel(String userLogin, String userPassword, String userStatus){
+        if(userStatus.equals("admin")){
+            User user = new Admin(userLogin, userPassword, userStatus);
+            AdminController controller = new AdminController();
+            controller.startAdminPanel();
+        }
+        else if(userStatus.equals("mentor")){
+            User user = new Mentor(userLogin, userPassword, userStatus);
+            MentorController controller = new MentorController();
+            controller.startMentorPanel();
+        }
+        else if(userStatus.equals("student")){
+            User user = new Student(userLogin, userPassword, userStatus);
+            StudentController controller = new StudentController();
+            controller.startStudentPanel();
+        }
     }
 }
