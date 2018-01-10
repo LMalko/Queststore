@@ -1,0 +1,16 @@
+*****************************************
+*             Mentor Panel              *
+*                                       *
+*****************************************
+*   1. Create new Student account.      *
+*   2. Add new Quest.                   *
+*   3. Create new Quest Category.       *
+*   4. Add new Artifact to Store.       *
+*   5. Update Artifact details.         *
+*   6. Update Quest details.            *
+*   7. Create new Artifact category.    *
+*   8. Mark student's quest.            *
+*   9. Mark student's artifact.         *
+*   10. Display student's wallets.      *
+*   0.  Exit.                           *
+*****************************************

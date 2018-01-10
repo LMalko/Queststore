@@ -1,0 +1,11 @@
+*****************************************
+*             Student Panel             *
+*                                       *
+*****************************************
+*   1. Display my account balance.      *
+*   2. Buy Artifact.                    *
+*   3. Create new crowdfunding.         *
+*   4. Display ongoing crowdfundings.   *
+*   5. Contribute to crowdfunding.      *
+*   0. Exit.                            *
+*****************************************
