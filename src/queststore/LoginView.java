@@ -4,6 +4,10 @@ class LoginView{
 
     private Scanner reader = new Scanner(System.in);
 
+    public void displayText(String text){
+        System.out.prinln(text);
+    }
+
     public String getPassword(){
         System.out.println("Enter password: ");
         String password = reader.nextln();
