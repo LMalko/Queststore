@@ -5,12 +5,15 @@ class User{
     protected String login;
     protected String password;
     protected String status;
+    private static int counter;
     //public ItemCollection userArtifacts;
 
     public User(String login, String password, String status){
         this.login = login;
         this.password = password;
         this.status = status;
+        this.id = counter;
+        counter += 1;
     }
 
     public void setName(String name){
