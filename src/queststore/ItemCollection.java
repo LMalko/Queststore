@@ -36,8 +36,6 @@ public class ItemCollection<T>{
         public CollectionIterator(ArrayList<T> collectionIterator) {
         
             this.collectionIterator = collectionIterator;
+        }
     }
-    }
-
-
 }
