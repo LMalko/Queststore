@@ -6,6 +6,7 @@ class LoginController{
     private static ArrayList<User> usersCollection = new ArrayList<User>();
 
     public void login(){
+        view.clearScreen();
         getUsersFromDao();
         String userLogin = view.getLogin();
         String userPassword = view.getPassword();
