@@ -14,6 +14,7 @@ public class Student extends User{
             super(name, surname, login, password, status);
             this.wallet = wallet;
             this.experiance = experiance;
+            this.group = group;
     }
 
     public Integer getStudentWallet(){
