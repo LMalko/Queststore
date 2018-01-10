@@ -30,8 +30,10 @@ public class Artifacts{
     public String getArtifactCategory(){
         return this.category;
     }
-
-    public ArrayList<Artifacts> getArtifacts(){
+// ItemCollection<Artifact>
+    public static ArrayList<Artifacts> getArtifacts(){
+        ArtifactsDao artifactsDao = new ArtifactsDao();
+        artifactsDao.importArtifacts();
         return artifactsCollection;
     }
 
