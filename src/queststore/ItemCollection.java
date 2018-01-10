@@ -25,4 +25,8 @@ public class ItemCollection<T> {
         
         collection.remove(item);
     }
+    
+    public String getName(){
+        return this.name;
+    }
 }
