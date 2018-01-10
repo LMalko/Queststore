@@ -37,5 +37,11 @@ public class Quests{
         this.award = award;
     }
 
-    
+    public ArrayList<Quests> getQuests(){
+        return achieversCollection;
+    }
+
+    public void addQuest(quest){
+        achieversCollection.add(quest);
+    }
 }
