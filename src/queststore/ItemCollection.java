@@ -28,26 +28,5 @@ public class ItemCollection<T>{
         itemCollection.remove(item);
     }
     
-    public class CollectionIterator<T> implements Iterable<T>{
 
-        ArrayList<T> collectionIterator;
-        int index;
-
-        public CollectionIterator(ArrayList<T> collectionIterator) {
-        
-            this.collectionIterator = collectionIterator;
-        }
-
-        @Override
-        public boolean hasNext() {
-        
-            return index < list.size();
-        }
-    
-        @Override
-        public T next() {
-
-            return list.get(index++);
-        }
-    }
 }
