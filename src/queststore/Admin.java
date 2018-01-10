@@ -1,5 +1,3 @@
-package queststore;
-
 public class Admin extends User{
 
     public Admin(String name, String login, String password, String status){

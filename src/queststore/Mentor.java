@@ -1,5 +1,3 @@
-package queststore;
-
 public class Mentor extends User{
 
     private String group;

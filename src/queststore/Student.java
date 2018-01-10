@@ -1,5 +1,3 @@
-package queststore;
-
 public class Student extends User{
 
     private int wallet;
