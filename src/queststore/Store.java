@@ -12,6 +12,13 @@ public class Store{
         return this.artifactsCollection;
     }
 
-
+    public Integer getTotalPay(Integer artifactID){
+        while(artifactIterator.hasNext()){
+            if(artifactIterator.next().id = artifactID){
+                return artifactIterator.next().price;
+            }
+        }
+        return 0;
+    }
 
 }
