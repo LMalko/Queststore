@@ -32,6 +32,11 @@ public class ItemCollection<T>{
 
         ArrayList<T> collectionIterator;
         int index;
+
+        public CollectionIterator(ArrayList<T> collectionIterator) {
+        
+            this.collectionIterator = collectionIterator;
+    }
     }
 
 
