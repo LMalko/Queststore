@@ -1,6 +1,7 @@
 //change to abstract when implementing Admin, Mentor and Student classes
-class User{
+abstract class User{
     protected String name;
+    protected String surname;
     protected int id;
     protected String login;
     protected String password;
@@ -16,8 +17,9 @@ class User{
         counter += 1;
     }
 
-    public User(String name, String login, String password, String status){
+    public User(String name, String surname, String login, String password, String status){
         this.name = name;
+        this.surname = surname;
         this.login = login;
         this.password = password;
         this.status = status;
