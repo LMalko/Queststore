@@ -16,6 +16,16 @@ public class ItemCollection<T>{
         this.category = category;
     }
     
+    public void add(T item) {
+        
+        itemCollection.add(item);
+    }
+    
+    public void remove(T item) {
+        
+        itemCollection.remove(item);
+    }
+    
 
 
 }
