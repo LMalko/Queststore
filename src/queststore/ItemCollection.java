@@ -37,5 +37,17 @@ public class ItemCollection<T>{
         
             this.collectionIterator = collectionIterator;
         }
+
+        @Override
+        public boolean hasNext() {
+        
+            return index < list.size();
+        }
+    
+        @Override
+        public T next() {
+
+            return list.get(index++);
+        }
     }
 }
