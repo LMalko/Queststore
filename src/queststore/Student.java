@@ -4,8 +4,9 @@ public class Student extends User{
     private int experiance;
     private String group;
 
-    public Student(String login, String password, String status){
+    public Student(String login, String password, String status, String group){
         super(login, password, status);
+        this.group = group;
     }
 
     public Student(String name, String login, String surname,
