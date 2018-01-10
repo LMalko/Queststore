@@ -1,5 +1,5 @@
+//change to abstract when implementing Admin, Mentor and Student classes
 class User{
-
     protected String name;
     protected int id;
     protected String login;
