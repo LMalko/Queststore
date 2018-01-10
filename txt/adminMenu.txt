@@ -1,0 +1,12 @@
+*****************************************
+*           Creepy Guy Panel            *
+*                                       *
+*****************************************
+*    1. Create new mentor.              *
+*    2. Create new group.               *
+*    3. Assign mentor to group.         *
+*    4. Edit mentor's data.             *
+*    5. View mentor's data.             *
+*    6. Create new level of experience. *
+*    0. Exit.                           *
+*****************************************
