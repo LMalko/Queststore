@@ -7,7 +7,7 @@ public class Quests{
     private int award;
     private static ArrayList achieversCollection;
 
-    public Quests(String name, int id, int award){
+    public Quests(int id, String name, int award){
         this.name = name;
         this.id = id;
         this.award = award;
