@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.io.Console;
 
 class LoginView{
 
@@ -9,8 +10,9 @@ class LoginView{
     }
 
     public String getPassword(){
-        System.out.println("Enter password: ");
-        String password = reader.nextLine();
+        Console console = System.console();
+        char passwordArray[] = console.readPassword("Enter password: ");
+        String password = String.valueOf(passwordArray);
         return password;
     }
 
@@ -18,5 +20,10 @@ class LoginView{
         System.out.println("Enter login: ");
         String login = reader.nextLine();
         return login;
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }
