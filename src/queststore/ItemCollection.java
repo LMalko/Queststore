@@ -16,13 +16,13 @@ public class ItemCollection<T> {
         return new CollectionIterator<T>(collection);
     }
     
-    public void add(T t) {
+    public void add(T item) {
         
-        collection.add(t);
+        collection.add(item);
     }
     
-    public void remove(T t) {
+    public void remove(T item) {
         
-        collection.remove(t);
+        collection.remove(item);
     }
 }
