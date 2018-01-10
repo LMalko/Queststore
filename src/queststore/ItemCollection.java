@@ -1,32 +1,28 @@
 import java.util.ArrayList;
 
-
-public class ItemCollection<T>{
-
-    ArrayList<T> itemCollection = new ArrayList<T>();
-    String category;
-    CollectionIterator<T> iterator;
-
-    public ItemCollection(String category) {
-
-        this.category = category;
-        this.iterator = new CollectionIterator<T>(this.category);
+public class ItemCollection<T> {
+    
+    private ArrayList<T> collection = new ArrayList<T>();
+    private String name;
+    
+    
+    public ItemCollection(String name) {
+        
+        this.name = name;
     }
 
     public CollectionIterator<T> getIterator() {
-
-        return this.iterator;
-    }
-    
-    public void add(T item) {
         
-        itemCollection.add(item);
+        return new CollectionIterator<T>(collection);
     }
     
-    public void remove(T item) {
+    public void add(T t) {
         
-        itemCollection.remove(item);
+        collection.add(t);
     }
     
-
+    public void remove(T t) {
+        
+        collection.remove(t);
+    }
 }
