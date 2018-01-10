@@ -11,6 +11,11 @@ public class ItemCollection<T>{
         return new CollectionIterator<T>(category);
     }
 
+    public ItemCollection(String category) {
+        
+        this.category = category;
+    }
+    
 
 
 }
