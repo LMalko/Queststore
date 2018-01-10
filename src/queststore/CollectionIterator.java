@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class CollectionIterator<T> implements Iterator<T> {
     
-    ArrayList<T> list;
-    int index;
+    private ArrayList<T> list;
+    private int index;
     
     public CollectionIterator(ArrayList<T> list) {
         
