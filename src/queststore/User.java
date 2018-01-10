@@ -16,6 +16,13 @@ class User{
         counter += 1;
     }
 
+    public User(String name, String login, String password, String status){
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.status = status;
+    }
+
     public void setName(String name){
         this.name = name;
     }
