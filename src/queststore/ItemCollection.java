@@ -29,7 +29,9 @@ public class ItemCollection<T>{
     }
     
     public class CollectionIterator<T> implements Iterable<T>{
-        
+
+        ArrayList<T> collectionIterator;
+        int index;
     }
 
 
