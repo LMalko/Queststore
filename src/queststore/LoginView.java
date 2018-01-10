@@ -5,17 +5,18 @@ class LoginView{
     private Scanner reader = new Scanner(System.in);
 
     public void displayText(String text){
-        System.out.prinln(text);
+        System.out.println(text);
     }
 
     public String getPassword(){
         System.out.println("Enter password: ");
-        String password = reader.nextln();
+        String password = reader.nextLine();
+        return password;
     }
 
     public String getLogin(){
-        System.out.prinln("Enter login: ");
-        String login = reader.nextln();
+        System.out.println("Enter login: ");
+        String login = reader.nextLine();
+        return login;
     }
-
 }
