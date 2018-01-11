@@ -20,10 +20,10 @@ class StudentController{
     }
 
     private void createCrowdfund(){
-        while(strIterator.hasNext()){
-            System.out.println(strIterator.next());
-
+        while(artifactIterator.hasNext()){
+            System.out.println(artifactsCollection.next());
         }
+
     }
 
     private void buyArtifact(Integer id){
@@ -31,6 +31,8 @@ class StudentController{
     }
 
     private void joinCrowdfund(Integer id){
+        while(crowdfundIterator.hasNext()){
+            System.out.println(crowdfundIterator.next());
+        }
     }
-
 }
