@@ -108,6 +108,7 @@ class StudentController{
 
     private void buyArtifact(){
         returnAllArtifacts();
+        System.out.println("\n\n\nStore is currently closed due to renovation - ZMIENIAMY SIĘ DLA CIEBIE !\n\n");
     }
 
     private void joinCrowdfund(){
