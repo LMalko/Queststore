@@ -20,9 +20,9 @@ public class CrowdfundDao{
                 String name = parts[1];
                 int totalPrice = Integer.parseInt(parts[2]);
                 int account = Integer.parseInt(parts[3]);
-                Student contributors = parts[4];
+                String contributors = parts[4];
                 Crowdfund crowdfund = new Crowdfund(id, name, totalPrice, account, contributors);
-                crowdfund.addCrowdfund(artifact);
+                crowdfund.addCrowdfund(crowdfund);
             }
         }
         catch (IOException e){
@@ -36,7 +36,7 @@ public class CrowdfundDao{
             BufferedWriter br = new BufferedWriter(new FileWriter("CrowdfundDao.csv"));
             StringBuilder sb = new StringBuilder();
 
-            for (Artifacts element : crowdfundData) {
+            for (Crowdfund element : crowdfundData) {
                 sb.append(element.getCrowdfundId());
                 sb.append(",");
                 sb.append(element.getCrowdfundName());
