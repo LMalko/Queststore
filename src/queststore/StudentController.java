@@ -42,28 +42,66 @@ class StudentController{
         }else{
             System.out.println("No such choice");
         }
-        //Restart iterators.
-        this.artifactIterator = artifactsCollection.getIterator();
-        this.crowdfundIterator = crowdfundsCollection.getIterator();
     }
 
     private void returnAllCrowdfunds(){
+        this.artifactIterator = artifactsCollection.getIterator();
         System.out.println("Crowdfunds:");
         while(crowdfundIterator.hasNext()){
             System.out.println(crowdfundIterator.next());
         }
+        this.crowdfundIterator = crowdfundsCollection.getIterator();
     }
 
     private void returnAllArtifacts(){
+        this.artifactIterator = artifactsCollection.getIterator();
         System.out.println("Artifacts:");
         while(artifactIterator.hasNext()){
             System.out.println(artifactIterator.next());
         }
+        this.artifactIterator = artifactsCollection.getIterator();
     }
 
     private void createCrowdfund(){
-        returnAllCrowdfunds();
-        
+        returnAllArtifacts();
+
+        int artifactID;
+        String contributorEmail;
+        boolean ifExists = false;
+
+        while(true){
+        try{
+            artifactID = Integer.parseInt(view.getUserInput("Enter artifact ID: "));
+            break;
+        }catch(NumberFormatException e){
+            view.clearScreen();
+            System.out.println("Wrong format.\n\n");
+            returnAllArtifacts();
+            }
+        }
+
+        while(artifactIterator.hasNext()){
+            Artifact nextArtifact = artifactIterator.next();
+            if(nextArtifact.getArtifactId() == artifactID){
+                Artifact artifactToCrowdfund = nextArtifact;
+                ifExists = true;
+                contributorEmail = student.getLogin();
+                Crowdfund crowdfund = new Crowdfund(artifactToCrowdfund.getArtifactName(),
+                                                    artifactToCrowdfund.getArtifactPrice(),
+                                                    artifactToCrowdfund.getArtifactPrice(), 
+                                                    contributorEmail);
+                this.crowdfundsDao.addCrowdfund(crowdfund);
+                this.crowdfundsDao.exportCrowdfund();
+                break;
+                }
+            }
+
+        if(!ifExists){
+            view.clearScreen();
+            System.out.println("No such ID\n\n");
+            this.artifactIterator = artifactsCollection.getIterator();
+            createCrowdfund();
+        }
 
     }
 
@@ -74,12 +112,5 @@ class StudentController{
     private void joinCrowdfund(){
         returnAllCrowdfunds();
     }
-}/** 
-    private void createNewMentor(){
-        String mentorName = view.getUserInput("Enter mentor's name: ");
-        String mentorSurname = view.getUserInput("Enter mentor's surname: ");
-        String mentorPassword = view.getUserInput("Enter mentor's password: ");
-        Mentor newMentor = new Mentor(mentorName, mentorSurname, mentorPassword);
-        dao.addUserToUsersCollection(newMentor);
-        dao.saveUsersToFile();
-    }*/
+
+}

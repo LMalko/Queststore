@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 class MentorController{
 
+    private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
+
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
@@ -11,8 +13,11 @@ class MentorController{
 
     public void startMentorPanel(){
         boolean isRunning = true;
+
         groupDao.importGroups();
         questDao.importQuests();
+        artifactsDao.importArtifacts();
+
 
         while(isRunning){
             view.displayUserMenu("txt/mentorMenu.txt");
@@ -44,6 +49,7 @@ class MentorController{
             addArtifact();
         }
         else if (choice.equals("7")){
+            editArtifact();
             //have to implement artifact picker
             //editArtifact(artifact);
         }
@@ -81,7 +87,7 @@ class MentorController{
         Quest newQuest = new Quest(questName, questAward, "not done", category);
         questDao.addQuest(newQuest);
         questDao.exportQuests();
-    
+
     }
 
     public void addQuestCategory(){
@@ -99,6 +105,7 @@ class MentorController{
         //tutaj cos
     }
 
+<<<<<<< HEAD
     public void getAllQuests(){
         ItemCollection<Quest> questCollection = questDao.getQuests();
         CollectionIterator<Quest> questIterator = questCollection.getIterator();
@@ -115,6 +122,9 @@ class MentorController{
                 " from category:"+category+" /currently:"+status);
         }
         questIterator = questCollection.getIterator();
+=======
+    public void editQuest(Quest quest){
+>>>>>>> ebf0cfd236a8fff0a0c0fbf0c04397db1edec5be
 
     }
 
@@ -126,10 +136,46 @@ class MentorController{
         Artifact newArtifact = new Artifact(artifactId, artifactName, artifactPrice, artifactCategory);
         artifactsDao.addArtifact(newArtifact);
         artifactsDao.exportArtifacts();
+
     }
 
-    public void editArtifact(Artifact artifact){
+    public void editArtifact(){
+        getAllArtifacts();
+        int id = Integer.parseInt(view.getUserInput("Enter artifact id: "));
+        Artifact artifactToEdit = getArtifactById(id);
+        artifactToEdit.setId(Integer.parseInt(view.getUserInput("Enter new artifact id: ")));
+        artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
+        artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
+        artifactToEdit.setCategory(view.getUserInput("Enter new artifact category: "));
+        artifactsDao.exportArtifacts();
+    }
 
+    public Artifact getArtifactById(int id){
+        ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
+        CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
+
+        while(artifactsIterator.hasNext()) {
+            Artifact artifact = artifactsIterator.next();
+            if(artifact.getArtifactId() == id) {
+                return artifact;
+            }
+        }
+        return null;
+    }
+
+    public void getAllArtifacts(){
+
+        ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
+        CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
+
+        while (artifactsIterator.hasNext()){
+            Artifact artifact = artifactsIterator.next();
+            int id = artifact.getArtifactId();
+            String name = artifact.getArtifactName();
+            int price = artifact.getArtifactPrice();
+            String category = artifact.getArtifactCategory();
+            view.displayText(id + " " + name + " " +price + " " +category);
+        }
     }
 
 

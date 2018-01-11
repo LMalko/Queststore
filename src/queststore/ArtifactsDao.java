@@ -60,7 +60,6 @@ public class ArtifactsDao{
     }
 
     public ItemCollection<Artifact> getArtifacts(){
-        importArtifacts();
         return artifactsCollection;
     }
 
