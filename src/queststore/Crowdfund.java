@@ -69,11 +69,11 @@ public class Crowdfund{
         return this.totalPrice - this.account;
     }
 
-    public Crowdfund getSpecyficCrowdfund(String name){
-        for (Crowdfund element : crowdfundCollection){
-            if (name.equals(element.getCrowdfundName())){
-                return element;
-            }
-        }
-    }
+    // public Crowdfund getSpecyficCrowdfund(String name){
+    //     for (Crowdfund element : corwdfundCollection){
+    //         if (name.equals(element.getCrowdfundName())){
+    //             return element;
+    //         }
+    //     }
+    // }
 }
