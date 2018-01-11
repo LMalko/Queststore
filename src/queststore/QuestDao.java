@@ -8,8 +8,10 @@ import java.io.FileWriter;
 
 public class QuestDao{
 
+    private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
+
     public void importQuests(){
-        String fileName = "QuestsDao.csv";
+        String fileName = "csv/QuestsDao.csv";
 
         try{
             BufferedReader buffer_reader = new BufferedReader(new FileReader(fileName));
@@ -20,7 +22,7 @@ public class QuestDao{
                 int award = Integer.parseInt(parts[1]);
                 String status = parts[2];
                 Quest quest = new Quest(name, award, status);
-                quest.addQuest(quest);
+                addQuest(quest);
             }
         }
         catch (IOException e){
@@ -28,12 +30,12 @@ public class QuestDao{
         }
     }
 
-    public void exportQuests(ItemCollection<Quest> questsData){
+    public void exportQuests(){
 
-        CollectionIterator<Quest> questsIterator = questsData.getIterator();
+        CollectionIterator<Quest> questsIterator = questsCollection.getIterator();
 
         try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("QuestsDao.csv"));
+            BufferedWriter br = new BufferedWriter(new FileWriter("csv/QuestsDao.csv"));
             StringBuilder sb = new StringBuilder();
 
             while(questsIterator.hasNext()){
@@ -53,5 +55,14 @@ public class QuestDao{
         catch (IOException e){
             e.printStackTrace();
         }
+
+    }
+
+    public ItemCollection<Quest> getQuests(){
+        return questsCollection;
+    }
+
+    public void addQuest(Quest quest){
+        questsCollection.add(quest);
     }
 }

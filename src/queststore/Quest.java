@@ -6,7 +6,6 @@ public class Quest{
     private int award;
     private static int id;
     private int questID;
-    private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
     private String status;
 
     public Quest(String name, int award, String status){
@@ -44,11 +43,4 @@ public class Quest{
         this.award = award;
     }
 
-    public ItemCollection<Quest> getQuests(){
-        return questsCollection;
-    }
-
-    public void addQuest(Quest quest){
-        questsCollection.add(quest);
-    }
 }
