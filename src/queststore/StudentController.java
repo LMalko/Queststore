@@ -30,7 +30,7 @@ class StudentController{
             System.out.println("\n\nWallet is:");
             System.out.println(student.getStudentWallet());
         }else if (choice.equals("2")){
-            System.out.println(artifactsCollection.get(0));
+            System.out.println(artifactsCollection);
             this.buyArtifact();
         }else if (choice.equals("3")){
             this.createCrowdfund();
