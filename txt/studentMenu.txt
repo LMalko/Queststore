@@ -7,5 +7,6 @@
 *   3. Create new crowdfunding.         *
 *   4. Display ongoing crowdfundings.   *
 *   5. Contribute to crowdfunding.      *
+*   6. Show my artifacts.               *
 *   0. Exit.                            *
 *****************************************
