@@ -77,7 +77,7 @@ public class Crowdfund{
 
     @Override
     public String toString(){
-        return  String.format("ID: %d, NAME: %s, PRICE: %d, ACCOUNT: %d, CONTRIBUTOR: %s",
+        return  String.format("ID: %d, NAME: %s, PRICE: %d, YOUR CURRENT ACCOUNT: %d, CONTRIBUTOR: %s",
                               this.id,
                               this.name,
                               this.totalPrice,
