@@ -5,10 +5,12 @@ class AdminController{
     private UsersDao dao = new UsersDao();
     private UserView view = new UserView();
     private GroupDao groupDao = new GroupDao();
+    private ExperienceLevelsDao levelsDao = new ExperienceLevelsDao();
 
     public void startAdminPanel(){
         boolean isRuntime = true;
         groupDao.importGroups();
+        levelsDao.importExperienceLevels();
 
         while(isRuntime){
             view.displayUserMenu("txt/adminMenu.txt");
@@ -37,7 +39,7 @@ class AdminController{
             getSpecificMentorData();
         }
         else if (choice.equals("6")){
-
+            createNewLevelOfExperience();
         }
     }
 
@@ -100,6 +102,16 @@ class AdminController{
             Group group = groupIterator.next();
             view.displayText(group.getGroupName());
         }
+    }
+
+    public void createNewLevelOfExperience(){
+        view.clearScreen();
+        String levelName = view.getUserInput("Set level name: ");
+        int level = Integer.parseInt(view.getUserInput("Set xp needed to reach level: "));
+        ExperienceLevel newLevel = new ExperienceLevel(level, levelName);
+        newLevel.addExperienceLevel(newLevel);
+        ItemCollection<ExperienceLevel> experienceLevels = newLevel.getExperienceLevels();
+        levelsDao.exportExperienceLevels(experienceLevels);
     }
 
     private void getAllMentors(){
