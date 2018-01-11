@@ -3,14 +3,15 @@ import java.util.ArrayList;
 
 public class Crowdfund{
     private int id;
+    private static Integer nextID = 10;
     private String name;
     private int totalPrice;
     private int account;
     private String contributorEmail;
     private static ItemCollection<Crowdfund> crowdfundCollection = new ItemCollection<>("Crowdfunds");
 
-    public Crowdfund(int id, String name, int totalPrice, int account, String contributorEmail){
-        this.id = id;
+    public Crowdfund(String name, int totalPrice, int account, String contributorEmail){
+        this.id = getNextID();
         this.name = name;
         this.totalPrice = totalPrice;
         this.account = account;
@@ -85,4 +86,9 @@ public class Crowdfund{
                               this.contributorEmail);
     }
 
+    private int getNextID() {
+        int newID = nextID;
+        nextID++;
+        return newID;
+    }
 }

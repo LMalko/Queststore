@@ -63,6 +63,7 @@ class StudentController{
 
     private void createCrowdfund(){
         returnAllCrowdfunds();
+        
 
     }
 
@@ -73,4 +74,12 @@ class StudentController{
     private void joinCrowdfund(){
         returnAllCrowdfunds();
     }
-}
+}/** 
+    private void createNewMentor(){
+        String mentorName = view.getUserInput("Enter mentor's name: ");
+        String mentorSurname = view.getUserInput("Enter mentor's surname: ");
+        String mentorPassword = view.getUserInput("Enter mentor's password: ");
+        Mentor newMentor = new Mentor(mentorName, mentorSurname, mentorPassword);
+        dao.addUserToUsersCollection(newMentor);
+        dao.saveUsersToFile();
+    }*/
