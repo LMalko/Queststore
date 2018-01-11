@@ -25,21 +25,18 @@ class StudentController{
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
             System.exit(0);
-        }
-        else if (choice.equals("1")){
+        }else if (choice.equals("1")){
             System.out.println(student.getStudentWallet());
-        }
-        else if (choice.equals("2")){
+        }else if (choice.equals("2")){
             this.buyArtifact();
-        }
-        else if (choice.equals("3")){
+        }else if (choice.equals("3")){
             this.createCrowdfund();
-        }
-        else if (choice.equals("4")){
+        }else if (choice.equals("4")){
             this.getAllCrowdfunds();
-        }
-        else if (choice.equals("5")){
+        }else if (choice.equals("5")){
             this.joinCrowdfund();
+        }else{
+            System.out.println("No such choice");
         }
     }
 
