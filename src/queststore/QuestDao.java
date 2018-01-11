@@ -40,8 +40,6 @@ public class QuestDao{
 
             while(questsIterator.hasNext()){
                 Quest quest = questsIterator.next();
-                sb.append(quest.getQuestId());
-                sb.append(",");
                 sb.append(quest.getQuestName());
                 sb.append(",");
                 sb.append(quest.getQuestAward());
