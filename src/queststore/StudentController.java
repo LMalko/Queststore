@@ -10,9 +10,13 @@ class StudentController{
     private Student student;
 
     public void startStudentPanel(Student student){
+        boolean isRuntime = true;
         this.student = student;
-        view.displayUserMenu("txt/studentMenu.txt");
-        handleStudentPanelOptions();
+        
+        while(isRuntime){
+            view.displayUserMenu("txt/studentMenu.txt");
+            handleStudentPanelOptions();
+        }
     }
 
     private void handleStudentPanelOptions(){
@@ -24,16 +28,16 @@ class StudentController{
             System.out.println(student.getStudentWallet());
         }
         else if (choice.equals("2")){
-            //buyArtifact();
+            this.buyArtifact();
         }
         else if (choice.equals("3")){
-            createCrowdfund();
+            this.createCrowdfund();
         }
         else if (choice.equals("4")){
-            getAllCrowdfunds();
+            this.getAllCrowdfunds();
         }
         else if (choice.equals("5")){
-            //joinCrowdfund(id);
+            this.joinCrowdfund();
         }
     }
 
