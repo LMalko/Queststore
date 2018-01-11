@@ -6,7 +6,7 @@ public class Artifact{
     private String name;
     private int price;
     private String category;
-    private static ArrayList<Artifact> artifactsCollection = new ArrayList<Artifact>();
+    private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
 
     public Artifact(int id, String name, int price, String category){
         this.id = id;
@@ -30,8 +30,8 @@ public class Artifact{
     public String getArtifactCategory(){
         return this.category;
     }
-// ItemCollection<Artifact>
-    public static ArrayList<Artifact> getArtifacts(){
+
+    public static ItemCollection<Artifact> getArtifacts(){
         ArtifactsDao artifactsDao = new ArtifactsDao();
         artifactsDao.importArtifacts();
         return artifactsCollection;
