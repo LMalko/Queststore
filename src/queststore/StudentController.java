@@ -19,5 +19,9 @@ class StudentController{
     private void createCrowdfund(Integer id){
 
     }
-    
+
+    private void buyArtifact(Integer id){
+        
+    }
+
 }
