@@ -1,10 +1,11 @@
 public class Store{
 
+    private ArtifactsDao artifactsDao = new ArtifactsDao();
     private ItemCollection<Artifact> artifactsCollection;
     private CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
 
     public Store(){
-        this.artifactsCollection = Artifact.getArtifacts();
+        this.artifactsCollection = artifactsDao.getArtifacts();
 
     }
 

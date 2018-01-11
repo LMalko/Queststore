@@ -8,8 +8,10 @@ import java.io.FileWriter;
 
 public class ArtifactsDao{
 
+    private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
+
     public void importArtifacts(){
-        String fileName = "ArtifactsDao.csv";
+        String fileName = "csv/ArtifactsDao.csv";
 
         try{
             BufferedReader buffer_reader = new BufferedReader(new FileReader(fileName));
@@ -21,7 +23,7 @@ public class ArtifactsDao{
                 int price = Integer.parseInt(parts[2]);
                 String category = parts[3];
                 Artifact artifact = new Artifact(id, name, price, category);
-                artifact.addArtifact(artifact);
+                addArtifact(artifact);
             }
         }
         catch (IOException e){
@@ -32,7 +34,7 @@ public class ArtifactsDao{
     public void exportArtifacts(ArrayList<Artifact> artifactsData){
 
         try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("ArtifactsDao.csv"));
+            BufferedWriter br = new BufferedWriter(new FileWriter("csv/ArtifactsDao.csv"));
             StringBuilder sb = new StringBuilder();
 
             for (Artifact element : artifactsData) {
@@ -52,5 +54,14 @@ public class ArtifactsDao{
         catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public ItemCollection<Artifact> getArtifacts(){
+        importArtifacts();
+        return artifactsCollection;
+    }
+
+    public void addArtifact(Artifact artifact){
+        artifactsCollection.add(artifact);
     }
 }

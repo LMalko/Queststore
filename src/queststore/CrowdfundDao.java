@@ -9,7 +9,7 @@ import java.io.FileWriter;
 public class CrowdfundDao{
 
     public void importCrowdfund(){
-        String fileName = "CrowdfundDao.csv";
+        String fileName = "csv/CrowdfundDao.csv";
 
         try{
             BufferedReader buffer_reader = new BufferedReader(new FileReader(fileName));
@@ -33,7 +33,7 @@ public class CrowdfundDao{
     public void exportCrowdfund(ArrayList<Crowdfund> crowdfundData){
 
         try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("CrowdfundDao.csv"));
+            BufferedWriter br = new BufferedWriter(new FileWriter("csv/CrowdfundDao.csv"));
             StringBuilder sb = new StringBuilder();
 
             for (Crowdfund element : crowdfundData) {
