@@ -101,4 +101,32 @@ class UsersDao {
     public void addUserToUsersCollection(User user){
         usersCollection.add(user);
     }
+
+    public ArrayList<User> getAllUsersByStatus(String userStatus){
+        ArrayList<User> usersWithGivenStatus = new ArrayList<User>();
+        for (User user : usersCollection){
+            if (user.getStatus().equals(userStatus)){
+                usersWithGivenStatus.add(user);
+            }
+        }
+        return usersWithGivenStatus;
+    }
+
+    public Mentor getMentorById(int id){
+        for (User user : usersCollection){
+            if(user.getId() == id && user.getStatus().equals("mentor")){
+                return (Mentor)user;
+            }
+        }
+        return null;
+    }
+
+    public Student getStudentById(int id){
+        for (User user : usersCollection){
+            if(user.getId() == id && user.getStatus().equals("student")){
+                return (Student)user;
+            }
+        }
+        return null;
+    }
 }

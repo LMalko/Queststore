@@ -8,20 +8,21 @@ import java.io.FileWriter;
 
 public class QuestDao{
 
+    private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
+
     public void importQuests(){
-        String fileName = "QuestsDao.csv";
+        String fileName = "csv/QuestsDao.csv";
 
         try{
             BufferedReader buffer_reader = new BufferedReader(new FileReader(fileName));
             String row;
             while((row = buffer_reader.readLine()) != null){
                 String[] parts = row.split(",");
-                int id = Integer.parseInt(parts[0]);
-                String name = parts[1];
-                int award = Integer.parseInt(parts[2]);
-                String status = parts[3];
-                Quest quest = new Quest(id, name, award, status);
-                quest.addQuest(quest);
+                String name = parts[0];
+                int award = Integer.parseInt(parts[1]);
+                String status = parts[2];
+                Quest quest = new Quest(name, award, status);
+                addQuest(quest);
             }
         }
         catch (IOException e){
@@ -29,22 +30,23 @@ public class QuestDao{
         }
     }
 
-    public void exportQuests(ItemCollection<Quest> questsData){
+    public void exportQuests(){
 
-        CollectionIterator<Quest> questsIterator = questsData.getIterator();
+        CollectionIterator<Quest> questsIterator = questsCollection.getIterator();
 
         try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("QuestsDao.csv"));
+            BufferedWriter br = new BufferedWriter(new FileWriter("csv/QuestsDao.csv"));
             StringBuilder sb = new StringBuilder();
 
             while(questsIterator.hasNext()){
-                sb.append(questsIterator.next().getQuestId());
+                Quest quest = questsIterator.next();
+                sb.append(quest.getQuestId());
                 sb.append(",");
-                sb.append(questsIterator.next().getQuestName());
+                sb.append(quest.getQuestName());
                 sb.append(",");
-                sb.append(questsIterator.next().getQuestAward());
+                sb.append(quest.getQuestAward());
                 sb.append(",");
-                sb.append(questsIterator.next().getQuestStatus());
+                sb.append(quest.getQuestStatus());
                 sb.append("\n");
             }
 
@@ -54,5 +56,14 @@ public class QuestDao{
         catch (IOException e){
             e.printStackTrace();
         }
+
+    }
+
+    public ItemCollection<Quest> getQuests(){
+        return questsCollection;
+    }
+
+    public void addQuest(Quest quest){
+        questsCollection.add(quest);
     }
 }

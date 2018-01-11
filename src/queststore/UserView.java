@@ -40,7 +40,7 @@ class UserView{
             System.out.println(userMenu);
         }
 
-    private void clearScreen() {
+    public void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
@@ -49,5 +49,9 @@ class UserView{
         System.out.println(text);
         String input = reader.nextLine();
         return input;
+    }
+
+    public void displayText(String text){
+        System.out.println(text);
     }
 }

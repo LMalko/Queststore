@@ -56,9 +56,9 @@ class LoginController{
             controller.startMentorPanel();
         }
         else if(userStatus.equals("student")){
-            User user = new Student(userLogin, userPassword, userStatus);
+            Student user = new Student(userLogin, userPassword, userStatus);
             StudentController controller = new StudentController();
-            controller.startStudentPanel();
+            controller.startStudentPanel(user);
         }
     }
 }
