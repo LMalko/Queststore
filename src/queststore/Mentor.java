@@ -7,11 +7,12 @@ public class Mentor extends User{
         this.group = null;
     }
 
-    public Group getMentorGroup(){
-        return group;
+    public String getMentorGroupName(){
+        return group.getGroupName();
     }
 
     public void setMentorGroup(Group group){
         this.group = group;
+        this.groupName = group.getGroupName();
     }
 }
