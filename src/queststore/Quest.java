@@ -7,14 +7,18 @@ public class Quest{
     private static int id;
     private int questID;
     private String status;
-    private String category;
+    private String categoryName;
 
-    public Quest(String name, int award, String status, String category){
+    public Quest(String name, int award, String status, String categoryName){
         this.name = name;
         this.questID = id++;
         this.award = award;
         this.status = status;
-        this.category = category;
+        this.categoryName = categoryName;
+    }
+
+    public String getQuestCategoryName(){
+        return this.categoryName;
     }
 
     public void setQuestName(String name){
@@ -23,10 +27,6 @@ public class Quest{
 
     public String getQuestName(){
         return this.name;
-    }
-
-    public String getCategory(){
-        return this.category;
     }
 
     public int getQuestId(){

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class MentorController{
 
     private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
@@ -6,10 +8,17 @@ class MentorController{
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
     private ArtifactsDao artifactsDao = new ArtifactsDao();
+    private CategoryDao categoryDao = new CategoryDao();
+    private GroupDao groupDao = new GroupDao();
 
     public void startMentorPanel(){
         boolean isRunning = true;
+
+        groupDao.importGroups();
+        questDao.importQuests();
         artifactsDao.importArtifacts();
+        groupDao.importGroups();
+
 
         while(isRunning){
             view.displayUserMenu("txt/mentorMenu.txt");
@@ -35,8 +44,7 @@ class MentorController{
             addQuestCategory();
         }
         else if (choice.equals("5")){
-            //have to implement quest picker
-            //editQuest(quest);
+            editQuest();
         }
         else if (choice.equals("6")){
             addArtifact();
@@ -70,8 +78,39 @@ class MentorController{
     }
 
     public void studentAssignToGroup(){
-
+        getAllStudents();
+        int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
+        Student student = dao.getStudentById(studentId);
+        view.clearScreen();  // clear before displaying group names
+        view.displayText("Choose group from those listed below:");
+        getAllGroupsNames();
+        String groupName = view.getUserInput("Choose group name:");
+        Group newGroup = groupDao.getGroupByName(groupName);
+        student.setStudentGroup(newGroup);
+        dao.saveUsersToFile();
     }
+
+    private void getAllStudents(){
+        view.clearScreen();
+        ArrayList<User> studentsCollection = dao.getAllUsersByStatus("student");
+        for(User student : studentsCollection){
+            int studentId = student.getId();
+            String studentName = student.getName();
+            String studentSurname = student.getSurname();
+            String studentGroup = student.getUserGroupName();
+            view.displayText("ID: "+studentId +" "+studentName+" "+studentSurname+" "+studentGroup);
+        }
+    }
+
+    public void getAllGroupsNames(){
+        ItemCollection<Group> allGroups = groupDao.getGroups();
+        CollectionIterator<Group> groupIterator = allGroups.getIterator();
+        while(groupIterator.hasNext()){
+            Group group = groupIterator.next();
+            view.displayText(group.getGroupName());
+        }
+    }
+
 
     public void addNewQuest(){
         String questName = view.getUserInput("Enter quest name: ");
@@ -80,15 +119,47 @@ class MentorController{
         Quest newQuest = new Quest(questName, questAward, "not done", category);
         questDao.addQuest(newQuest);
         questDao.exportQuests();
-    
+
     }
 
     public void addQuestCategory(){
+        String categoryName = view.getUserInput("Enter new category name: ");
+        Category category = new Category(categoryName);
+        categoryDao.addCategory(category);
+        categoryDao.exportCategory();
 
     }
 
-    public void editQuest(Quest quest){
-        
+    public void editQuest(){
+        view.clearScreen();
+        getAllQuests();
+        int questId = Integer.parseInt(view.getUserInput("Enter ID of quest you want to edit: "));
+        Quest quest = questDao.getQuestById(questId);
+        quest.setQuestName(view.getUserInput("Enter new quest name: "));
+        quest.setQuestAward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
+        quest.setQuestStatus(view.getUserInput("Enter new quest status: "));
+        questDao.exportQuests();
+
+
+    }
+
+    public void getAllQuests(){
+        ItemCollection<Quest> questCollection = questDao.getQuests();
+        CollectionIterator<Quest> questIterator = questCollection.getIterator();
+
+        while(questIterator.hasNext()){
+            Quest currentQuest = questIterator.next();
+
+            String questID = Integer.toString(currentQuest.getQuestId());
+            String name = currentQuest.getQuestName();
+            String award = Integer.toString(currentQuest.getQuestAward());
+            String status = currentQuest.getQuestStatus();
+            String category = currentQuest.getQuestCategoryName();
+            view.displayText("ID: "+questID +" "+name+" for:"+award+
+                " from category:"+category+" /currently:"+status);
+        }
+        questIterator = questCollection.getIterator();
+
     }
 
     public void addArtifact(){
@@ -123,7 +194,6 @@ class MentorController{
                 return artifact;
             }
         }
-        System.out.println("xxxxxxxxxxxxxxx");
         return null;
     }
 

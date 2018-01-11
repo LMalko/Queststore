@@ -47,7 +47,7 @@ public class QuestDao{
                 sb.append(",");
                 sb.append(quest.getQuestStatus());
                 sb.append(",");
-                sb.append(quest.getCategory());
+                sb.append(quest.getQuestCategoryName());
                 sb.append("\n");
             }
 
@@ -60,8 +60,20 @@ public class QuestDao{
 
     }
 
+    public Quest getQuestById(int id){
+        CollectionIterator<Quest> questIterator = questsCollection.getIterator();
+
+        while (questIterator.hasNext()){
+            Quest quest = questIterator.next();
+
+            if(quest.getQuestId() == id) {
+                return quest;
+            }
+        }
+        return null;
+    }
+
     public ItemCollection<Quest> getQuests(){
-        importQuests();
         return questsCollection;
     }
 
