@@ -26,6 +26,7 @@ class StudentController{
     private void handleStudentPanelOptions(){
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
+            view.clearScreen();
             System.exit(0);
         }else if (choice.equals("1")){
             System.out.println("\n\nWallet is:");
@@ -62,6 +63,7 @@ class StudentController{
 
     private void createCrowdfund(){
         returnAllCrowdfunds();
+        
 
     }
 
@@ -72,4 +74,12 @@ class StudentController{
     private void joinCrowdfund(){
         returnAllCrowdfunds();
     }
-}
+}/** 
+    private void createNewMentor(){
+        String mentorName = view.getUserInput("Enter mentor's name: ");
+        String mentorSurname = view.getUserInput("Enter mentor's surname: ");
+        String mentorPassword = view.getUserInput("Enter mentor's password: ");
+        Mentor newMentor = new Mentor(mentorName, mentorSurname, mentorPassword);
+        dao.addUserToUsersCollection(newMentor);
+        dao.saveUsersToFile();
+    }*/

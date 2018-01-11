@@ -23,7 +23,7 @@ public class CrowdfundDao{
                 int totalPrice = Integer.parseInt(parts[2]);
                 int account = Integer.parseInt(parts[3]);
                 String contributorEmail = parts[4];
-                Crowdfund crowdfund = new Crowdfund(id, name, totalPrice, account, contributorEmail);
+                Crowdfund crowdfund = new Crowdfund(name, totalPrice, account, contributorEmail);
                 addCrowdfund(crowdfund);
             }
         }
