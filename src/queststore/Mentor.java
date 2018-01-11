@@ -15,4 +15,20 @@ public class Mentor extends User{
         this.group = group;
         this.groupName = group.getGroupName();
     }
+
+    public void setMentorName(String name){
+        this.name = name;
+    }
+
+    public void setMentorSurname(String surname){
+        this.surname = surname;
+    }
+
+    public void setMentorPassword(String password){
+        this.password = password;
+    }
+
+    public void setMentorLogin(String name, String surname){
+        this.login = name.toLowerCase() + surname.toLowerCase() + "@cc.com";
+    }
 }
