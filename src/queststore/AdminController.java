@@ -162,7 +162,7 @@ class AdminController{
         }
     }
 
-    public void getAllGroupsNames(){
+    private void getAllGroupsNames(){
         ItemCollection<Group> allGroups = groupDao.getGroups();
         CollectionIterator<Group> groupIterator = allGroups.getIterator();
         while(groupIterator.hasNext()){
@@ -171,7 +171,7 @@ class AdminController{
         }
     }
 
-    public void createNewLevelOfExperience(){
+    private void createNewLevelOfExperience(){
         try{
             view.clearScreen();
             String levelName = view.getUserInput("Set level name: ");
