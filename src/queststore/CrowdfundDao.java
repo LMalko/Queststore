@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.io.FileWriter;
 
 
-public class ArtifactsDao{
+public class CrowdfundDao{
 
-    public void importArtifacts(){
-        String fileName = "ArtifactsDao.csv";
+    public void importCrowdfund(){
+        String fileName = "CrowdfundDao.csv";
 
         try{
             BufferedReader buffer_reader = new BufferedReader(new FileReader(fileName));
@@ -18,10 +18,11 @@ public class ArtifactsDao{
                 String[] parts = row.split(",");
                 int id = Integer.parseInt(parts[0]);
                 String name = parts[1];
-                int price = Integer.parseInt(parts[2]);
-                String category = parts[3];
-                Artifact artifact = new Artifact(id, name, price, category);
-                artifact.addArtifact(artifact);
+                int totalPrice = Integer.parseInt(parts[2]);
+                int account = Integer.parseInt(parts[3]);
+                String contributorEmail = parts[4];
+                Crowdfund crowdfund = new Crowdfund(id, name, totalPrice, account, contributorEmail);
+                crowdfund.addCrowdfund(crowdfund);
             }
         }
         catch (IOException e){
@@ -29,20 +30,22 @@ public class ArtifactsDao{
         }
     }
 
-    public void exportArtifacts(ArrayList<Artifact> artifactsData){
+    public void exportCrowdfund(ArrayList<Crowdfund> crowdfundData){
 
         try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("ArtifactsDao.csv"));
+            BufferedWriter br = new BufferedWriter(new FileWriter("CrowdfundDao.csv"));
             StringBuilder sb = new StringBuilder();
 
-            for (Artifact element : artifactsData) {
-                sb.append(element.getArtifactId());
+            for (Crowdfund element : crowdfundData) {
+                sb.append(element.getCrowdfundId());
                 sb.append(",");
-                sb.append(element.getArtifactName());
+                sb.append(element.getCrowdfundName());
                 sb.append(",");
-                sb.append(element.getArtifactPrice());
+                sb.append(element.getCrowdfundTotalPrice());
                 sb.append(",");
-                sb.append(element.getArtifactCategory());
+                sb.append(element.getCrowdfundAccount());
+                sb.append(",");
+                sb.append(element.getCrowdfundContributorEmail());
                 sb.append("\n");
             }
 

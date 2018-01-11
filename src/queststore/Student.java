@@ -21,5 +21,9 @@ public class Student extends User{
 
     public void setStudentGroup(Group group){
         this.group = group;
+
+    public Group getStudentGroup(){
+        return this.group;
+
     }
 }

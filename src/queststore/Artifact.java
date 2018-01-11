@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 
 
-public class Artifacts{
+public class Artifact{
     private int id;
     private String name;
     private int price;
     private String category;
-    private static ArrayList<Artifacts> artifactsCollection = new ArrayList<Artifacts>();
+    private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
 
-    public Artifacts(int id, String name, int price, String category){
+    public Artifact(int id, String name, int price, String category){
         this.id = id;
         this.name = name;
         this.price = price;
@@ -30,14 +30,14 @@ public class Artifacts{
     public String getArtifactCategory(){
         return this.category;
     }
-// ItemCollection<Artifact>
-    public static ArrayList<Artifacts> getArtifacts(){
+
+    public static ItemCollection<Artifact> getArtifacts(){
         ArtifactsDao artifactsDao = new ArtifactsDao();
         artifactsDao.importArtifacts();
         return artifactsCollection;
     }
 
-    public void addArtifact(Artifacts artifact){
+    public void addArtifact(Artifact artifact){
         artifactsCollection.add(artifact);
     }
 }

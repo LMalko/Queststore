@@ -6,15 +6,15 @@ public class Crowdfund{
     String name;
     int totalPrice;
     int account;
-    Student contributors;
-    private static ArrayList<Crowdfund> corwdfundCollection = new ArrayList<Crowdfund>();
+    String contributorEmail;
+    private static ItemCollection<Crowdfund> crowdfundCollection = new ItemCollection<>("Crowdfunds");
 
-    public Crowdfund(int id, String name, int totalPrice, int account, Student contributors){
+    public Crowdfund(int id, String name, int totalPrice, int account, String contributorEmail){
         this.id = id;
         this.name = name;
         this.totalPrice = totalPrice;
         this.account = account;
-        this.contributors = contributors;
+        this.contributorEmail = contributorEmail;
     }
 
     public int getCrowdfundId(){
@@ -33,8 +33,8 @@ public class Crowdfund{
         return this.account;
     }
 
-    public Student getCrowdfundContributors(){
-        return this.contributors;
+    public String getCrowdfundContributorEmail(){
+        return this.contributorEmail;
     }
 
     public void setCrowdfundId(int id){
@@ -53,16 +53,16 @@ public class Crowdfund{
         this.account = account;
     }
 
-    public void setCrowdfundId(Student contributors){
-        this.contributors = contributors;
+    public void setCrowdfundId(String contributorEmail){
+        this.contributorEmail = contributorEmail;
     }
 
-    public ArrayList<Crowdfund> getCrowdfund(){
-        return corwdfundCollection;
+    public static ItemCollection<Crowdfund> getCrowdfunds(){
+        return crowdfundCollection;
     }
 
     public void addCrowdfund(Crowdfund crowdfund){
-        corwdfundCollection.add(crowdfund);
+        crowdfundCollection.add(crowdfund);
     }
 
     public int getPriceLeft(){
@@ -70,10 +70,12 @@ public class Crowdfund{
     }
 
     public Crowdfund getSpecyficCrowdfund(String name){
-        for (Crowdfund element : crowdfundCollection){
-            if (name.equals(element.getCrowdfundName())){
-                return element;
+        CollectionIterator<Crowdfund> crowdfundIterator = crowdfundCollection.getIterator();
+        while(crowdfundIterator.hasNext()){
+            if (name.equals(crowdfundIterator.next().getCrowdfundName())){
+                return crowdfundIterator.next();
             }
         }
+        return null;
     }
 }

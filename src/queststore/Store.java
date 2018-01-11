@@ -4,7 +4,7 @@ public class Store{
     private CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
 
     public Store(){
-        this.artifactsCollection = Artifacts.getArifacts();
+        this.artifactsCollection = Artifact.getArtifacts();
 
     }
 
@@ -12,10 +12,12 @@ public class Store{
         return this.artifactsCollection;
     }
 
-    public Integer getTotalPay(Integer artifactID){
+    public int getTotalPay(int artifactID){
+
+
         while(artifactIterator.hasNext()){
-            if(artifactIterator.next().id = artifactID){
-                return artifactIterator.next().price;
+            if(artifactIterator.next().getArtifactId() == artifactID){
+                return artifactIterator.next().getArtifactPrice();
             }
         }
         return 0;

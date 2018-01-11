@@ -6,12 +6,12 @@
 *   2. Assign student to group.         *
 *   3. Add new Quest.                   *
 *   4. Create new Quest Category.       *
-*   5. Add new Artifact to Store.       *
-*   6. Update Artifact details.         *
-*   7. Update Quest details.            *
+*   5. Update Quest details.            *
+*   6. Add new Artifact to Store.       *
+*   7. Update Artifact details.         *
 *   8. Create new Artifact category.    *
 *   9. Mark student's quest.            *
-*   10. Mark student's artifact.         *
+*   10. Mark student's artifact.        *
 *   11. Display student's wallets.      *
 *   0.  Exit.                           *
 *****************************************
