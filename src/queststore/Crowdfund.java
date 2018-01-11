@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 
 public class Crowdfund{
-    int id;
-    String name;
-    int totalPrice;
-    int account;
-    String contributorEmail;
+    private int id;
+    private String name;
+    private int totalPrice;
+    private int account;
+    private String contributorEmail;
     private static ItemCollection<Crowdfund> crowdfundCollection = new ItemCollection<>("Crowdfunds");
 
     public Crowdfund(int id, String name, int totalPrice, int account, String contributorEmail){
@@ -61,10 +61,6 @@ public class Crowdfund{
         return crowdfundCollection;
     }
 
-    public void addCrowdfund(Crowdfund crowdfund){
-        crowdfundCollection.add(crowdfund);
-    }
-
     public int getPriceLeft(){
         return this.totalPrice - this.account;
     }
@@ -78,4 +74,15 @@ public class Crowdfund{
         }
         return null;
     }
+
+    @Override
+    public String toString(){
+        return  String.format("ID: %d, NAME: %s, PRICE: %d, ACCOUNT: %d, CONTRIBUTOR: %s",
+                              this.id,
+                              this.name,
+                              this.totalPrice,
+                              this.account,
+                              this.contributorEmail);
+    }
+
 }

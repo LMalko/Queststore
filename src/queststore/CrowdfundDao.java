@@ -8,7 +8,9 @@ import java.io.FileWriter;
 
 public class CrowdfundDao{
 
-    public void importCrowdfund(){
+    private static ItemCollection<Crowdfund> crowdfundCollection = new ItemCollection<>("Crowdfunds");
+
+    public void importCrowdfunds(){
         String fileName = "csv/CrowdfundDao.csv";
 
         try{
@@ -22,7 +24,7 @@ public class CrowdfundDao{
                 int account = Integer.parseInt(parts[3]);
                 String contributorEmail = parts[4];
                 Crowdfund crowdfund = new Crowdfund(id, name, totalPrice, account, contributorEmail);
-                crowdfund.addCrowdfund(crowdfund);
+                addCrowdfund(crowdfund);
             }
         }
         catch (IOException e){
@@ -30,22 +32,26 @@ public class CrowdfundDao{
         }
     }
 
-    public void exportCrowdfund(ArrayList<Crowdfund> crowdfundData){
+    public void exportCrowdfund(){
+
+        CollectionIterator<Crowdfund> crowdfundIterator = crowdfundCollection.getIterator();
 
         try{
             BufferedWriter br = new BufferedWriter(new FileWriter("csv/CrowdfundDao.csv"));
             StringBuilder sb = new StringBuilder();
 
-            for (Crowdfund element : crowdfundData) {
-                sb.append(element.getCrowdfundId());
+            while (crowdfundIterator.hasNext()) {
+
+                Crowdfund crowdfund = crowdfundIterator.next();
+                sb.append(crowdfund.getCrowdfundId());
                 sb.append(",");
-                sb.append(element.getCrowdfundName());
+                sb.append(crowdfund.getCrowdfundName());
                 sb.append(",");
-                sb.append(element.getCrowdfundTotalPrice());
+                sb.append(crowdfund.getCrowdfundTotalPrice());
                 sb.append(",");
-                sb.append(element.getCrowdfundAccount());
+                sb.append(crowdfund.getCrowdfundAccount());
                 sb.append(",");
-                sb.append(element.getCrowdfundContributorEmail());
+                sb.append(crowdfund.getCrowdfundContributorEmail());
                 sb.append("\n");
             }
 
@@ -55,5 +61,13 @@ public class CrowdfundDao{
         catch (IOException e){
             e.printStackTrace();
         }
+    }
+    public ItemCollection<Crowdfund> getCrowdfunds(){
+        importCrowdfunds();
+        return crowdfundCollection;
+    }
+
+    public void addCrowdfund(Crowdfund crowdfund){
+        crowdfundCollection.add(crowdfund);
     }
 }

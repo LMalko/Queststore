@@ -21,7 +21,8 @@ public class QuestDao{
                 String name = parts[0];
                 int award = Integer.parseInt(parts[1]);
                 String status = parts[2];
-                Quest quest = new Quest(name, award, status);
+                String category = parts[3];
+                Quest quest = new Quest(name, award, status, category);
                 addQuest(quest);
             }
         }
@@ -40,13 +41,13 @@ public class QuestDao{
 
             while(questsIterator.hasNext()){
                 Quest quest = questsIterator.next();
-                sb.append(quest.getQuestId());
-                sb.append(",");
                 sb.append(quest.getQuestName());
                 sb.append(",");
                 sb.append(quest.getQuestAward());
                 sb.append(",");
                 sb.append(quest.getQuestStatus());
+                sb.append(",");
+                sb.append(quest.getCategory());
                 sb.append("\n");
             }
 
@@ -60,6 +61,7 @@ public class QuestDao{
     }
 
     public ItemCollection<Quest> getQuests(){
+        importQuests();
         return questsCollection;
     }
 

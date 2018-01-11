@@ -1,11 +1,9 @@
-import java.util.ArrayList;
-
-
 class MentorController{
 
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
+    private ArtifactsDao artifactsDao = new ArtifactsDao();
 
     public void startMentorPanel(){
         boolean isRunning = true;
@@ -68,43 +66,17 @@ class MentorController{
     }
 
     public void studentAssignToGroup(){
-        getAllStudents();
-        int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
-        Student student = dao.getStudentById(studentId);
-        view.displayText("Choose group from listed below");
-        getAllGroupsNames();
-        String groupName = view.getUserInput("Choose group name");
-        Group group = Group.getGroupByName(groupName);
-        student.setStudentGroup(group);
-        }
 
-        private void getAllGroupsNames(){
-        ArrayList<Group> allGroups = Group.getAllGroups();
-        CollectionIterator<Group> iterator = new CollectionIterator(allGroups);
-        while(iterator.hasNext()){
-            String groupName = iterator.next().getGroupName();
-            view.displayText(groupName);
-        }
-        }
-
-        private void getAllStudents(){
-        ArrayList<User> studentsCollection = dao.getAllUsersByStatus("student");
-
-        for(User student : studentsCollection){
-            int studentId = student.getId();
-            String studentName = student.getName();
-            String studentSurname = student.getSurname();
-            view.displayText("ID: "+studentId +" "+studentName+" "+studentSurname);
-        }
-        }
+    }
 
     public void addNewQuest(){
         String questName = view.getUserInput("Enter quest name: ");
         int questAward = Integer.parseInt(view.getUserInput("Enter award for completing quest: "));
-        Quest newQuest = new Quest(questName, questAward, "not done");
+        String category = view.getUserInput("Enter category of quest: ");
+        Quest newQuest = new Quest(questName, questAward, "not done", category);
         questDao.addQuest(newQuest);
         questDao.exportQuests();
-        // export quest poprawić listy quest collection
+    
     }
 
     public void addQuestCategory(){
@@ -112,11 +84,17 @@ class MentorController{
     }
 
     public void editQuest(Quest quest){
-
+        
     }
 
     public void addArtifact(){
-
+        int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
+        String artifactName = view.getUserInput("Enter artifact name: ");
+        int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
+        String artifactCategory = view.getUserInput("Enter artifact category: ");
+        Artifact newArtifact = new Artifact(artifactId, artifactName, artifactPrice, artifactCategory);
+        artifactsDao.addArtifact(newArtifact);
+        artifactsDao.exportArtifacts();
     }
 
     public void editArtifact(Artifact artifact){
