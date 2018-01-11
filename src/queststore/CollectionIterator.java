@@ -2,23 +2,23 @@ import java.util.ArrayList;
 
 public class CollectionIterator<T> implements Iterator<T> {
     
-    private ArrayList<T> list;
+    private ArrayList<T> collection;
     private int index;
     
-    public CollectionIterator(ArrayList<T> list) {
+    public CollectionIterator(ArrayList<T> collection) {
         
-        this.list = list;
+        this.collection = collection;
     }
     
     @Override
     public boolean hasNext() {
         
-        return index < list.size();
+        return index < collection.size();
     }
     
     @Override
     public T next() {
         
-        return list.get(index++);
+        return collection.get(index++);
     }
 }
