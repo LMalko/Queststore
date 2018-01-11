@@ -72,7 +72,6 @@ class UsersDao {
         try{
             BufferedWriter br = new BufferedWriter(new FileWriter("csv/usersData.csv"));
             StringBuilder sb = new StringBuilder();
-            System.out.println(usersCollection.size());
             sb.append(headerLine);
             sb.append("\n");
             for (User user : usersCollection) {
@@ -87,9 +86,14 @@ class UsersDao {
                 sb.append(user.getPassword());
                 sb.append(",");
                 sb.append(user.getStatus());
+                sb.append(",");
+                sb.append(user.getUserGroupName());
+                sb.append(",");
+                sb.append(user.getUserWallet());
+                sb.append(",");
+                sb.append(user.getUserExperience());
                 sb.append("\n");
             }
-
             br.write(sb.toString());
             br.close();
         }
