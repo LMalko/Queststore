@@ -38,13 +38,13 @@ public class QuestDao{
             StringBuilder sb = new StringBuilder();
 
             while(questsIterator.hasNext()){
-                sb.append(questsData.next().getQuestId());
+                sb.append(questsIterator.next().getQuestId());
                 sb.append(",");
-                sb.append(questsData.next().getQuestName());
+                sb.append(questsIterator.next().getQuestName());
                 sb.append(",");
-                sb.append(questsData.next().getQuestAward());
+                sb.append(questsIterator.next().getQuestAward());
                 sb.append(",");
-                sb.append(questsData.next().getQuestStatus());
+                sb.append(questsIterator.next().getQuestStatus());
                 sb.append("\n");
             }
 
