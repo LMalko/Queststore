@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 class MentorController{
 
+    private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
+
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
@@ -128,6 +130,20 @@ class MentorController{
 
     public void editArtifact(Artifact artifact){
 
+    }
+
+    public void getAllArtifacts(){
+        CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
+
+        ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
+        while (artifactsIterator.hasNext()){
+            Artifact artifact = artifactsIterator.next();
+            int id = artifact.getArtifactId();
+            String name = artifact.getArtifactName();
+            int price = artifact.getArtifactPrice();
+            String category = artifact.getArtifactCategory();
+            view.displayText(id + " " + name + " " +price + " " +category);
+        }
     }
 
 
