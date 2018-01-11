@@ -2,11 +2,13 @@ import java.util.ArrayList;
 
 class AdminController{
 
-    UsersDao dao = new UsersDao();
-    UserView view = new UserView();
+    private UsersDao dao = new UsersDao();
+    private UserView view = new UserView();
+    private GroupDao groupDao = new GroupDao();
 
     public void startAdminPanel(){
         boolean isRuntime = true;
+        groupDao.importGroups();
 
         while(isRuntime){
             view.displayUserMenu("txt/adminMenu.txt");
@@ -51,9 +53,8 @@ class AdminController{
     public void createNewGroup(){
         String groupName = view.getUserInput("Enter new group name: ");
         Group group = new Group(groupName);
-        group.addGroupToGroupCollection(group);
-        group.exportGroupsToFile();
-
+        groupDao.addGroup(group);
+        groupDao.exportGroups();
     }
 
     public void assignMentorToGroup(){
@@ -65,22 +66,22 @@ class AdminController{
         view.displayText("Choose group from listed below");
         getAllGroupsNames();
         String groupName = view.getUserInput("Choose group name");
-        Group group = Group.getGroupByName(groupName);
-        mentor.setMentorGroup(group);
+        Group newGroup = groupDao.getGroupByName(groupName);
+        mentor.setMentorGroup(newGroup);
+        dao.saveUsersToFile();
     }
 
     public void getAllGroupsNames(){
-        ArrayList<Group> allGroups = Group.getAllGroups();
-        CollectionIterator<Group> iterator = new CollectionIterator(allGroups);
-        while(iterator.hasNext()){
-            String groupName = iterator.next().getGroupName();
-            view.displayText(groupName);
+        ItemCollection<Group> allGroups = groupDao.getGroups();
+        CollectionIterator<Group> groupIterator = allGroups.getIterator();
+        while(groupIterator.hasNext()){
+            Group group = groupIterator.next();
+            view.displayText(group.getGroupName());
         }
     }
 
     public void getAllMentors(){
         ArrayList<User> mentorsCollection = dao.getAllUsersByStatus("mentor");
-
         for(User mentor : mentorsCollection){
             int mentorId = mentor.getId();
             String mentorName = mentor.getName();
