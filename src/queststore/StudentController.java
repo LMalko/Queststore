@@ -18,22 +18,19 @@ class StudentController{
             System.exit(0);
         }
         else if (choice.equals("1")){
-
+            return this.wallet;
         }
         else if (choice.equals("2")){
-
+            buyArtifact(id);
         }
         else if (choice.equals("3")){
-
+            createCrowdfund()
         }
         else if (choice.equals("4")){
-
+            getAllCrowdfunds();
         }
         else if (choice.equals("5")){
-
-        }
-        else if (choice.equals("6")){
-
+            joinCrowdfund(Integer id);
         }
     }
 
