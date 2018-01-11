@@ -71,7 +71,7 @@ class UsersDao {
     }
 
     public void saveUsersToFile(){
-        String headerLine = "id,name,surname,login,password,status";
+        String headerLine = "id,name,surname,login,password,status,group,wallet,experience";
         try{
             BufferedWriter br = new BufferedWriter(new FileWriter("csv/usersData.csv"));
             StringBuilder sb = new StringBuilder();
