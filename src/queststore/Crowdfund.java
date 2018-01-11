@@ -7,7 +7,7 @@ public class Crowdfund{
     int totalPrice;
     int account;
     String contributorEmail;
-    private static ArrayList<Crowdfund> corwdfundCollection = new ArrayList<Crowdfund>();
+    private static ItemCollection<Crowdfund> crowdfundCollection = new ItemCollection<>("Crowdfunds");
 
     public Crowdfund(int id, String name, int totalPrice, int account, String contributorEmail){
         this.id = id;
@@ -58,22 +58,23 @@ public class Crowdfund{
     }
 
     public ArrayList<Crowdfund> getCrowdfund(){
-        return corwdfundCollection;
+        return crowdfundCollection;
     }
 
     public void addCrowdfund(Crowdfund crowdfund){
-        corwdfundCollection.add(crowdfund);
+        crowdfundCollection.add(crowdfund);
     }
 
     public int getPriceLeft(){
         return this.totalPrice - this.account;
     }
 
-    // public Crowdfund getSpecyficCrowdfund(String name){
-    //     for (Crowdfund element : corwdfundCollection){
-    //         if (name.equals(element.getCrowdfundName())){
-    //             return element;
-    //         }
-    //     }
-    // }
+    public Crowdfund getSpecyficCrowdfund(String name){
+        CollectionIterator<Crowdfund> crowdfundIterator = crowdfundCollection.getIterator();
+        while(crowdfundIterator.hasNext()){
+            if (name.equals(crowdfundIterator.next().getCrowdfundName())){
+                return crowdfundIterator.next();
+            }
+        }
+    }
 }
