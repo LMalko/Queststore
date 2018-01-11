@@ -26,7 +26,7 @@ class AdminController{
             createNewGroup();
         }
         else if (choice.equals("3")){
-
+            assignMentorToGroup();
         }
         else if (choice.equals("4")){
 
@@ -76,9 +76,8 @@ class AdminController{
 
     public void getAllMentors(){
         ArrayList<User> mentorsCollection = dao.getAllUsersByStatus("mentor");
-        CollectionIterator<Mentor> iterator = new CollectionIterator(mentorsCollection);
-        while(iterator.hasNext()){
-            Mentor mentor = iterator.next();
+
+        for(User mentor : mentorsCollection){
             int mentorId = mentor.getId();
             String mentorName = mentor.getName();
             String mentorSurname = mentor.getSurname();
