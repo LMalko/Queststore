@@ -93,6 +93,6 @@ public class Crowdfund{
     }
 
     public void reduceCurrentPrice(int amount){
-        this.account = this account - amount;
+        this.account = this.account - amount;
     }
 }
