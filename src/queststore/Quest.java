@@ -7,6 +7,7 @@ public class Quest{
     private static int id;
     private int questID;
     private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
+    private String status;
 
     public Quest(String name, int award, String status){
         this.name = name;
