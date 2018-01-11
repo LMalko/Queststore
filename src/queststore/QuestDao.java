@@ -19,7 +19,8 @@ public class QuestDao{
                 int id = Integer.parseInt(parts[0]);
                 String name = parts[1];
                 int award = Integer.parseInt(parts[2]);
-                Quests quest = new Quests(id, name, award);
+                String status = parts[3];
+                Quests quest = new Quests(id, name, award, status);
                 quest.addQuest(quest);
             }
         }
@@ -40,6 +41,8 @@ public class QuestDao{
                 sb.append(element.getQuestName());
                 sb.append(",");
                 sb.append(element.getQuestAward());
+                sb.append(",");
+                sb.append(element.getQuestStatus());
                 sb.append("\n");
             }
 
