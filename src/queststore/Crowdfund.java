@@ -57,7 +57,7 @@ public class Crowdfund{
         this.contributorEmail = contributorEmail;
     }
 
-    public ItemCollection<Crowdfund> getCrowdfunds(){
+    public static ItemCollection<Crowdfund> getCrowdfunds(){
         return crowdfundCollection;
     }
 
