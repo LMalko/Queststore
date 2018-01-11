@@ -80,8 +80,8 @@ class MentorController{
     }
 
     public void addQuestCategory(){
-
-    }
+        String categoryName = view.getUserInput("Enter new category name: ");
+    }   
 
     public void editQuest(Quest quest){
         
