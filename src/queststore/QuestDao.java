@@ -16,11 +16,10 @@ public class QuestDao{
             String row;
             while((row = buffer_reader.readLine()) != null){
                 String[] parts = row.split(",");
-                int id = Integer.parseInt(parts[0]);
-                String name = parts[1];
-                int award = Integer.parseInt(parts[2]);
-                String status = parts[3];
-                Quest quest = new Quest(id, name, award, status);
+                String name = parts[0];
+                int award = Integer.parseInt(parts[1]);
+                String status = parts[2];
+                Quest quest = new Quest(name, award, status);
                 quest.addQuest(quest);
             }
         }
