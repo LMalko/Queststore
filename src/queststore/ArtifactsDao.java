@@ -9,7 +9,7 @@ import java.io.FileWriter;
 public class ArtifactsDao{
 
     public void importArtifacts(){
-        String fileName = "ArtifactsDao.csv";
+        String fileName = "csv/ArtifactsDao.csv";
 
         try{
             BufferedReader buffer_reader = new BufferedReader(new FileReader(fileName));
@@ -32,7 +32,7 @@ public class ArtifactsDao{
     public void exportArtifacts(ArrayList<Artifact> artifactsData){
 
         try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("ArtifactsDao.csv"));
+            BufferedWriter br = new BufferedWriter(new FileWriter("csv/ArtifactsDao.csv"));
             StringBuilder sb = new StringBuilder();
 
             for (Artifact element : artifactsData) {
