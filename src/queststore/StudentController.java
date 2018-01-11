@@ -16,6 +16,8 @@ class StudentController{
         while(isRuntime){
             view.displayUserMenu("txt/studentMenu.txt");
             handleStudentPanelOptions();
+            String choice = view.getUserInput("Press anything to continue");
+
         }
     }
 
