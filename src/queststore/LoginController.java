@@ -3,11 +3,9 @@ import java.util.ArrayList;
 class LoginController{
     private LoginView view = new LoginView();
     private UsersDao dao = new UsersDao();
-    private static ArrayList<User> usersCollection = new ArrayList<User>();
-
+    private ArrayList<User> usersCollection = dao.getUsersCollection();
     public void login(){
         view.clearScreen();
-        getUsersFromDao();
         String userLogin = view.getLogin();
         String userPassword = view.getPassword();
         String userStatus = getUserStatus(userLogin, userPassword);
@@ -16,12 +14,9 @@ class LoginController{
         }
     }
 
-    private void getUsersFromDao(){
-        usersCollection = dao.getUsersCollection();
-    }
-
     private boolean checkIfUserExists(String login){
         for (User user : usersCollection){
+            System.out.println(user.getStatus());
             if (login.equals(user.getLogin())){
                 return true;
             }

@@ -4,7 +4,7 @@ public class Store{
     private CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
 
     public Store(){
-        this.artifactsCollection = Artifacts.getArifacts();
+        this.artifactsCollection = Artifact.getArtifacts();
 
     }
 

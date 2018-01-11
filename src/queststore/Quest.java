@@ -1,16 +1,18 @@
 import java.util.ArrayList;
 
 
-public class Quests{
+public class Quest{
     private String name;
     private int id;
     private int award;
-    private static ArrayList<Quests> achieversCollection = new ArrayList<Quests>();
+    private String status;
+    private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
 
-    public Quests(int id, String name, int award){
+    public Quest(int id, String name, int award, String status){
         this.name = name;
         this.id = id;
         this.award = award;
+        this.status = status;
     }
 
     public void setQuestName(String name){
@@ -33,15 +35,23 @@ public class Quests{
         return this.award;
     }
 
+    public String getQuestStatus(){
+        return this.status;
+    }
+
+    public void setQuestStatus(String status){
+        this.status = status;
+    }
+
     public void setQuestAward(int award){
         this.award = award;
     }
 
-    public ArrayList<Quests> getQuests(){
-        return achieversCollection;
+    public ItemCollection<Quest> getQuests(){
+        return questsCollection;
     }
 
-    public void addQuest(Quests quest){
-        achieversCollection.add(quest);
+    public void addQuest(Quest quest){
+        questsCollection.add(quest);
     }
 }

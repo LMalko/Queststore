@@ -2,9 +2,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 class UserView{
     private BufferedReader br = null;
+    private Scanner reader = new Scanner(System.in);
 
     private String importUserMenu(String filename ) {
         String userMenu = "";
@@ -41,5 +43,11 @@ class UserView{
     private void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public String getUserInput(String text){
+        System.out.println(text);
+        String input = reader.nextLine();
+        return input;
     }
 }

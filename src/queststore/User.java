@@ -9,24 +9,22 @@ abstract class User{
     private static int counter;
     //public ItemCollection userArtifacts;
 
-    public User(String login, String password, String status){
-        this.login = login;
+    public User(String name, String surname, String password, String status){
+        this.name = name;
+        this.surname = surname;
+        this.login = name.toLowerCase() + surname.toLowerCase() + "@cc.com";
         this.password = password;
         this.status = status;
         this.id = counter;
         counter += 1;
     }
 
-    public User(String name, String surname, String login, String password, String status){
-        this.name = name;
-        this.surname = surname;
-        this.login = login;
-        this.password = password;
-        this.status = status;
-    }
-
     public void setName(String name){
         this.name = name;
+    }
+
+    public void setSurname(String surname){
+        this.surname = surname;
     }
 
     public void setId(int id){
@@ -47,6 +45,10 @@ abstract class User{
 
     public String getName(){
         return this.name;
+    }
+
+    public String getSurname(){
+        return this.surname;
     }
 
     public int getId(){
