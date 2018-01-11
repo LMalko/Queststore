@@ -76,6 +76,6 @@ public class Crowdfund{
                 return crowdfundIterator.next();
             }
         }
-        return None;
+        return null;
     }
 }
