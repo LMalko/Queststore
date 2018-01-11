@@ -124,4 +124,13 @@ class UsersDao {
         }
         return null;
     }
+
+    public Student getStudentById(int id){
+        for (User user : usersCollection){
+            if(user.getId() == id && user.getStatus().equals("student")){
+                return (Student)user;
+            }
+        }
+        return null;
+    }
 }

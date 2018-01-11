@@ -6,7 +6,7 @@ public class Artifact{
     private String name;
     private int price;
     private String category;
-    private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
+
 
     public Artifact(int id, String name, int price, String category){
         this.id = id;
@@ -31,13 +31,14 @@ public class Artifact{
         return this.category;
     }
 
-    public static ItemCollection<Artifact> getArtifacts(){
-        ArtifactsDao artifactsDao = new ArtifactsDao();
-        artifactsDao.importArtifacts();
-        return artifactsCollection;
+    @Override
+    public String toString(){
+        return  String.format("ID: %d, NAME: %s, PRICE: %d, TYPE: %s",
+                              this.id,
+                              this.name,
+                              this.price,
+                              this.category);
     }
 
-    public void addArtifact(Artifact artifact){
-        artifactsCollection.add(artifact);
-    }
+    
 }

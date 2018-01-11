@@ -6,7 +6,7 @@ public class Student extends User{
 
     public Student(String name, String surname, String password){
         super(name, surname, password, "student");
-        this.wallet = 0;
+        this.wallet = 1500;
         this.experience = 0;
         this.group = null;
     }

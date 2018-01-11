@@ -9,7 +9,7 @@ import java.io.FileWriter;
 public class ExperienceLevelsDao{
 
     public void importExperienceLevel(){
-        String fileName = "ExperienceLevelDao.csv";
+        String fileName = "csv/ExperienceLevelDao.csv";
 
         try{
             BufferedReader buffer_reader = new BufferedReader(new FileReader(fileName));
@@ -30,7 +30,7 @@ public class ExperienceLevelsDao{
     public void exportExperienceLevel(ArrayList<ExperienceLevel> experienceLevelData){
 
         try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("ExperienceLevelDao.csv"));
+            BufferedWriter br = new BufferedWriter(new FileWriter("csv/ExperienceLevelDao.csv"));
             StringBuilder sb = new StringBuilder();
 
             for (ExperienceLevel element : experienceLevelData) {
