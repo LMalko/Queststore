@@ -31,19 +31,19 @@ public class Artifact{
         return this.category;
     }
 
-    public void setId(){
+    public void setId(int id){
         this.id = id;
     }
 
-    public void setName(){
+    public void setName(String name){
         this.name = name;
     }
 
-    public void setPrice(){
+    public void setPrice(int price){
         this.price = price;
     }
 
-    public void setId(){
+    public void setCategory(String category){
         this.category = category;
     }
 
