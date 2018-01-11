@@ -21,6 +21,10 @@ class StudentController{
     }
 
     private void buyArtifact(Integer id){
+
+    }
+
+    private void joinCrowdfund(Integer id){
         
     }
 
