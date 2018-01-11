@@ -23,8 +23,8 @@ public class Student extends User{
         this.group = group;
     }
 
-    public Group getStudentGroup(){
-        return this.group;
+    public String getStudentGroupName(){
+        return this.group.getGroupName();
 
     }
 }
