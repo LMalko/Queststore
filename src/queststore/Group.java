@@ -16,7 +16,7 @@ class Group{
         this.groupName = newName;
     }
 
-    public void addGroupToGroupCollection(Group group){
+    public static void addGroupToGroupCollection(Group group){
         allGroupsCollection.add(group);
     }
 
@@ -30,7 +30,11 @@ class Group{
     }
 
     public static ArrayList<Group> getAllGroups(){
+        GroupDao.importGroups();
         return allGroupsCollection;
     }
 
+    public void exportGroupsToFile(){
+        GroupDao.exportGroups(allGroupsCollection);
+    }
 }
