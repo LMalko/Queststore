@@ -1,5 +1,3 @@
-package queststore;
-
 class MentorController{
 
     private UserView view = new UserView();
