@@ -5,6 +5,7 @@ public class Quest{
     private String name;
     private int id;
     private int award;
+    private String status;
     private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
 
     public Quest(int id, String name, int award, String status){
