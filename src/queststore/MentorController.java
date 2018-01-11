@@ -8,12 +8,17 @@ class MentorController{
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
     private ArtifactsDao artifactsDao = new ArtifactsDao();
+    private CategoryDao categoryDao = new CategoryDao();
     private GroupDao groupDao = new GroupDao();
 
     public void startMentorPanel(){
         boolean isRunning = true;
+
+        groupDao.importGroups();
+        questDao.importQuests();
         artifactsDao.importArtifacts();
         groupDao.importGroups();
+
 
         while(isRunning){
             view.displayUserMenu("txt/mentorMenu.txt");
@@ -39,8 +44,7 @@ class MentorController{
             addQuestCategory();
         }
         else if (choice.equals("5")){
-            //have to implement quest picker
-            //editQuest(quest);
+            editQuest();
         }
         else if (choice.equals("6")){
             addArtifact();
@@ -119,10 +123,42 @@ class MentorController{
     }
 
     public void addQuestCategory(){
+        String categoryName = view.getUserInput("Enter new category name: ");
+        Category category = new Category(categoryName);
+        categoryDao.addCategory(category);
+        categoryDao.exportCategory();
 
     }
 
-    public void editQuest(Quest quest){
+    public void editQuest(){
+        view.clearScreen();
+        getAllQuests();
+        int questId = Integer.parseInt(view.getUserInput("Enter ID of quest you want to edit: "));
+        Quest quest = questDao.getQuestById(questId);
+        quest.setQuestName(view.getUserInput("Enter new quest name: "));
+        quest.setQuestAward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
+        quest.setQuestStatus(view.getUserInput("Enter new quest status: "));
+        questDao.exportQuests();
+
+
+    }
+
+    public void getAllQuests(){
+        ItemCollection<Quest> questCollection = questDao.getQuests();
+        CollectionIterator<Quest> questIterator = questCollection.getIterator();
+
+        while(questIterator.hasNext()){
+            Quest currentQuest = questIterator.next();
+
+            String questID = Integer.toString(currentQuest.getQuestId());
+            String name = currentQuest.getQuestName();
+            String award = Integer.toString(currentQuest.getQuestAward());
+            String status = currentQuest.getQuestStatus();
+            String category = currentQuest.getQuestCategoryName();
+            view.displayText("ID: "+questID +" "+name+" for:"+award+
+                " from category:"+category+" /currently:"+status);
+        }
+        questIterator = questCollection.getIterator();
 
     }
 
