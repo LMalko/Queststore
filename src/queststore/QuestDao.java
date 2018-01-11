@@ -31,11 +31,13 @@ public class QuestDao{
 
     public void exportQuests(ItemCollection<Quest> questsData){
 
+        CollectionIterator<Quest> questsIterator = questsData.getIterator();
+
         try{
             BufferedWriter br = new BufferedWriter(new FileWriter("QuestsDao.csv"));
             StringBuilder sb = new StringBuilder();
 
-            while(questsData.hasNext()){
+            while(questsIterator.hasNext()){
                 sb.append(questsData.next().getQuestId());
                 sb.append(",");
                 sb.append(questsData.next().getQuestName());
