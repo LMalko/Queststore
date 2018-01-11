@@ -5,7 +5,7 @@ public class Quests{
     private String name;
     private int id;
     private int award;
-    private static ArrayList<Quests> achieversCollection = new ArrayList<Quests>();
+    private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
 
     public Quests(int id, String name, int award){
         this.name = name;
@@ -38,10 +38,10 @@ public class Quests{
     }
 
     public ArrayList<Quests> getQuests(){
-        return achieversCollection;
+        return questsCollection;
     }
 
     public void addQuest(Quests quest){
-        achieversCollection.add(quest);
+        questsCollection.add(quest);
     }
 }
