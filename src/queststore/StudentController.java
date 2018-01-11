@@ -53,6 +53,9 @@ class StudentController{
     }
 
     private void buyArtifact(Integer id){
+        while(artifactIterator.hasNext()){
+            System.out.println(artifactIterator.next());
+        }
 
     }
 
