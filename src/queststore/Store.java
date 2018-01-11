@@ -13,8 +13,10 @@ public class Store{
     }
 
     public int getTotalPay(int artifactID){
+
+
         while(artifactIterator.hasNext()){
-            if(artifactIterator.next().getArtifactId() = artifactID){
+            if(artifactIterator.next().getArtifactId() == artifactID){
                 return artifactIterator.next().getArtifactPrice();
             }
         }
