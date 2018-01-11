@@ -14,8 +14,8 @@ public class Store{
 
     public Integer getTotalPay(Integer artifactID){
         while(artifactIterator.hasNext()){
-            if(artifactIterator.next().id = artifactID){
-                return artifactIterator.next().price;
+            if(artifactIterator.next().getArtifactId() = artifactID){
+                return artifactIterator.next().getArtifactPrice();
             }
         }
         return 0;
