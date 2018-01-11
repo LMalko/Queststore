@@ -50,4 +50,8 @@ class UserView{
         String input = reader.nextLine();
         return input;
     }
+
+    public void displayText(String text){
+        System.out.println(text);
+    }
 }
