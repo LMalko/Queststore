@@ -17,7 +17,7 @@ class MentorController{
         groupDao.importGroups();
         questDao.importQuests();
         artifactsDao.importArtifacts();
-        groupDao.importGroups();
+        categoryDao.importCategories();
 
 
         while(isRunning){
@@ -55,7 +55,7 @@ class MentorController{
             //editArtifact(artifact);
         }
         else if (choice.equals("8")){
-            addArtifactCategory();
+            addNewCategory();
         }
         else if (choice.equals("9")){
             markStudentQuest();
@@ -180,7 +180,7 @@ class MentorController{
         artifactToEdit.setId(Integer.parseInt(view.getUserInput("Enter new artifact id: ")));
         artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
         artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
-        artifactToEdit.setCategory(view.getUserInput("Enter new artifact category: "));
+        artifactToEdit.setCategory(addArtifactCategory());
         artifactsDao.exportArtifacts();
     }
 
@@ -213,8 +213,34 @@ class MentorController{
     }
 
 
-    public void addArtifactCategory(){
+    public String addArtifactCategory(){
+        getAllCategories();
+        view.displayText("Choose category from listed below:");
+        String categoryName = view.getUserInput("Choose category by name: ");
+        Category category = categoryDao.getCategoryByName(categoryName);
+        if (category.getCategoryName().equals(categoryName)){
+            return categoryName;
+        }
+        return null;
+    }
 
+    public void addNewCategory(){
+        String categoryName = view.getUserInput("Enter new category name: ");
+        Category category = new Category(categoryName);
+        categoryDao.addCategory(category);
+        categoryDao.exportCategory();
+
+    }
+
+    private void getAllCategories(){
+        ItemCollection<Category> categoryCollection = categoryDao.getCategories();
+        CollectionIterator<Category> categoryIterator = categoryCollection.getIterator();
+
+        while (categoryIterator.hasNext()){
+            Category category = categoryIterator.next();
+            String categoryName = category.getCategoryName();
+            view.displayText(categoryName);
+        }
     }
 
     public void markStudentQuest(){
