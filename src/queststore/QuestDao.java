@@ -29,7 +29,7 @@ public class QuestDao{
         }
     }
 
-    public void exportQuests(ArrayList<Quests> questsData){
+    public void exportQuests(ItemCollection<Quest> questsData){
 
         try{
             BufferedWriter br = new BufferedWriter(new FileWriter("QuestsDao.csv"));
