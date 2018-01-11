@@ -31,5 +31,14 @@ public class Artifact{
         return this.category;
     }
 
+    @Override
+    public String toString(){
+        return  String.format("ID: %d, NAME: %s, PRICE: %d, TYPE: %s",
+                              this.id,
+                              this.name,
+                              this.price,
+                              this.category);
+    }
+
     
 }
