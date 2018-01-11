@@ -31,7 +31,7 @@ class AdminController{
             assignMentorToGroup();
         }
         else if (choice.equals("4")){
-
+            editMentorData();
         }
         else if (choice.equals("5")){
 
@@ -47,6 +47,20 @@ class AdminController{
         String mentorPassword = view.getUserInput("Enter mentor's password: ");
         Mentor newMentor = new Mentor(mentorName, mentorSurname, mentorPassword);
         dao.addUserToUsersCollection(newMentor);
+        dao.saveUsersToFile();
+    }
+
+    private void editMentorData(){
+        getAllMentors();
+        int mentorId = Integer.parseInt(view.getUserInput("Choose mentor by ID"));
+        Mentor mentor = dao.getMentorById(mentorId);
+        String newName = view.getUserInput("Enter mentor's new name: ");
+        String newSurname = view.getUserInput("Enter mentor's new surname: ");
+        String newPassword = view.getUserInput("Enter mentor's new password: ");
+        mentor.setMentorName(newName);
+        mentor.setMentorSurname(newSurname);
+        mentor.setMentorPassword(newPassword);
+        mentor.setMentorLogin(newName, newSurname);
         dao.saveUsersToFile();
     }
 
