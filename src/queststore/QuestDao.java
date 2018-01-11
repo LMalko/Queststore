@@ -20,7 +20,7 @@ public class QuestDao{
                 String name = parts[1];
                 int award = Integer.parseInt(parts[2]);
                 String status = parts[3];
-                Quests quest = new Quests(id, name, award, status);
+                Quest quest = new Quest(id, name, award, status);
                 quest.addQuest(quest);
             }
         }
@@ -35,14 +35,14 @@ public class QuestDao{
             BufferedWriter br = new BufferedWriter(new FileWriter("QuestsDao.csv"));
             StringBuilder sb = new StringBuilder();
 
-            for (Quests element : questsData) {
-                sb.append(element.getQuestId());
+            while(questsData.hasNext()){
+                sb.append(questsData.next().getQuestId());
                 sb.append(",");
-                sb.append(element.getQuestName());
+                sb.append(questsData.next().getQuestName());
                 sb.append(",");
-                sb.append(element.getQuestAward());
+                sb.append(questsData.next().getQuestAward());
                 sb.append(",");
-                sb.append(element.getQuestStatus());
+                sb.append(questsData.next().getQuestStatus());
                 sb.append("\n");
             }
 
