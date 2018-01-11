@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class AdminController{
 
     UsersDao dao = new UsersDao();
@@ -54,8 +56,8 @@ class AdminController{
 
     public void assignMentorToGroup(){
         getAllMentors();
-        int mentorId = (int)view.getUserInput("Choose mentor by ID");
-        Mentor mentor = dao.getUserById(mentorId);
+        int mentorId = Integer.parseInt(view.getUserInput("Choose mentor by ID"));
+        Mentor mentor = dao.getMentorById(mentorId);
         view.displayText("Choose group from listed below");
         getAllGroupsNames();
         String groupName = view.getUserInput("Choose group name");
@@ -73,14 +75,14 @@ class AdminController{
     }
 
     public void getAllMentors(){
-        ArrayList<Mentor> mentorsCollection = dao.getAllUsersByStatus("mentor");
-        CollectionIterator<Group> iterator = new CollectionIterator(mentorsCollection);
+        ArrayList<User> mentorsCollection = dao.getAllUsersByStatus("mentor");
+        CollectionIterator<Mentor> iterator = new CollectionIterator(mentorsCollection);
         while(iterator.hasNext()){
             Mentor mentor = iterator.next();
-            String mentorId = mentor.getId();
+            int mentorId = mentor.getId();
             String mentorName = mentor.getName();
             String mentorSurname = mentor.getSurname();
             view.displayText("ID: "+mentorId +" "+mentorName+" "+mentorSurname);
+        }
     }
-
 }
