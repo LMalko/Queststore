@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.FileWriter;
 
 public class CategoryDao{
 
@@ -9,7 +10,7 @@ public class CategoryDao{
     private BufferedReader bufferedReader = null;
 
     public void importCategories(){
-        String filename = "csv/categories.csv";
+        String fileName = "csv/categories.csv";
 
         try{
             bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -70,7 +71,7 @@ public class CategoryDao{
 
     public Category getCategoryByName(String name){
         CollectionIterator<Category> categoryIterator = allCategories.getIterator();
-        while(groupIterator.hasNext()){
+        while(categoryIterator.hasNext()){
             Category category = categoryIterator.next();
             if (category.getCategoryName().equals(name)){
                 return category;

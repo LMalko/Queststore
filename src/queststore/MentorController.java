@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class MentorController{
 
     private UserView view = new UserView();
@@ -5,9 +7,11 @@ class MentorController{
     private QuestDao questDao = new QuestDao();
     private ArtifactsDao artifactsDao = new ArtifactsDao();
     private CategoryDao categoryDao = new CategoryDao();
+    private GroupDao groupDao = new GroupDao();
 
     public void startMentorPanel(){
         boolean isRunning = true;
+        groupDao.importGroups();
 
         while(isRunning){
             view.displayUserMenu("txt/mentorMenu.txt");
@@ -33,8 +37,7 @@ class MentorController{
             addQuestCategory();
         }
         else if (choice.equals("5")){
-            //have to implement quest picker
-            //editQuest(quest);
+            editQuest();
         }
         else if (choice.equals("6")){
             addArtifact();
@@ -88,8 +91,22 @@ class MentorController{
         
     }   
 
-    public void editQuest(Quest quest){
-        
+    public void editQuest(){
+        getAllQuests();
+    }
+
+    public void getAllQuests(){
+        ArrayList<Quest> questCollection = questDao.getAllQuests();
+        for (Quest quest: questCollection){
+            String questID = Integer.toString(quest.getQuestID());
+            String name = quest.getQuestName();
+            String award = Integer.toString(quest.getQuestAward());
+            String status = quest.getQuestStatus();
+            String category = quest.getQuestCategoryName();
+            view.displayText("ID: "+questID +" "+name+" for:"+award+
+                " from category:"+category+" /currently:"+status);
+        }
+
     }
 
     public void addArtifact(){
