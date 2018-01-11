@@ -52,12 +52,15 @@ class AdminController{
         String groupName = view.getUserInput("Enter new group name: ");
         Group group = new Group(groupName);
         group.addGroupToGroupCollection(group);
+        group.exportGroupsToFile();
+
     }
 
     private void assignMentorToGroup(){
         getAllMentors();
         int mentorId = Integer.parseInt(view.getUserInput("Choose mentor by ID"));
         Mentor mentor = dao.getMentorById(mentorId);
+        view.clearScreen();  // clear before displaying group names
         view.displayText("Choose group from listed below");
         getAllGroupsNames();
         String groupName = view.getUserInput("Choose group name");

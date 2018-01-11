@@ -7,7 +7,10 @@ class StudentController{
     CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
     CollectionIterator<Crowdfund> crowdfundIterator = crowdfundsCollection.getIterator();
 
-    public void startStudentPanel(){
+    private Student student;
+
+    public void startStudentPanel(Student student){
+        this.student = student;
         view.displayUserMenu("txt/studentMenu.txt");
         handleStudentPanelOptions();
     }
@@ -18,22 +21,19 @@ class StudentController{
             System.exit(0);
         }
         else if (choice.equals("1")){
-
+            System.out.println(student.getStudentWallet());
         }
         else if (choice.equals("2")){
-
+            //buyArtifact();
         }
         else if (choice.equals("3")){
-
+            createCrowdfund();
         }
         else if (choice.equals("4")){
-
+            getAllCrowdfunds();
         }
         else if (choice.equals("5")){
-
-        }
-        else if (choice.equals("6")){
-
+            //joinCrowdfund(id);
         }
     }
 
