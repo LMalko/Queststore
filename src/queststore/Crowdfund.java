@@ -91,4 +91,8 @@ public class Crowdfund{
         nextID++;
         return newID;
     }
+
+    public void reduceCurrentPrice(int amount){
+        this.account = this account - amount;
+    }
 }
