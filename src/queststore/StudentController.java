@@ -9,10 +9,10 @@ class StudentController{
 
     public void startStudentPanel(){
         view.displayUserMenu("txt/studentMenu.txt");
-        handleAdminPanelOptions();
+        handleStudentPanelOptions()
     }
 
-    private void handleAdminPanelOptions(){
+    private void handleStudentPanelOptions(){
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
             System.exit(0);
