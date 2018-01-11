@@ -4,6 +4,7 @@ class MentorController{
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
     private ArtifactsDao artifactsDao = new ArtifactsDao();
+    private CategoryDao categoryDao = new CategoryDao();
 
     public void startMentorPanel(){
         boolean isRunning = true;
@@ -81,6 +82,10 @@ class MentorController{
 
     public void addQuestCategory(){
         String categoryName = view.getUserInput("Enter new category name: ");
+        Category category = new Category(categoryName);
+        categoryDao.addCategory(category);
+        categoryDao.exportCategory();
+        
     }   
 
     public void editQuest(Quest quest){
