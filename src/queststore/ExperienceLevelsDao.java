@@ -8,8 +8,8 @@ import java.io.FileWriter;
 
 public class ExperienceLevelsDao{
 
-    public void importExperienceLevel(){
-        String fileName = "csv/ExperienceLevelDao.csv";
+    public void importExperienceLevels(){
+        String fileName = "csv/experienceLevels.csv";
 
         try{
             BufferedReader buffer_reader = new BufferedReader(new FileReader(fileName));
@@ -27,16 +27,17 @@ public class ExperienceLevelsDao{
         }
     }
 
-    public void exportExperienceLevel(ArrayList<ExperienceLevel> experienceLevelData){
+    public void exportExperienceLevels(ItemCollection<ExperienceLevel> experienceLevelData){
 
         try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("csv/ExperienceLevelDao.csv"));
+            BufferedWriter br = new BufferedWriter(new FileWriter("csv/experienceLevels.csv"));
             StringBuilder sb = new StringBuilder();
-
-            for (ExperienceLevel element : experienceLevelData) {
-                sb.append(element.getLevel());
+            CollectionIterator<ExperienceLevel> levelIterator = experienceLevelData.getIterator();
+            while(levelIterator.hasNext()) {
+                ExperienceLevel level = levelIterator.next();
+                sb.append(level.getLevel());
                 sb.append(",");
-                sb.append(element.getLevelName());
+                sb.append(level.getLevelName());
                 sb.append("\n");
             }
 
