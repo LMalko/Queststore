@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class Group{
     private String groupName;
     private static ArrayList<Group> allGroupsCollection;
@@ -20,7 +22,7 @@ class Group{
 
     public  static Group getGroupByName(String name){
         for (Group group : allGroupsCollection){
-            if (group.getGroupByName().equals(name)){
+            if (group.getGroupName().equals(name)){
                 return group;
             }
         }
