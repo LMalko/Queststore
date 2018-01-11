@@ -112,11 +112,12 @@ class UsersDao {
         return usersCollection;
     }
 
-    public User getUserById(int id){
-        for (User user L usersCollection){
-            if(user.getId == id){
-                return user;
+    public Mentor getMentorById(int id){
+        for (User user : usersCollection){
+            if(user.getId() == id && user.getStatus().equals("mentor")){
+                return (Mentor)user;
             }
         }
+        return null;
     }
 }
