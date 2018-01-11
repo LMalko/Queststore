@@ -57,7 +57,7 @@ public class Crowdfund{
         this.contributorEmail = contributorEmail;
     }
 
-    public ArrayList<Crowdfund> getCrowdfund(){
+    public CollectionIterator<Crowdfund> getCrowdfund(){
         return crowdfundCollection;
     }
 
