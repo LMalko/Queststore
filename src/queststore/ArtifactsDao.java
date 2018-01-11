@@ -31,20 +31,23 @@ public class ArtifactsDao{
         }
     }
 
-    public void exportArtifacts(ArrayList<Artifact> artifactsData){
+    public void exportArtifacts(){
+
+        CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
 
         try{
             BufferedWriter br = new BufferedWriter(new FileWriter("csv/ArtifactsDao.csv"));
             StringBuilder sb = new StringBuilder();
 
-            for (Artifact element : artifactsData) {
-                sb.append(element.getArtifactId());
+            while (artifactsIterator.hasNext()) {
+                Artifact artifact = artifactsIterator.next();
+                sb.append(artifact.getArtifactId());
                 sb.append(",");
-                sb.append(element.getArtifactName());
+                sb.append(artifact.getArtifactName());
                 sb.append(",");
-                sb.append(element.getArtifactPrice());
+                sb.append(artifact.getArtifactPrice());
                 sb.append(",");
-                sb.append(element.getArtifactCategory());
+                sb.append(artifact.getArtifactCategory());
                 sb.append("\n");
             }
 
