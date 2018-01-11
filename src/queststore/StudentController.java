@@ -26,6 +26,7 @@ class StudentController{
     private void handleStudentPanelOptions(){
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
+            view.clearScreen();
             System.exit(0);
         }else if (choice.equals("1")){
             System.out.println("\n\nWallet is:");
