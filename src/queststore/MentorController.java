@@ -2,6 +2,7 @@ class MentorController{
 
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
+    private QuestDao questDao = new QuestDao();
 
     public void startMentorPanel(){
         boolean isRunning = true;
@@ -24,7 +25,7 @@ class MentorController{
             studentAssignToGroup();
         }
         else if (choice.equals("3")){
-            addQuest();
+            addNewQuest();
         }
         else if (choice.equals("4")){
             addQuestCategory();
@@ -67,8 +68,13 @@ class MentorController{
 
     }
 
-    public void addQuest(){
-
+    public void addNewQuest(){
+        String questName = view.getUserInput("Enter quest name: ");
+        int questAward = Integer.parseInt(view.getUserInput("Enter award for completing quest: "));
+        Quest newQuest = new Quest(questName, questAward, "not done");
+        questDao.addQuest(newQuest);
+        questDao.exportQuests();
+        // export quest poprawić listy quest collection
     }
 
     public void addQuestCategory(){
