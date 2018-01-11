@@ -14,7 +14,11 @@ class Group{
         this.groupName = newName;
     }
 
-    public void addGroupToGroupCollectio(Group group){
+    public void addGroupToGroupCollection(Group group){
         allGroupsCollection.add(group);
+    }
+
+    public static ArrayList<Group> getAllGroups(){
+        return allGroupsCollection;
     }
 }
