@@ -6,8 +6,8 @@ class StudentController{
     private ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
     private ItemCollection<Crowdfund> crowdfundsCollection = crowdfundsDao.getCrowdfunds();
 
-    CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
-    CollectionIterator<Crowdfund> crowdfundIterator = crowdfundsCollection.getIterator();
+    private CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
+    private CollectionIterator<Crowdfund> crowdfundIterator = crowdfundsCollection.getIterator();
 
     private Student student;
 
@@ -41,6 +41,9 @@ class StudentController{
         }else{
             System.out.println("No such choice");
         }
+        //Restart iterators.
+        this.artifactIterator = artifactsCollection.getIterator();
+        this.crowdfundIterator = crowdfundsCollection.getIterator();
     }
 
     public ItemCollection<Crowdfund> getAllCrowdfunds(){
