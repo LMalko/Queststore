@@ -3,6 +3,8 @@ public class Student extends User{
     private int wallet;
     private int experience;
     private Group group;
+    private ItemCollection<Integer> myArtifacts;
+    private ItemCollection<Integer> myCrowdfunds;
 
     public Student(String name, String surname, String password){
         super(name, surname, password, "student");
