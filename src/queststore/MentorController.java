@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class MentorController{
 
     private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
@@ -6,10 +8,12 @@ class MentorController{
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
     private ArtifactsDao artifactsDao = new ArtifactsDao();
+    private GroupDao groupDao = new GroupDao();
 
     public void startMentorPanel(){
         boolean isRunning = true;
         artifactsDao.importArtifacts();
+        groupDao.importGroups();
 
         while(isRunning){
             view.displayUserMenu("txt/mentorMenu.txt");
@@ -70,8 +74,39 @@ class MentorController{
     }
 
     public void studentAssignToGroup(){
-
+        getAllStudents();
+        int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
+        Student student = dao.getStudentById(studentId);
+        view.clearScreen();  // clear before displaying group names
+        view.displayText("Choose group from those listed below:");
+        getAllGroupsNames();
+        String groupName = view.getUserInput("Choose group name:");
+        Group newGroup = groupDao.getGroupByName(groupName);
+        student.setStudentGroup(newGroup);
+        dao.saveUsersToFile();
     }
+
+    private void getAllStudents(){
+        view.clearScreen();
+        ArrayList<User> studentsCollection = dao.getAllUsersByStatus("student");
+        for(User student : studentsCollection){
+            int studentId = student.getId();
+            String studentName = student.getName();
+            String studentSurname = student.getSurname();
+            String studentGroup = student.getUserGroupName();
+            view.displayText("ID: "+studentId +" "+studentName+" "+studentSurname+" "+studentGroup);
+        }
+    }
+
+    public void getAllGroupsNames(){
+        ItemCollection<Group> allGroups = groupDao.getGroups();
+        CollectionIterator<Group> groupIterator = allGroups.getIterator();
+        while(groupIterator.hasNext()){
+            Group group = groupIterator.next();
+            view.displayText(group.getGroupName());
+        }
+    }
+
 
     public void addNewQuest(){
         String questName = view.getUserInput("Enter quest name: ");
