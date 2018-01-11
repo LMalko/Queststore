@@ -52,14 +52,14 @@ class StudentController{
 
     }
 
-    private void buyArtifact(Integer id){
+    private void buyArtifact(){
         while(artifactIterator.hasNext()){
             System.out.println(artifactIterator.next());
         }
 
     }
 
-    private void joinCrowdfund(Integer id){
+    private void joinCrowdfund(){
         while(crowdfundIterator.hasNext()){
             System.out.println(crowdfundIterator.next());
         }
