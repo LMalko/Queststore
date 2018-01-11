@@ -46,7 +46,7 @@ public class Quest{
         this.award = award;
     }
 
-    public ArrayList<Quests> getQuests(){
+    public ItemCollection<Quest> getQuests(){
         return questsCollection;
     }
 
