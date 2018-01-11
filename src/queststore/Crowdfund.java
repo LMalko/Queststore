@@ -6,10 +6,10 @@ public class Crowdfund{
     String name;
     int totalPrice;
     int account;
-    Student contributors;
+    String contributors;
     private static ArrayList<Crowdfund> corwdfundCollection = new ArrayList<Crowdfund>();
 
-    public Crowdfund(int id, String name, int totalPrice, int account, Student contributors){
+    public Crowdfund(int id, String name, int totalPrice, int account, String contributors){
         this.id = id;
         this.name = name;
         this.totalPrice = totalPrice;
@@ -33,7 +33,7 @@ public class Crowdfund{
         return this.account;
     }
 
-    public Student getCrowdfundContributors(){
+    public String getCrowdfundContributors(){
         return this.contributors;
     }
 
@@ -53,7 +53,7 @@ public class Crowdfund{
         this.account = account;
     }
 
-    public void setCrowdfundId(Student contributors){
+    public void setCrowdfundId(String contributors){
         this.contributors = contributors;
     }
 
