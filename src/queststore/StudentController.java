@@ -48,6 +48,7 @@ class StudentController{
     }
 
     private void returnAllCrowdfunds(){
+        this.crowdfundIterator = crowdfundsCollection.getIterator();
         System.out.println("Crowdfunds:");
         while(crowdfundIterator.hasNext()){
             System.out.println(crowdfundIterator.next());
@@ -138,7 +139,7 @@ class StudentController{
                 while(true){
                 try{
                     contribution = Integer.parseInt(view.getUserInput("How much you want to contribute? "));
-                    if(contribution < student.getStudentWallet()){
+                    if(contribution > student.getStudentWallet()){
                         System.out.println("You are to poor to contribute that much, amigo \n\n\n");
                         continue;
                     }
