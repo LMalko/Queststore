@@ -25,7 +25,7 @@ class StudentController{
     }
 
     private void joinCrowdfund(Integer id){
-        
+
     }
 
 }
