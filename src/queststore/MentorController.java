@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+
+
 class MentorController{
 
     private UserView view = new UserView();
@@ -65,8 +68,35 @@ class MentorController{
     }
 
     public void studentAssignToGroup(){
+        getAllStudents();
+        int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
+        Student student = dao.getStudentById(studentId);
+        view.displayText("Choose group from listed below");
+        getAllGroupsNames();
+        String groupName = view.getUserInput("Choose group name");
+        Group group = Group.getGroupByName(groupName);
+        student.setStudentGroup(group);
+        }
 
-    }
+        private void getAllGroupsNames(){
+        ArrayList<Group> allGroups = Group.getAllGroups();
+        CollectionIterator<Group> iterator = new CollectionIterator(allGroups);
+        while(iterator.hasNext()){
+            String groupName = iterator.next().getGroupName();
+            view.displayText(groupName);
+        }
+        }
+
+        private void getAllStudents(){
+        ArrayList<User> studentsCollection = dao.getAllUsersByStatus("student");
+
+        for(User student : studentsCollection){
+            int studentId = student.getId();
+            String studentName = student.getName();
+            String studentSurname = student.getSurname();
+            view.displayText("ID: "+studentId +" "+studentName+" "+studentSurname);
+        }
+        }
 
     public void addNewQuest(){
         String questName = view.getUserInput("Enter quest name: ");
@@ -82,7 +112,7 @@ class MentorController{
     }
 
     public void editQuest(Quest quest){
-        
+
     }
 
     public void addArtifact(){
