@@ -1,8 +1,8 @@
 class StudentController{
 
     private UserView view = new UserView();
-    private ItemCollection<Artifact> artifactsCollection = Artifacts.getArtifacts();
-    private ItemCollection<Crowdfund> crowdfundsCollection = Crowdfund.getCrowdfundsCollection();
+    private ItemCollection<Artifact> artifactsCollection = Artifact.getArtifacts();
+    private ItemCollection<Crowdfund> crowdfundsCollection = Crowdfund.getCrowdfunds();
 
     CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
     CollectionIterator<Crowdfund> crowdfundIterator = crowdfundsCollection.getIterator();
@@ -20,10 +20,10 @@ class StudentController{
     }
 
     private void createCrowdfund(){
-        while(strIterator.hasNext()){
-            System.out.println(strIterator.next());
-
+        while(artifactIterator.hasNext()){
+            System.out.println(artifactIterator.next());
         }
+
     }
 
     private void buyArtifact(Integer id){
@@ -31,6 +31,8 @@ class StudentController{
     }
 
     private void joinCrowdfund(Integer id){
+        while(crowdfundIterator.hasNext()){
+            System.out.println(crowdfundIterator.next());
+        }
     }
-
 }

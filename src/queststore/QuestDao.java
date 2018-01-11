@@ -20,7 +20,7 @@ public class QuestDao{
                 String name = parts[1];
                 int award = Integer.parseInt(parts[2]);
                 String status = parts[3];
-                Quests quest = new Quests(id, name, award, status);
+                Quest quest = new Quest(id, name, award, status);
                 quest.addQuest(quest);
             }
         }
@@ -31,18 +31,20 @@ public class QuestDao{
 
     public void exportQuests(ItemCollection<Quest> questsData){
 
+        CollectionIterator<Quest> questsIterator = questsData.getIterator();
+
         try{
             BufferedWriter br = new BufferedWriter(new FileWriter("QuestsDao.csv"));
             StringBuilder sb = new StringBuilder();
 
-            for (Quests element : questsData) {
-                sb.append(element.getQuestId());
+            while(questsIterator.hasNext()){
+                sb.append(questsIterator.next().getQuestId());
                 sb.append(",");
-                sb.append(element.getQuestName());
+                sb.append(questsIterator.next().getQuestName());
                 sb.append(",");
-                sb.append(element.getQuestAward());
+                sb.append(questsIterator.next().getQuestAward());
                 sb.append(",");
-                sb.append(element.getQuestStatus());
+                sb.append(questsIterator.next().getQuestStatus());
                 sb.append("\n");
             }
 
