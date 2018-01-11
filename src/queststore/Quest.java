@@ -3,13 +3,14 @@ import java.util.ArrayList;
 
 public class Quest{
     private String name;
-    private int id;
     private int award;
+    private static int id;
+    private int questID;
     private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
 
-    public Quest(int id, String name, int award, String status){
+    public Quest(String name, int award, String status){
         this.name = name;
-        this.id = id;
+        this.questID = id++;
         this.award = award;
         this.status = status;
     }
@@ -23,11 +24,7 @@ public class Quest{
     }
 
     public int getQuestId(){
-        return this.id;
-    }
-
-    public void setQuestId(int id){
-        this.id = id;
+        return this.questID;
     }
 
     public int getQuestAward(){
