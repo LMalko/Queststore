@@ -9,6 +9,32 @@ class StudentController{
 
     public void startStudentPanel(){
         view.displayUserMenu("txt/studentMenu.txt");
+        handleAdminPanelOptions();
+    }
+
+    private void handleAdminPanelOptions(){
+        String choice = view.getUserInput("Choose your option: ");
+        if (choice.equals("0")){
+            System.exit(0);
+        }
+        else if (choice.equals("1")){
+
+        }
+        else if (choice.equals("2")){
+
+        }
+        else if (choice.equals("3")){
+
+        }
+        else if (choice.equals("4")){
+
+        }
+        else if (choice.equals("5")){
+
+        }
+        else if (choice.equals("6")){
+
+        }
     }
 
     public ItemCollection<Crowdfund> getAllCrowdfunds(){
