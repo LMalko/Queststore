@@ -31,9 +31,6 @@ class StudentController{
     }
 
     private void joinCrowdfund(Integer id){
-        while(strIterator.hasNext()){
-            System.out.println(strIterator.next());
-        }
     }
 
 }
