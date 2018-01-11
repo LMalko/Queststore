@@ -1,13 +1,17 @@
 public class Mentor extends User{
 
-    private String group;
+    private Group group;
 
     public Mentor(String name, String surname, String password){
         super(name, surname, password, "mentor");
-        this.group = "";
+        this.group = null;
     }
 
-    public String getMentorGroup(){
+    public Group getMentorGroup(){
         return group;
+    }
+
+    public void setMentorGroup(Group group){
+        this.group = group;
     }
 }
