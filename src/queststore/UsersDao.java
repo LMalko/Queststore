@@ -103,13 +103,13 @@ class UsersDao {
     }
 
     public ArrayList<User> getAllUsersByStatus(String userStatus){
-        ArrayList<User> usersCollection = new ArrayList<User>();
+        ArrayList<User> usersWithGivenStatus = new ArrayList<User>();
         for (User user : usersCollection){
             if (user.getStatus().equals(userStatus)){
-                usersCollection.add(user);
+                usersWithGivenStatus.add(user);
             }
         }
-        return usersCollection;
+        return usersWithGivenStatus;
     }
 
     public Mentor getMentorById(int id){
