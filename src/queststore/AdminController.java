@@ -2,11 +2,15 @@ import java.util.ArrayList;
 
 class AdminController{
 
-    UsersDao dao = new UsersDao();
-    UserView view = new UserView();
+    private UsersDao dao = new UsersDao();
+    private UserView view = new UserView();
+    private GroupDao groupDao = new GroupDao();
+    private ExperienceLevelsDao levelsDao = new ExperienceLevelsDao();
 
     public void startAdminPanel(){
         boolean isRuntime = true;
+        groupDao.importGroups();
+        levelsDao.importExperienceLevels();
 
         while(isRuntime){
             view.displayUserMenu("txt/adminMenu.txt");
@@ -29,13 +33,13 @@ class AdminController{
             assignMentorToGroup();
         }
         else if (choice.equals("4")){
-
+            editMentorData();
         }
         else if (choice.equals("5")){
-
+            getSpecificMentorData();
         }
         else if (choice.equals("6")){
-
+            createNewLevelOfExperience();
         }
     }
 
@@ -48,12 +52,34 @@ class AdminController{
         dao.saveUsersToFile();
     }
 
+    private void editMentorData(){
+        getAllMentors();
+        int mentorId = Integer.parseInt(view.getUserInput("Choose mentor by ID"));
+        Mentor mentor = dao.getMentorById(mentorId);
+        String newName = view.getUserInput("Enter mentor's new name: ");
+        String newSurname = view.getUserInput("Enter mentor's new surname: ");
+        String newPassword = view.getUserInput("Enter mentor's new password: ");
+        mentor.setMentorName(newName);
+        mentor.setMentorSurname(newSurname);
+        mentor.setMentorPassword(newPassword);
+        mentor.setMentorLogin(newName, newSurname);
+        dao.saveUsersToFile();
+    }
+
+    private void getSpecificMentorData(){
+        getAllMentors();
+        int mentorId = Integer.parseInt(view.getUserInput("Choose mentor by ID"));
+        Mentor mentor = dao.getMentorById(mentorId);
+        view.displayText(mentor.toString());
+        view.getUserInput("Press any key to continue");
+
+    }
+
     private void createNewGroup(){
         String groupName = view.getUserInput("Enter new group name: ");
         Group group = new Group(groupName);
-        group.addGroupToGroupCollection(group);
-        group.exportGroupsToFile();
-
+        groupDao.addGroup(group);
+        groupDao.exportGroups();
     }
 
     private void assignMentorToGroup(){
@@ -61,25 +87,36 @@ class AdminController{
         int mentorId = Integer.parseInt(view.getUserInput("Choose mentor by ID"));
         Mentor mentor = dao.getMentorById(mentorId);
         view.clearScreen();  // clear before displaying group names
-        view.displayText("Choose group from listed below");
+        view.displayText("Choose group from those listed below:");
         getAllGroupsNames();
-        String groupName = view.getUserInput("Choose group name");
-        Group group = Group.getGroupByName(groupName);
-        mentor.setMentorGroup(group);
+        String groupName = view.getUserInput("Choose group name:");
+        Group newGroup = groupDao.getGroupByName(groupName);
+        mentor.setMentorGroup(newGroup);
+        dao.saveUsersToFile();
     }
 
-    private void getAllGroupsNames(){
-        ArrayList<Group> allGroups = Group.getAllGroups();
-        CollectionIterator<Group> iterator = new CollectionIterator(allGroups);
-        while(iterator.hasNext()){
-            String groupName = iterator.next().getGroupName();
-            view.displayText(groupName);
+    public void getAllGroupsNames(){
+        ItemCollection<Group> allGroups = groupDao.getGroups();
+        CollectionIterator<Group> groupIterator = allGroups.getIterator();
+        while(groupIterator.hasNext()){
+            Group group = groupIterator.next();
+            view.displayText(group.getGroupName());
         }
     }
 
-    private void getAllMentors(){
-        ArrayList<User> mentorsCollection = dao.getAllUsersByStatus("mentor");
+    public void createNewLevelOfExperience(){
+        view.clearScreen();
+        String levelName = view.getUserInput("Set level name: ");
+        int level = Integer.parseInt(view.getUserInput("Set xp needed to reach level: "));
+        ExperienceLevel newLevel = new ExperienceLevel(level, levelName);
+        newLevel.addExperienceLevel(newLevel);
+        ItemCollection<ExperienceLevel> experienceLevels = newLevel.getExperienceLevels();
+        levelsDao.exportExperienceLevels(experienceLevels);
+    }
 
+    private void getAllMentors(){
+        view.clearScreen();
+        ArrayList<User> mentorsCollection = dao.getAllUsersByStatus("mentor");
         for(User mentor : mentorsCollection){
             int mentorId = mentor.getId();
             String mentorName = mentor.getName();
