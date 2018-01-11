@@ -1,7 +1,7 @@
 id,name,surname,login,password,status
-0,admin,admin,adminadmin@cc.com,admin,admin
-1,Kamil,Boksa,kamilboksa@cc.com,student,student
-2,Dominik,Starzyk,dominikstarzyk@cc.com,leniwiec,mentor
-3,Konrad,Gadzina,konradgadzina@cc.com,ukulele,mentor
-4,Piotr,Tomaszewski,piotrtomaszewski@cc.com,kolumbia,mentor
-6,mentor,mentor,mentormentor@cc.com,mentor,mentor
+0,admin,admin,adminadmin@cc.com,admin,admin,,0,0
+1,Kamil,Boksa,kamilboksa@cc.com,student,student,,0,0
+2,Dominik,Starzyk,dominikstarzyk@cc.com,leniwiec,mentor,maj2017,0,0
+3,Konrad,Gadzina,konradgadzina@cc.com,ukulele,mentor,,0,0
+4,Piotr,Tomaszewski,piotrtomaszewski@cc.com,kolumbia,mentor,,0,0
+5,mentor,mentor,mentormentor@cc.com,mentor,mentor,,0,0
