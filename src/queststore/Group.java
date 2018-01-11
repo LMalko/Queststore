@@ -18,6 +18,15 @@ class Group{
         allGroupsCollection.add(group);
     }
 
+    public  static Group getGroupByName(String name){
+        for (Group group : allGroupsCollection){
+            if (group.getGroupByName().equals(name)){
+                return group;
+            }
+        }
+        return null;
+    }
+
     public static ArrayList<Group> getAllGroups(){
         return allGroupsCollection;
     }
