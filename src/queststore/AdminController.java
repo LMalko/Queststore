@@ -31,10 +31,10 @@ class AdminController{
             assignMentorToGroup();
         }
         else if (choice.equals("4")){
-
+            editMentorData();
         }
         else if (choice.equals("5")){
-
+            getSpecificMentorData();
         }
         else if (choice.equals("6")){
 
@@ -50,6 +50,29 @@ class AdminController{
         dao.saveUsersToFile();
     }
 
+    private void editMentorData(){
+        getAllMentors();
+        int mentorId = Integer.parseInt(view.getUserInput("Choose mentor by ID"));
+        Mentor mentor = dao.getMentorById(mentorId);
+        String newName = view.getUserInput("Enter mentor's new name: ");
+        String newSurname = view.getUserInput("Enter mentor's new surname: ");
+        String newPassword = view.getUserInput("Enter mentor's new password: ");
+        mentor.setMentorName(newName);
+        mentor.setMentorSurname(newSurname);
+        mentor.setMentorPassword(newPassword);
+        mentor.setMentorLogin(newName, newSurname);
+        dao.saveUsersToFile();
+    }
+
+    private void getSpecificMentorData(){
+        getAllMentors();
+        int mentorId = Integer.parseInt(view.getUserInput("Choose mentor by ID"));
+        Mentor mentor = dao.getMentorById(mentorId);
+        view.displayText(mentor.toString());
+        view.getUserInput("Press any key to continue");
+
+    }
+
     private void createNewGroup(){
         String groupName = view.getUserInput("Enter new group name: ");
         Group group = new Group(groupName);
@@ -62,9 +85,9 @@ class AdminController{
         int mentorId = Integer.parseInt(view.getUserInput("Choose mentor by ID"));
         Mentor mentor = dao.getMentorById(mentorId);
         view.clearScreen();  // clear before displaying group names
-        view.displayText("Choose group from listed below");
+        view.displayText("Choose group from those listed below:");
         getAllGroupsNames();
-        String groupName = view.getUserInput("Choose group name");
+        String groupName = view.getUserInput("Choose group name:");
         Group newGroup = groupDao.getGroupByName(groupName);
         mentor.setMentorGroup(newGroup);
         dao.saveUsersToFile();
@@ -80,6 +103,7 @@ class AdminController{
     }
 
     private void getAllMentors(){
+        view.clearScreen();
         ArrayList<User> mentorsCollection = dao.getAllUsersByStatus("mentor");
         for(User mentor : mentorsCollection){
             int mentorId = mentor.getId();

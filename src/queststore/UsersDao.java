@@ -43,13 +43,16 @@ class UsersDao {
         String login = personData[3];
         String password = personData[4];
         String status = personData[5];
+        String groupName = personData[6];
+        int wallet = Integer.parseInt(personData[7]);
+        int experience = Integer.parseInt(personData[8]);
         User person = null;
 
         if(status.equals("admin")){
             person = new Admin(name, surname, password);
         }
         else if(status.equals("mentor")){
-            person = new Mentor(name, surname, password);
+            person = new Mentor(name, surname, password, groupName);
         }
         else if(status.equals("student")){
             person = new Student(name, surname, password);
