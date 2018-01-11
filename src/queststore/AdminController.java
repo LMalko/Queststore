@@ -21,7 +21,7 @@ class AdminController{
             createNewMentor();
         }
         else if (choice.equals("2")){
-
+            createNewGroup();
         }
         else if (choice.equals("3")){
 
@@ -44,5 +44,11 @@ class AdminController{
         Mentor newMentor = new Mentor(mentorName, mentorSurname, mentorPassword);
         dao.addUserToUsersCollection(newMentor);
         dao.saveUsersToFile();
+    }
+
+    public void createNewGroup(){
+        String groupName = view.getUserInput("Enter new group name: ");
+        Group group = new Group(groupName);
+        group.addGroupToGroupCollection(group);
     }
 }
