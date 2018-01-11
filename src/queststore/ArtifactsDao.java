@@ -20,7 +20,7 @@ public class ArtifactsDao{
                 String name = parts[1];
                 int price = Integer.parseInt(parts[2]);
                 String category = parts[3];
-                Artifacts artifact = new Artifacts(id, name, price, category);
+                Artifact artifact = new Artifact(id, name, price, category);
                 artifact.addArtifact(artifact);
             }
         }
@@ -29,13 +29,13 @@ public class ArtifactsDao{
         }
     }
 
-    public void exportArtifacts(ArrayList<Artifacts> artifactsData){
+    public void exportArtifacts(ArrayList<Artifact> artifactsData){
 
         try{
             BufferedWriter br = new BufferedWriter(new FileWriter("ArtifactsDao.csv"));
             StringBuilder sb = new StringBuilder();
 
-            for (Artifacts element : artifactsData) {
+            for (Artifact element : artifactsData) {
                 sb.append(element.getArtifactId());
                 sb.append(",");
                 sb.append(element.getArtifactName());
