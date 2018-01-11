@@ -7,6 +7,11 @@ public class Mentor extends User{
         this.group = null;
     }
 
+    public Mentor(String name, String surname, String password, String groupName){
+        super(name,surname,password,"mentor");
+        this.groupName = groupName;
+    }
+
     public String getMentorGroupName(){
         return group.getGroupName();
     }
@@ -30,5 +35,15 @@ public class Mentor extends User{
 
     public void setMentorLogin(String name, String surname){
         this.login = name.toLowerCase() + surname.toLowerCase() + "@cc.com";
+    }
+
+    @Override
+    public String toString(){
+        return  String.format("ID: %d, NAME: %s, SURNAME: %s, EMAIL: %s, GROUP: %s",
+                              this.id,
+                              this.name,
+                              this.surname,
+                              this.login,
+                              this.groupName);
     }
 }
