@@ -31,6 +31,22 @@ public class Artifact{
         return this.category;
     }
 
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setPrice(int price){
+        this.price = price;
+    }
+
+    public void setCategory(String category){
+        this.category = category;
+    }
+
     @Override
     public String toString(){
         return  String.format("ID: %d, NAME: %s, PRICE: %d, TYPE: %s",
@@ -40,5 +56,5 @@ public class Artifact{
                               this.category);
     }
 
-    
+
 }

@@ -1,5 +1,7 @@
 class MentorController{
 
+    private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
+
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
@@ -7,6 +9,7 @@ class MentorController{
 
     public void startMentorPanel(){
         boolean isRunning = true;
+        artifactsDao.importArtifacts();
 
         while(isRunning){
             view.displayUserMenu("txt/mentorMenu.txt");
@@ -39,6 +42,7 @@ class MentorController{
             addArtifact();
         }
         else if (choice.equals("7")){
+            editArtifact();
             //have to implement artifact picker
             //editArtifact(artifact);
         }
@@ -95,10 +99,47 @@ class MentorController{
         Artifact newArtifact = new Artifact(artifactId, artifactName, artifactPrice, artifactCategory);
         artifactsDao.addArtifact(newArtifact);
         artifactsDao.exportArtifacts();
+
     }
 
-    public void editArtifact(Artifact artifact){
+    public void editArtifact(){
+        getAllArtifacts();
+        int id = Integer.parseInt(view.getUserInput("Enter artifact id: "));
+        Artifact artifactToEdit = getArtifactById(id);
+        artifactToEdit.setId(Integer.parseInt(view.getUserInput("Enter new artifact id: ")));
+        artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
+        artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
+        artifactToEdit.setCategory(view.getUserInput("Enter new artifact category: "));
+        artifactsDao.exportArtifacts();
+    }
 
+    public Artifact getArtifactById(int id){
+        ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
+        CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
+
+        while(artifactsIterator.hasNext()) {
+            Artifact artifact = artifactsIterator.next();
+            if(artifact.getArtifactId() == id) {
+                return artifact;
+            }
+        }
+        System.out.println("xxxxxxxxxxxxxxx");
+        return null;
+    }
+
+    public void getAllArtifacts(){
+
+        ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
+        CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
+
+        while (artifactsIterator.hasNext()){
+            Artifact artifact = artifactsIterator.next();
+            int id = artifact.getArtifactId();
+            String name = artifact.getArtifactName();
+            int price = artifact.getArtifactPrice();
+            String category = artifact.getArtifactCategory();
+            view.displayText(id + " " + name + " " +price + " " +category);
+        }
     }
 
 
