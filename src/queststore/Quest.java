@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 
-public class Quests{
+public class Quest{
     private String name;
     private int id;
     private int award;
     private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
 
-    public Quests(int id, String name, int award, String status){
+    public Quest(int id, String name, int award, String status){
         this.name = name;
         this.id = id;
         this.award = award;
