@@ -80,7 +80,7 @@ class MentorController{
         Quest newQuest = new Quest(questName, questAward, "not done", category);
         questDao.addQuest(newQuest);
         questDao.exportQuests();
-    
+
     }
 
     public void addQuestCategory(){
@@ -88,7 +88,7 @@ class MentorController{
     }
 
     public void editQuest(Quest quest){
-        
+
     }
 
     public void addArtifact(){
@@ -123,7 +123,6 @@ class MentorController{
                 return artifact;
             }
         }
-        System.out.println("xxxxxxxxxxxxxxx");
         return null;
     }
 
