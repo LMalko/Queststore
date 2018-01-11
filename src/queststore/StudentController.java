@@ -2,8 +2,9 @@ class StudentController{
 
     private UserView view = new UserView();
     private ArtifactsDao artifactsDao = new ArtifactsDao();
+    private CrowdfundDao crowdfundsDao = new CrowdfundDao();
     private ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
-    private ItemCollection<Crowdfund> crowdfundsCollection = Crowdfund.getCrowdfunds();
+    private ItemCollection<Crowdfund> crowdfundsCollection = crowdfundsDao.getCrowdfunds();
 
     CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
     CollectionIterator<Crowdfund> crowdfundIterator = crowdfundsCollection.getIterator();
@@ -53,7 +54,7 @@ class StudentController{
     private void createCrowdfund(){
         System.out.println("Crowdfunds:");
         while(crowdfundIterator.hasNext()){
-            System.out.println(artifactIterator.next());
+            System.out.println(crowdfundIterator.next());
         }
 
     }
