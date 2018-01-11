@@ -6,6 +6,7 @@ class MentorController{
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
+    private ArtifactsDao artifactsDao = new ArtifactsDao();
 
     public void startMentorPanel(){
         boolean isRunning = true;
@@ -116,7 +117,13 @@ class MentorController{
     }
 
     public void addArtifact(){
-
+        int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
+        String artifactName = view.getUserInput("Enter artifact name: ");
+        int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
+        String artifactCategory = view.getUserInput("Enter artifact category: ");
+        Artifact newArtifact = new Artifact(artifactId, artifactName, artifactPrice, artifactCategory);
+        artifactsDao.addArtifact(newArtifact);
+        artifactsDao.exportArtifacts();
     }
 
     public void editArtifact(Artifact artifact){
