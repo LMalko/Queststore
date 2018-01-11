@@ -61,6 +61,7 @@ public class QuestDao{
     }
 
     public ItemCollection<Quest> getQuests(){
+        importQuests();
         return questsCollection;
     }
 
