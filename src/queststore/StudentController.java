@@ -9,7 +9,7 @@ class StudentController{
 
     public void startStudentPanel(){
         view.displayUserMenu("txt/studentMenu.txt");
-        handleStudentPanelOptions()
+        handleStudentPanelOptions();
     }
 
     private void handleStudentPanelOptions(){
