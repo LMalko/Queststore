@@ -29,4 +29,8 @@ public class Student extends User{
         return this.group.getGroupName();
 
     }
+
+    public void reduceWallet(int amount){
+        this.wallet = this.wallet - amount;
+    }
 }
