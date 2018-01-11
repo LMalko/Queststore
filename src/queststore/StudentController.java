@@ -1,7 +1,8 @@
 class StudentController{
 
     private UserView view = new UserView();
-    private ItemCollection<Artifact> artifactsCollection = Artifact.getArtifacts();
+    private ArtifactsDao artifactsDao = new ArtifactsDao();
+    private ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
     private ItemCollection<Crowdfund> crowdfundsCollection = Crowdfund.getCrowdfunds();
 
     CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
