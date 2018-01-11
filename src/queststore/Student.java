@@ -10,7 +10,7 @@ public class Student extends User{
     }
 
     public Student(String name, String login, String surname,
-         String password, String status, String group, int wallet, int experiance){
+                   String password, String status, String group, int wallet, int experiance){
             super(name, surname, login, password, status);
             this.wallet = wallet;
             this.experiance = experiance;
