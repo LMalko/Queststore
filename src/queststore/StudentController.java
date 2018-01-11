@@ -21,7 +21,7 @@ class StudentController{
 
     private void createCrowdfund(){
         while(artifactIterator.hasNext()){
-            System.out.println(artifactsCollection.next());
+            System.out.println(artifactIterator.next());
         }
 
     }
