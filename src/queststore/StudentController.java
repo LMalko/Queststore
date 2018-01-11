@@ -30,7 +30,6 @@ class StudentController{
             System.out.println("\n\nWallet is:");
             System.out.println(student.getStudentWallet());
         }else if (choice.equals("2")){
-            System.out.println(artifactsCollection);
             this.buyArtifact();
         }else if (choice.equals("3")){
             this.createCrowdfund();
@@ -52,13 +51,15 @@ class StudentController{
     }
 
     private void createCrowdfund(){
-        while(artifactIterator.hasNext()){
+        System.out.println("Crowdfunds:");
+        while(crowdfundIterator.hasNext()){
             System.out.println(artifactIterator.next());
         }
 
     }
 
     private void buyArtifact(){
+        System.out.println("Artifacts:");
         while(artifactIterator.hasNext()){
             System.out.println(artifactIterator.next());
         }
@@ -66,6 +67,7 @@ class StudentController{
     }
 
     private void joinCrowdfund(){
+        System.out.println("Crowdfunds:");
         while(crowdfundIterator.hasNext()){
             System.out.println(crowdfundIterator.next());
         }
