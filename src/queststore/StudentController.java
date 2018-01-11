@@ -31,13 +31,13 @@ class StudentController{
             System.out.println("\n\nWallet is:");
             System.out.println(student.getStudentWallet());
         }else if (choice.equals("2")){
-            this.buyArtifact();
+            buyArtifact();
         }else if (choice.equals("3")){
-            this.createCrowdfund();
+            createCrowdfund();
         }else if (choice.equals("4")){
-            this.getAllCrowdfunds();
+            returnAllCrowdfunds();
         }else if (choice.equals("5")){
-            this.joinCrowdfund();
+            joinCrowdfund();
         }else{
             System.out.println("No such choice");
         }
@@ -46,34 +46,30 @@ class StudentController{
         this.crowdfundIterator = crowdfundsCollection.getIterator();
     }
 
-    public ItemCollection<Crowdfund> getAllCrowdfunds(){
-        return crowdfundsCollection;
-    }
-
-    public ItemCollection<Artifact> getAllArtifacts(){
-        return artifactsCollection;
-    }
-
-    private void createCrowdfund(){
+    private void returnAllCrowdfunds(){
         System.out.println("Crowdfunds:");
         while(crowdfundIterator.hasNext()){
             System.out.println(crowdfundIterator.next());
         }
-
     }
 
-    private void buyArtifact(){
+    private void returnAllArtifacts(){
         System.out.println("Artifacts:");
         while(artifactIterator.hasNext()){
             System.out.println(artifactIterator.next());
         }
+    }
+
+    private void createCrowdfund(){
+        returnAllCrowdfunds();
 
     }
 
+    private void buyArtifact(){
+        returnAllArtifacts();
+    }
+
     private void joinCrowdfund(){
-        System.out.println("Crowdfunds:");
-        while(crowdfundIterator.hasNext()){
-            System.out.println(crowdfundIterator.next());
-        }
+        returnAllCrowdfunds();
     }
 }
