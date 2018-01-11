@@ -5,33 +5,46 @@ class LoginController{
     private UsersDao dao = new UsersDao();
     private ArrayList<User> usersCollection = dao.getUsersCollection();
     public void login(){
-        view.clearScreen();
-        String userLogin = view.getLogin();
-        String userPassword = view.getPassword();
-        String userStatus = getUserStatus(userLogin, userPassword);
-        if (checkIfUserExists(userLogin) && checkUserPassword(userLogin, userPassword)){
-            runProperUserPanel(userLogin, userPassword, userStatus);
+        boolean isLoginSession = true;
+
+        while (isLoginSession){
+            view.clearScreen();
+            String userLogin = view.getLogin();
+            String userPassword = view.getPassword();
+            String userStatus = getUserStatus(userLogin, userPassword);
+            if (checkIfUserExists(userLogin) && checkUserPassword(userLogin, userPassword)){
+                runProperUserPanel(userLogin, userPassword, userStatus);
+            }
         }
     }
 
     private boolean checkIfUserExists(String login){
-        for (User user : usersCollection){
-            System.out.println(user.getStatus());
-            if (login.equals(user.getLogin())){
-                return true;
+        try{
+            for (User user : usersCollection){
+                if (login.equals(user.getLogin())){
+                    return true;
+                }
             }
+            view.displayText("Given user does not exists!");
+            Thread.sleep(1000);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
         }
-        view.displayText("Given user does not exists!");
         return false;
     }
 
     private boolean checkUserPassword(String login, String password){
-        for (User user : usersCollection){
-            if (login.equals(user.getLogin()) && password.equals(user.getPassword())){
-                return true;
+        try{
+            for (User user : usersCollection){
+                if (login.equals(user.getLogin()) && password.equals(user.getPassword())){
+                    return true;
+                }
             }
+            view.displayText("Wrong password!");
+            Thread.sleep(1000);
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
         }
-        view.displayText("Wrong password!");
         return false;
     }
 
