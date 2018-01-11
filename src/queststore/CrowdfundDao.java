@@ -20,8 +20,8 @@ public class CrowdfundDao{
                 String name = parts[1];
                 int totalPrice = Integer.parseInt(parts[2]);
                 int account = Integer.parseInt(parts[3]);
-                String contributors = parts[4];
-                Crowdfund crowdfund = new Crowdfund(id, name, totalPrice, account, contributors);
+                String contributorEmail = parts[4];
+                Crowdfund crowdfund = new Crowdfund(id, name, totalPrice, account, contributorEmail);
                 crowdfund.addCrowdfund(crowdfund);
             }
         }
@@ -45,7 +45,7 @@ public class CrowdfundDao{
                 sb.append(",");
                 sb.append(element.getCrowdfundAccount());
                 sb.append(",");
-                sb.append(element.getCrowdfundContributors());
+                sb.append(element.getCrowdfundContributorEmail());
                 sb.append("\n");
             }
 
