@@ -14,6 +14,7 @@ class StudentController{
     public void startStudentPanel(Student student){
         boolean isRuntime = true;
         this.student = student;
+        artifactsDao.importArtifacts();
         
         while(isRuntime){
             view.displayUserMenu("txt/studentMenu.txt");
@@ -39,13 +40,14 @@ class StudentController{
             returnAllCrowdfunds();
         }else if (choice.equals("5")){
             joinCrowdfund();
+        }else if (choice.equals("6")){
+            System.out.println("Not available");
         }else{
             System.out.println("No such choice");
         }
     }
 
     private void returnAllCrowdfunds(){
-        this.artifactIterator = artifactsCollection.getIterator();
         System.out.println("Crowdfunds:");
         while(crowdfundIterator.hasNext()){
             System.out.println(crowdfundIterator.next());
@@ -99,7 +101,6 @@ class StudentController{
         if(!ifExists){
             view.clearScreen();
             System.out.println("No such ID\n\n");
-            this.artifactIterator = artifactsCollection.getIterator();
             createCrowdfund();
         }
 
@@ -111,6 +112,58 @@ class StudentController{
 
     private void joinCrowdfund(){
         returnAllCrowdfunds();
+
+        int crowdfundID;
+        int contribution;
+        boolean ifExists = false;
+
+        while(true){
+        try{
+            crowdfundID = Integer.parseInt(view.getUserInput("Enter crowdfund ID: "));
+            break;
+        }catch(NumberFormatException e){
+            view.clearScreen();
+            System.out.println("Wrong format.\n\n");
+            returnAllCrowdfunds();
+            }
+        }
+
+        while(crowdfundIterator.hasNext()){
+            Crowdfund nextCrowdfund = crowdfundIterator.next();
+            if(nextCrowdfund.getCrowdfundId() == crowdfundID){
+                Crowdfund crowdfundToContribute = nextCrowdfund;
+                ifExists = true;
+
+                while(true){
+                try{
+                    contribution = Integer.parseInt(view.getUserInput("How much you want to contribute? "));
+                    if(contribution < student.getStudentWallet()){
+                        System.out.println("You are to poor to contribute that much, amigo \n\n\n");
+                        continue;
+                    }
+                    student.reduceWallet(contribution);
+                    crowdfundToContribute.reduceCurrentPrice(contribution);
+                    
+                    break;
+
+                }catch(NumberFormatException e){
+                    view.clearScreen();
+                    System.out.println("Wrong format.\n\n");
+                    returnAllCrowdfunds();
+                    }
+                }
+
+                this.crowdfundsDao.exportCrowdfund();
+                break;
+                }
+            }
+
+        if(!ifExists){
+            view.clearScreen();
+            System.out.println("No such ID\n\n");
+            joinCrowdfund();
+        }
+
     }
 
 }
