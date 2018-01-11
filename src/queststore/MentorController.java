@@ -12,6 +12,7 @@ class MentorController{
     public void startMentorPanel(){
         boolean isRunning = true;
         groupDao.importGroups();
+        questDao.importQuests();
 
         while(isRunning){
             view.displayUserMenu("txt/mentorMenu.txt");
@@ -96,16 +97,21 @@ class MentorController{
     }
 
     public void getAllQuests(){
-        ArrayList<Quest> questCollection = questDao.getAllQuests();
-        for (Quest quest: questCollection){
-            String questID = Integer.toString(quest.getQuestID());
-            String name = quest.getQuestName();
-            String award = Integer.toString(quest.getQuestAward());
-            String status = quest.getQuestStatus();
-            String category = quest.getQuestCategoryName();
+        ItemCollection<Quest> questCollection = questDao.getQuests();
+        CollectionIterator<Quest> questIterator = questCollection.getIterator();
+
+        while(questIterator.hasNext()){
+            Quest currentQuest = questIterator.next();
+
+            String questID = Integer.toString(currentQuest.getQuestId());
+            String name = currentQuest.getQuestName();
+            String award = Integer.toString(currentQuest.getQuestAward());
+            String status = currentQuest.getQuestStatus();
+            String category = currentQuest.getQuestCategoryName();
             view.displayText("ID: "+questID +" "+name+" for:"+award+
                 " from category:"+category+" /currently:"+status);
         }
+        questIterator = questCollection.getIterator();
 
     }
 

@@ -29,10 +29,6 @@ public class Quest{
         return this.name;
     }
 
-    public String getCategory(){
-        return this.category;
-    }
-
     public int getQuestId(){
         return this.questID;
     }

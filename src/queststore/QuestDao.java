@@ -47,7 +47,7 @@ public class QuestDao{
                 sb.append(",");
                 sb.append(quest.getQuestStatus());
                 sb.append(",");
-                sb.append(quest.getCategory());
+                sb.append(quest.getQuestCategoryName());
                 sb.append("\n");
             }
 
@@ -61,7 +61,6 @@ public class QuestDao{
     }
 
     public ItemCollection<Quest> getQuests(){
-        importQuests();
         return questsCollection;
     }
 
