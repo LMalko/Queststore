@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.io.FileWriter;
 
 
-public class ExperienceLevelDao{
+public class ExperienceLevelsDao{
 
     public void importExperienceLevel(){
         String fileName = "ExperienceLevelDao.csv";

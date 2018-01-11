@@ -26,8 +26,8 @@ public class ExperienceLevel{
     }
 
     public ItemCollection<ExperienceLevel> getExperienceLevels(){
-        ExperienceLevelDao experienceLevelDaoDao = new ExperienceLevelDao();
-        experienceLevelDaoDao.importExperienceLevel();
+        ExperienceLevelsDao experienceLevelDao = new ExperienceLevelsDao();
+        experienceLevelDao.importExperienceLevel();
         return experienceLevelCollection;
     }
 
