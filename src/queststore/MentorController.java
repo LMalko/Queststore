@@ -93,7 +93,10 @@ class MentorController{
     }   
 
     public void editQuest(){
+        view.clearScreen();
         getAllQuests();
+        int questId = Integer.parseInt(view.getUserInput("Enter name of quest you want to edit: "));
+        //tutaj cos
     }
 
     public void getAllQuests(){
