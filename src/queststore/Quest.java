@@ -50,7 +50,7 @@ public class Quest{
         return questsCollection;
     }
 
-    public void addQuest(Quests quest){
+    public void addQuest(Quest quest){
         questsCollection.add(quest);
     }
 }
