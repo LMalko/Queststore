@@ -105,7 +105,6 @@ class MentorController{
         //tutaj cos
     }
 
-<<<<<<< HEAD
     public void getAllQuests(){
         ItemCollection<Quest> questCollection = questDao.getQuests();
         CollectionIterator<Quest> questIterator = questCollection.getIterator();
@@ -122,9 +121,6 @@ class MentorController{
                 " from category:"+category+" /currently:"+status);
         }
         questIterator = questCollection.getIterator();
-=======
-    public void editQuest(Quest quest){
->>>>>>> ebf0cfd236a8fff0a0c0fbf0c04397db1edec5be
 
     }
 
