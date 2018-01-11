@@ -12,7 +12,7 @@ public class Store{
         return this.artifactsCollection;
     }
 
-    public Integer getTotalPay(Integer artifactID){
+    public int getTotalPay(int artifactID){
         while(artifactIterator.hasNext()){
             if(artifactIterator.next().getArtifactId() = artifactID){
                 return artifactIterator.next().getArtifactPrice();
