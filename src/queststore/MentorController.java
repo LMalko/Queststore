@@ -12,6 +12,7 @@ class MentorController{
 
     public void startMentorPanel(){
         boolean isRunning = true;
+        artifactsDao.importArtifacts();
 
         while(isRunning){
             view.displayUserMenu("txt/mentorMenu.txt");
@@ -126,6 +127,7 @@ class MentorController{
         Artifact newArtifact = new Artifact(artifactId, artifactName, artifactPrice, artifactCategory);
         artifactsDao.addArtifact(newArtifact);
         artifactsDao.exportArtifacts();
+
     }
 
     public void editArtifact(Artifact artifact){
