@@ -101,8 +101,14 @@ class MentorController{
     public void editQuest(){
         view.clearScreen();
         getAllQuests();
-        int questId = Integer.parseInt(view.getUserInput("Enter name of quest you want to edit: "));
-        //tutaj cos
+        int questId = Integer.parseInt(view.getUserInput("Enter ID of quest you want to edit: "));
+        Quest quest = questDao.getQuestById(questId);
+        quest.setQuestName(view.getUserInput("Enter new quest name: "));
+        quest.setQuestAward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
+        quest.setQuestStatus(view.getUserInput("Enter new quest status: "));
+        questDao.exportQuests();
+
+
     }
 
     public void getAllQuests(){

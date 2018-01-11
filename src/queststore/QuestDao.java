@@ -60,6 +60,19 @@ public class QuestDao{
 
     }
 
+    public Quest getQuestById(int id){
+        CollectionIterator<Quest> questIterator = questsCollection.getIterator();
+
+        while (questIterator.hasNext()){
+            Quest quest = questIterator.next();
+
+            if(quest.getQuestId() == id) {
+                return quest;
+            }
+        }
+        return null;
+    }
+
     public ItemCollection<Quest> getQuests(){
         return questsCollection;
     }
