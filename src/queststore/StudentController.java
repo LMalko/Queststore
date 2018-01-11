@@ -8,11 +8,16 @@ class StudentController{
         view.displayUserMenu("txt/studentMenu.txt");
     }
 
-    public getAllCrowdfunds(){
+    public ItemCollection<Crowdfunds> getAllCrowdfunds(){
         return crowdfundsCollection;
     }
 
-    public getAllArtifacts(){
+    public ItemCollection<Artifacts> getAllArtifacts(){
         return artifactsCollection;
     }
+
+    private void createCrowdfund(Integer id){
+
+    }
+    
 }
