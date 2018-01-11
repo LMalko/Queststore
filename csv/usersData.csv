@@ -2,5 +2,6 @@ id,name,surname,login,password,status
 0,admin,admin,adminadmin@cc.com,admin,admin
 1,Kamil,Boksa,kamilboksa@cc.com,student,student
 2,Dominik,Starzyk,dominikstarzyk@cc.com,leniwiec,mentor
-4,Konrad,Gadzina,konradgadzina@cc.com,ukulele,mentor
-5,Piotr,Tomaszewski,piotrtomaszewski@cc.com,kolumbia,mentor
+3,Konrad,Gadzina,konradgadzina@cc.com,ukulele,mentor
+4,Piotr,Tomaszewski,piotrtomaszewski@cc.com,kolumbia,mentor
+6,mentor,mentor,mentormentor@cc.com,mentor,mentor
