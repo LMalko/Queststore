@@ -66,4 +66,15 @@ public class JDBConnection{
             System.out.println("\n\n\nQuery was NOT performed successfully");
 
         }
-}
+    }
+
+    public void executeUpdateAgainstDatabase(String update){
+        try{
+            statement = connection.createStatement();
+            statement.executeUpdate(update);
+        }catch (Exception exception){
+            System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
+            System.out.println("\n\n\nUpdate was NOT performed successfully");
+        }
+        
+    }
