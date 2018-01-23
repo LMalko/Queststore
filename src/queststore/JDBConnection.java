@@ -1,5 +1,3 @@
-package queststore;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.*;
@@ -105,10 +103,8 @@ public class JDBConnection{
                 ArrayList<String> rowResult = new ArrayList<String>();
             
                 for (int i = 0; i < columnNames.size(); i++){
-                    if(!columnNames.get(i).equals("id")){
                         
                         rowResult.add(result.getString(columnNames.get(i)));
-                        }
                     }
                 arrayResult.add(rowResult);
                 }
