@@ -25,7 +25,6 @@ public class ArtifactsDao{
             addArtifact(artifact);
             }
 
-        databaseConnection.closeDatabase();
     }
 
     public void exportArtifacts(){
@@ -42,7 +41,6 @@ public class ArtifactsDao{
                                                                 artifact.getArtifactCategory());
         }
 
-        databaseConnection.closeDatabase();
     }
 
     public ItemCollection<Artifact> getArtifacts(){
