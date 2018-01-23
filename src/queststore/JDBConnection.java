@@ -81,8 +81,8 @@ public class JDBConnection{
 
     public ArrayList getArrayListFromQuery(String query){
         
-        ArrayList<ArrayList> arrayResult = new ArrayList();
-        
+        ArrayList<ArrayList> arrayResult = new ArrayList<ArrayList>();
+
         try{
             
             statement = connection.createStatement();
@@ -102,7 +102,7 @@ public class JDBConnection{
             System.out.println("\n\nResult: \n\n");
             while(result.next()){
                 
-                ArrayList<String> rowResult = new ArrayList();
+                ArrayList<String> rowResult = new ArrayList<String>();
             
                 for (int i = 0; i < columnNames.size(); i++){
                     if(!columnNames.get(i).equals("id")){
