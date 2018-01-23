@@ -15,3 +15,17 @@ public class JDBConnection{
     public JDBConnection(String filename){
         this.filename = filename;
     }
+
+    Connection connectToDatabase() {
+        
+        try {
+            // Register JDBC driver.
+            Class.forName("org.sqlite.JDBC");
+            // Open a connection to database.
+            connection = DriverManager.getConnection(filename);
+        }catch ( Exception exception ) {
+            System.err.println( exception.getClass().getName() + ": " + exception.getMessage() );
+        }
+        System.out.println("Database has opened successfully");
+        return connection;
+    }
