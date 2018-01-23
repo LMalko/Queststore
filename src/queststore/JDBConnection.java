@@ -1,4 +1,4 @@
-
+package queststore;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -11,3 +11,7 @@ public class JDBConnection{
     private Connection connection = null;
     private Statement statement = null;
     private ResultSet result;
+
+    public JDBConnection(String filename){
+        this.filename = filename;
+    }
