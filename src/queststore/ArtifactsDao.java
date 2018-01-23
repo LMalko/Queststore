@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class ArtifactsDao{
 
     private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<Artifact>("Artifacts");
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questsore.db");
+    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
 
     public void importArtifacts(){
         databaseConnection.connectToDatabase();
