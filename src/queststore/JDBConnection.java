@@ -78,3 +78,17 @@ public class JDBConnection{
         }
         
     }
+
+
+    public void closeDatabase(){
+        try{
+            result.close();
+            statement.close();
+            connection.close();
+
+        }catch(Exception exception){
+            System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
+            System.exit(0);
+        }
+    }
+}
