@@ -97,7 +97,6 @@ public class JDBConnection{
                 columnNames.add(columnName);
             }
 
-            System.out.println("\n\nResult: \n\n");
             while(result.next()){
                 
                 ArrayList<String> rowResult = new ArrayList<String>();
