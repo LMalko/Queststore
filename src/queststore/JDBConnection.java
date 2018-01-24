@@ -113,7 +113,6 @@ public class JDBConnection{
                 System.out.println("\n\n\nOperation was NOT performed successfully");
     
             }
-        System.out.println(arrayResult);
         return arrayResult;
     }
 
