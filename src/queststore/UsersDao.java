@@ -1,58 +1,53 @@
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 class UsersDao {
 
-    private String csvFile = "csv/usersData.csv";
-    private BufferedReader br = null;
-    private String line = "";
-    private String separator = ",";
     private static ArrayList<User> usersCollection = new ArrayList<User>();
+    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
 
     private void importUsersData() {
-        try {
-            br = new BufferedReader(new FileReader(csvFile));
-            String headerLine = br.readLine();  // created to skip first line in csv file
-            while ((line = br.readLine()) != null) {
-                String[] personData = line.split(separator);
-                User person = createUserObject(personData);
-                usersCollection.add(person);
+        databaseConnection.connectToDatabase();
+        ArrayList<ArrayList<String>> users = databaseConnection.getArrayListFromQuery("SELECT * FROM users");
+        for(int i =0; i < users.size(); i++){
+            ArrayList<String> personData = users.get(i);
+            User person = createUserObject(personData);
+            System.out.println(person.getName());
+            usersCollection.add(person);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            closeReader(br);
         }
-    }
 
     public ArrayList<User> getUsersCollection() {
         importUsersData();
         return usersCollection;
     }
 
-    private User createUserObject(String[] personData) {
-        String name = personData[1];
-        String surname = personData[2];
-        String login = personData[3];
-        String password = personData[4];
-        String status = personData[5];
-        String groupName = personData[6];
-        int wallet = Integer.parseInt(personData[7]);
-        int experience = Integer.parseInt(personData[8]);
-        User person = null;
+    private User createUserObject(ArrayList<String> personData) {
+        String name = personData.get(1);
+        String surname = personData.get(2);
+        String login = personData.get(3);
+        String password = personData.get(4);
+        String status = personData.get(5);
+        int groupIndex = 0;
+        //int walletID = Integer.parseInt(personData.get(7)); BRAK W BAZIE DANYCH
 
+        if (personData.get(6) != null){
+            groupIndex = Integer.parseInt(personData.get(6));
+        }
+        if (personData.get(7) != null) {
+            String experienceLevel = personData.get(7);
+        } else {
+            String experienceLevel = "";
+        }
+
+        User person = null;
         if(status.equals("admin")){
             person = new Admin(name, surname, password);
         }
         else if(status.equals("mentor")){
-            person = new Mentor(name, surname, password, groupName);
+            person = new Mentor(name, surname, password, groupIndex);
         }
         else if(status.equals("student")){
             person = new Student(name, surname, password);
@@ -60,15 +55,6 @@ class UsersDao {
         return person;
     }
 
-    private void closeReader(BufferedReader br) {
-        if (br != null) {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public void saveUsersToFile(){
         String headerLine = "id,name,surname,login,password,status,group,wallet,experience";
