@@ -56,8 +56,7 @@ class AdminController{
         String mentorSurname = view.getUserInput("Enter mentor's surname: ");
         String mentorPassword = view.getUserInput("Enter mentor's password: ");
         Mentor newMentor = new Mentor(mentorName, mentorSurname, mentorPassword);
-        dao.addUserToUsersCollection(newMentor);
-        dao.saveUsersToFile();
+        dao.addUserToDatabase(newMentor);
     }
 
     private void editMentorData(){
