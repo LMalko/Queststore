@@ -4,12 +4,11 @@ public class Mentor extends User{
 
     public Mentor(String name, String surname, String password){
         super(name, surname, password, "mentor");
-        this.group = null;
     }
 
-    public Mentor(String name, String surname, String password, String groupName){
+    public Mentor(String name, String surname, String password, int groupIndex){
         super(name,surname,password,"mentor");
-        this.groupName = groupName;
+        this.groupIndex = groupIndex;
     }
 
     public String getMentorGroupName(){

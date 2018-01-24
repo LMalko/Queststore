@@ -74,7 +74,7 @@ class MentorController{
         String studentPassword = view.getUserInput("Enter student password: ");
         Student newStudent = new Student(studentName, studentSurname, studentPassword);
         dao.addUserToUsersCollection(newStudent);
-        dao.saveUsersToFile();
+        //dao.saveUsersToFile();
     }
 
     public void studentAssignToGroup(){
@@ -87,7 +87,7 @@ class MentorController{
         String groupName = view.getUserInput("Choose group name:");
         Group newGroup = groupDao.getGroupByName(groupName);
         student.setStudentGroup(newGroup);
-        dao.saveUsersToFile();
+        //dao.saveUsersToFile();
     }
 
     private void getAllStudents(){

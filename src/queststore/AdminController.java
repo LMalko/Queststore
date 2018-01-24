@@ -56,8 +56,7 @@ class AdminController{
         String mentorSurname = view.getUserInput("Enter mentor's surname: ");
         String mentorPassword = view.getUserInput("Enter mentor's password: ");
         Mentor newMentor = new Mentor(mentorName, mentorSurname, mentorPassword);
-        dao.addUserToUsersCollection(newMentor);
-        dao.saveUsersToFile();
+        dao.addUserToDatabase(newMentor);
     }
 
     private void editMentorData(){
@@ -73,7 +72,7 @@ class AdminController{
                 mentor.setMentorSurname(newSurname);
                 mentor.setMentorPassword(newPassword);
                 mentor.setMentorLogin(newName, newSurname);
-                dao.saveUsersToFile();
+                //dao.saveUsersToFile();
             }
             else{
                 view.displayText("No mentor with given ID exists!");
@@ -144,7 +143,7 @@ class AdminController{
             String groupName = view.getUserInput("Choose group name:");
             Group newGroup = groupDao.getGroupByName(groupName);
             mentor.setMentorGroup(newGroup);
-            dao.saveUsersToFile();
+            //dao.saveUsersToFile();
         } catch (NullPointerException e){
             try{
                 view.displayText("No such mentor or group exists!");
