@@ -14,7 +14,7 @@ public class JDBConnection{
         this.filename = filename;
     }
 
-    Connection connectToDatabase() {
+    void connectToDatabase() {
         
         try {
             // Register JDBC driver.
@@ -25,7 +25,6 @@ public class JDBConnection{
         }catch ( Exception exception ) {
             System.err.println( exception.getClass().getName() + ": " + exception.getMessage() );
         }
-        return connection;
     }
 
     public void executeQueryAgainstDatabase(String query){
