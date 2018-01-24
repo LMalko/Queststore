@@ -13,7 +13,6 @@ public class ArtifactsDao{
         databaseConnection.connectToDatabase();
 
         ArrayList<ArrayList<String>> artifacts = databaseConnection.getArrayListFromQuery("SELECT * FROM artifacts");
-        String row;
         for(int i =0; i < artifacts.size(); i++){
 
             int id = Integer.parseInt(artifacts.get(i).get(0));

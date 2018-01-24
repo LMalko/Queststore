@@ -89,11 +89,16 @@ class StudentController{
             if(nextArtifact.getArtifactId() == artifactID){
                 Artifact artifactToCrowdfund = nextArtifact;
                 ifExists = true;
-                contributorEmail = student.getLogin();
+                int founderID = student.getId();
+
+                
+
+
                 Crowdfund crowdfund = new Crowdfund(artifactToCrowdfund.getArtifactName(),
                                                     artifactToCrowdfund.getArtifactPrice(),
                                                     artifactToCrowdfund.getArtifactPrice(), 
-                                                    contributorEmail);
+                                                    founderID );
+                                                    
                 this.crowdfundsDao.addCrowdfund(crowdfund);
                 this.crowdfundsDao.exportCrowdfund();
                 break;
