@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.sql.*;
 
 class UsersDao {
 
@@ -55,6 +56,35 @@ class UsersDao {
         return person;
     }
 
+    public void addUserToDatabase(User user){
+        Connection connection = databaseConnection.connectToDatabase();
+        String name = user.getName();
+        String surname = user.getSurname();
+        String login = user.getLogin();
+        String password = user.getPassword();
+        String status = user.getStatus();
+        int groupIndex = user.getUserGroupIndex();
+        String experienceLevel = user.getUserExperienceLevel();
+        PreparedStatement preparedStatement;
+
+        String query = "INSERT INTO users(name, surname, login, password, status, group_id, experience) VALUES (?,?,?,?,?,?,?);";
+
+        System.out.println(query);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, surname);
+            preparedStatement.setString(3, login);
+            preparedStatement.setString(4, password);
+            preparedStatement.setString(5, status);
+            preparedStatement.setInt(6, groupIndex);
+            preparedStatement.setString(7, experienceLevel);
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+    }
 
     public void saveUsersToFile(){
         String headerLine = "id,name,surname,login,password,status,group,wallet,experience";
@@ -80,7 +110,7 @@ class UsersDao {
                 sb.append(",");
                 sb.append(user.getUserWallet());
                 sb.append(",");
-                sb.append(user.getUserExperience());
+                sb.append(user.getUserExperienceLevel());
                 sb.append("\n");
             }
             br.write(sb.toString());
