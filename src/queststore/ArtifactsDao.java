@@ -6,13 +6,10 @@ import java.util.ArrayList;
 
 public class ArtifactsDao{
 
-    private ItemCollection<Artifact> artifactsCollection = new ItemCollection<Artifact>("Artifacts");
+    private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<Artifact>("Artifacts");
     private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
 
     public void importArtifacts(){
-
-        artifactsCollection = new ItemCollection<Artifact>("Artifacts");
-
         databaseConnection.connectToDatabase();
 
         ArrayList<ArrayList<String>> artifacts = databaseConnection.getArrayListFromQuery("SELECT * FROM artifacts");
@@ -60,6 +57,5 @@ public class ArtifactsDao{
                                                         String.valueOf(artifact.getArtifactPrice()) + ", '" +
                                                         artifact.getArtifactCategory() +
                                                         "')");
-
     }
 }
