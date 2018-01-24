@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 class Group{
     private String groupName;
+    private int groupIndex;
 
     public Group(String name){
         this.groupName = name;

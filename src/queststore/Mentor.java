@@ -7,9 +7,9 @@ public class Mentor extends User{
         this.group = null;
     }
 
-    public Mentor(String name, String surname, String password, String groupName){
+    public Mentor(String name, String surname, String password, int groupIndex){
         super(name,surname,password,"mentor");
-        this.groupName = groupName;
+        this.groupIndex = groupIndex;
     }
 
     public String getMentorGroupName(){

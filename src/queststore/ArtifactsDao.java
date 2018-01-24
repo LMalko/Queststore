@@ -49,5 +49,14 @@ public class ArtifactsDao{
 
     public void addArtifact(Artifact artifact){
         artifactsCollection.add(artifact);
+                    
+    }
+
+    public void addArtifactToDatabase(Artifact artifact){
+        databaseConnection.executeUpdateAgainstDatabase("INSERT INTO artifacts (name, price, category) VALUES ( " + "'" +
+                                                        artifact.getArtifactName() + "', " +
+                                                        String.valueOf(artifact.getArtifactPrice()) + ", '" +
+                                                        artifact.getArtifactCategory() +
+                                                        "')");
     }
 }
