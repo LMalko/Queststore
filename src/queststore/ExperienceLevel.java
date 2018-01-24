@@ -1,24 +1,24 @@
 public class ExperienceLevel{
-    int level;
+    int money_required;
     String levelName;
     private static ItemCollection<ExperienceLevel> experienceLevelCollection = new ItemCollection<>("ExperienceLevel");
 
 
-    public ExperienceLevel(int level, String levelName){
-        this.level = level;
+    public ExperienceLevel(int money_required, String levelName){
+        this.money_required = money_required;
         this.levelName = levelName;
     }
 
     public int getLevel(){
-        return this.level;
+        return this.money_required;
     }
 
     public String getLevelName(){
         return this.levelName;
     }
 
-    public void setLevel(int level){
-        this.level = level;
+    public void setLevel(int money_required){
+        this.money_required = money_required;
     }
 
     public void setLevelName(String levelName){
