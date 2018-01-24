@@ -105,7 +105,6 @@ public class JDBConnection{
                     }
                 arrayResult.add(rowResult);
                 }
-                System.out.println("\n\n\nOperation performed successfully");
                 
             }catch(Exception exception){
     

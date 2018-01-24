@@ -15,6 +15,7 @@ class StudentController{
         boolean isRuntime = true;
         this.student = student;
         artifactsDao.importArtifacts();
+        crowdfundsDao.importCrowdfunds();
         
         while(isRuntime){
             view.displayUserMenu("txt/studentMenu.txt");
@@ -25,6 +26,7 @@ class StudentController{
     }
 
     private void handleStudentPanelOptions(){
+        refreshArtifactsAndCrowdfundsDB();
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
             view.clearScreen();
@@ -45,8 +47,16 @@ class StudentController{
         }else{
             System.out.println("No such choice");
         }
+    }
+
+    private void refreshArtifactsAndCrowdfundsDB(){
+        artifactsDao = new ArtifactsDao();
         artifactsDao.importArtifacts();
+        artifactsCollection = artifactsDao.getArtifacts();
+        crowdfundsDao = new CrowdfundDao();
         crowdfundsDao.importCrowdfunds();
+        crowdfundsCollection = crowdfundsDao.getCrowdfunds();
+
 
     }
 
@@ -101,8 +111,8 @@ class StudentController{
                                                     artifactToCrowdfund.getArtifactPrice(), 
                                                     founderID );
                                                     
-                this.crowdfundsDao.addCrowdfund(crowdfund);
-                this.crowdfundsDao.exportCrowdfund();
+                
+                crowdfundsDao.addCrowdfundToDatabase(crowdfund);
                 break;
                 }
             }
@@ -163,7 +173,6 @@ class StudentController{
                     }
                 }
 
-                this.crowdfundsDao.exportCrowdfund();
                 break;
                 }
             }

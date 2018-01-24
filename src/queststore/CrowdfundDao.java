@@ -9,6 +9,7 @@ public class CrowdfundDao{
     private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
 
     public void importCrowdfunds(){
+        crowdfundCollection= new ItemCollection<>("Crowdfunds");
         databaseConnection.connectToDatabase();
 
 
