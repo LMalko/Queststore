@@ -22,7 +22,7 @@ abstract class User{
         this.id = counter;
         this.groupIndex = 0;
         this.wallet = 0;
-        this.experienceLevel = "";
+        this.experienceLevel = " ";
         counter += 1;
     }
 
@@ -78,11 +78,13 @@ abstract class User{
         return this.wallet;
     }
 
-    public String getUserExperience(){
+    public String getUserExperienceLevel(){
         return this.experienceLevel;
     }
 
     public String getUserGroupName(){
         return this.groupName;
     }
+
+    public int getUserGroupIndex() { return this.groupIndex; }
 }
