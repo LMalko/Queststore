@@ -2,17 +2,22 @@ import java.util.ArrayList;
 
 
 public class Artifact{
-    private int id;
+    private Integer id;
     private String name;
     private int price;
     private String category;
 
+    private static Integer nextID = 1;
 
-    public Artifact(int id, String name, int price, String category){
-        this.id = id;
+
+
+
+    public Artifact(String name, int price, String category){
         this.name = name;
         this.price = price;
         this.category = category;
+
+        this.id = getNextID();
     }
 
     public int getArtifactId(){
@@ -31,10 +36,6 @@ public class Artifact{
         return this.category;
     }
 
-    public void setId(int id){
-        this.id = id;
-    }
-
     public void setName(String name){
         this.name = name;
     }
@@ -46,6 +47,12 @@ public class Artifact{
     public void setCategory(String category){
         this.category = category;
     }
+
+    private Integer getNextID() {
+        Integer newID = nextID;
+        nextID++;
+        return newID;
+}
 
     @Override
     public String toString(){
