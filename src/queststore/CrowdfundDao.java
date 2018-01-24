@@ -5,10 +5,12 @@ import java.sql.Connection;
 
 public class CrowdfundDao{
 
-    private static ItemCollection<Crowdfund> crowdfundCollection = new ItemCollection<>("Crowdfunds");
+    private ItemCollection<Crowdfund> crowdfundCollection;
     private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
 
     public void importCrowdfunds(){
+
+        crowdfundCollection = new ItemCollection<>("Crowdfunds");
         databaseConnection.connectToDatabase();
 
 
