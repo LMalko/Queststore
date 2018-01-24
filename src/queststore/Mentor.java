@@ -4,7 +4,6 @@ public class Mentor extends User{
 
     public Mentor(String name, String surname, String password){
         super(name, surname, password, "mentor");
-        this.group = null;
     }
 
     public Mentor(String name, String surname, String password, int groupIndex){
