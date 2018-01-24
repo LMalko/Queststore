@@ -21,7 +21,6 @@ public class JDBConnection{
             Class.forName("org.sqlite.JDBC");
             // Open a connection to database.
             connection = DriverManager.getConnection(filename);
-            System.out.println("Database has opened successfully");
         }catch ( Exception exception ) {
             System.err.println( exception.getClass().getName() + ": " + exception.getMessage() );
         }
