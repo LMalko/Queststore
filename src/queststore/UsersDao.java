@@ -81,41 +81,6 @@ class UsersDao {
 
     }
 
-    public void saveUsersToFile(){
-        String headerLine = "id,name,surname,login,password,status,group,wallet,experience";
-        try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("csv/usersData.csv"));
-            StringBuilder sb = new StringBuilder();
-            sb.append(headerLine);
-            sb.append("\n");
-            for (User user : usersCollection) {
-                sb.append(user.getId());
-                sb.append(",");
-                sb.append(user.getName());
-                sb.append(",");
-                sb.append(user.getSurname());
-                sb.append(",");
-                sb.append(user.getLogin());
-                sb.append(",");
-                sb.append(user.getPassword());
-                sb.append(",");
-                sb.append(user.getStatus());
-                sb.append(",");
-                sb.append(user.getUserGroupName());
-                sb.append(",");
-                sb.append(user.getUserWallet());
-                sb.append(",");
-                sb.append(user.getUserExperienceLevel());
-                sb.append("\n");
-            }
-            br.write(sb.toString());
-            br.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
     public void addUserToUsersCollection(User user){
         usersCollection.add(user);
     }
