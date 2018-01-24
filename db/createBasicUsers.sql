@@ -1,6 +1,6 @@
 
--- create entities of admin, mentor and student 
-INSERT INTO users (name, surname, login, password, status, group_id, experience) 
+-- create entities of admin, mentor and student
+INSERT INTO users (name, surname, login, password, status, group_id, experience)
 VALUES ('default', 'student', 'defaultstudent@cc.com', 'student', 'student', 1, 'Adept'),
     ('default', 'mentor', 'defaultmentor@cc.com', 'mentor', 'mentor', 1, null),
     ('default', 'admin', 'defaultadmin@cc.com', 'admin', 'admin', null, null);
@@ -34,14 +34,10 @@ VALUES (1, 1, 'done'),
 (2, 1, 'not done');
 
 --create representational record of GROUPS
-INSERT INTO groups ('2017.B');
+INSERT INTO groups (name)
+VALUES ('2017.B');
 
 --create representational record of EXPERIENCE_LEVELS
 INSERT INTO experience_levels (name, money_required)
 VALUES ('Adept', 2000),
 ('Big Shaq', 4000);
-
-
-
-
-

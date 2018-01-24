@@ -1,31 +1,26 @@
+import java.sql.Connection;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 public class CategoryDao{
 
     private static ItemCollection<Category> allCategories = new ItemCollection<>("Category");
-    private BufferedReader bufferedReader = null;
+    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
 
     public void importCategories(){
-        String fileName = "csv/categories.csv";
+        databaseConnection.connectToDatabase();
 
-        try{
-            bufferedReader = new BufferedReader(new FileReader(fileName));
-            String row;
-            while((row = bufferedReader.readLine()) != null){
-                String[] parts = row.split("\n");
-                String name = parts[0];
-                Category newCategory = new Category(name);
-                addCategory(newCategory);
-            }
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        } finally {
-            closeReader(bufferedReader);
+        ArrayList<ArrayList<String>> category = databaseConnection.getArrayListFromQuery("SELECT * FROM category");
+        String row;
+        for(int i =0; i < category.size(); i++){
+
+            String name = category.get(i).get(0);
+            Category newCategory = new Category(name);
+            addCategory(newCategory);
         }
     }
 

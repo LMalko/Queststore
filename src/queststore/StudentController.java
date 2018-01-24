@@ -45,6 +45,7 @@ class StudentController{
         }else{
             System.out.println("No such choice");
         }
+        artifactsDao.importArtifacts();
     }
 
     private void returnAllCrowdfunds(){

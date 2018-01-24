@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,23 +10,23 @@ import java.io.FileWriter;
 
 public class ExperienceLevelsDao{
 
-    public void importExperienceLevels(){
-        String fileName = "csv/experienceLevels.csv";
 
-        try{
-            BufferedReader buffer_reader = new BufferedReader(new FileReader(fileName));
-            String row;
-            while((row = buffer_reader.readLine()) != null){
-                String[] parts = row.split(",");
-                int level = Integer.parseInt(parts[0]);
-                String levelName = parts[1];
-                ExperienceLevel experienceLevel = new ExperienceLevel(level, levelName);
-                experienceLevel.addExperienceLevel(experienceLevel);
-            }
+    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+
+    public void importExperienceLevels(){
+        databaseConnection.connectToDatabase();
+
+        ArrayList<ArrayList<String>> experience = databaseConnection.getArrayListFromQuery("SELECT * FROM experience_levels");
+        String row;
+        for(int i =0; i < experience.size(); i++){
+
+            int money_required = Integer.parseInt(experience.get(i).get(0));
+            String name = experience.get(i).get(1);
+
+            ExperienceLevel experienceLevel = new ExperienceLevel(money_required, name);
+            experienceLevel.addExperienceLevel(experienceLevel);
         }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+
     }
 
     public void exportExperienceLevels(ItemCollection<ExperienceLevel> experienceLevelData){

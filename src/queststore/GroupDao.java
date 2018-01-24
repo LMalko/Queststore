@@ -4,30 +4,24 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.io.FileWriter;
+import java.sql.Connection;
 
 
 public class GroupDao{
 
     private static ItemCollection<Group> groupsCollection = new ItemCollection<>("Group");
-    private BufferedReader br = null;
+    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
 
     public void importGroups(){
-        String fileName = "csv/groups.csv";
+        databaseConnection.connectToDatabase();
 
-        try{
-            br = new BufferedReader(new FileReader(fileName));
-            String row;
-            while((row = br.readLine()) != null){
-                String[] parts = row.split("\n");
-                String name = parts[0];
-                Group group = new Group(name);
-                addGroup(group);
-            }
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        } finally {
-            closeReader(br);
+        ArrayList<ArrayList<String>> group = databaseConnection.getArrayListFromQuery("SELECT * FROM groups");
+        String row;
+        for(int i =0; i < group.size(); i++){
+
+            String groupName = group.get(i).get(0);
+            Group newGroup = new Group(groupName);
+            addGroup(newGroup);
         }
     }
 
