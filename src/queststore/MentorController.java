@@ -73,8 +73,9 @@ class MentorController{
         String studentSurname = view.getUserInput("Enter student surname: ");
         String studentPassword = view.getUserInput("Enter student password: ");
         Student newStudent = new Student(studentName, studentSurname, studentPassword);
-        dao.addUserToUsersCollection(newStudent);
+        dao.addUserToDatabase(newStudent);
         //dao.saveUsersToFile();
+        // dodawanie portfela!!!
     }
 
     public void studentAssignToGroup(){
@@ -87,6 +88,7 @@ class MentorController{
         String groupName = view.getUserInput("Choose group name:");
         Group newGroup = groupDao.getGroupByName(groupName);
         student.setStudentGroup(newGroup);
+        dao.updateUserGroupInDatabase(student);
         //dao.saveUsersToFile();
     }
 

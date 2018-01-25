@@ -6,6 +6,8 @@ class UsersDao {
     private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
 
     public void importUsersData() {
+        // wyszysc liste
+
         databaseConnection.connectToDatabase();
         ArrayList<ArrayList<String>> users = databaseConnection.getArrayListFromQuery("SELECT * FROM users");
         for(int i =0; i < users.size(); i++){
@@ -47,7 +49,7 @@ class UsersDao {
             person = new Mentor(id, name, surname, password, groupId);
         }
         else if(status.equals("student")){
-            person = new Student(name, surname, password);
+            person = new Student(id, name, surname, password, groupId);
         }
         return person;
     }
