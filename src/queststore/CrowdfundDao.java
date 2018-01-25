@@ -9,7 +9,7 @@ public class CrowdfundDao{
     private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importCrowdfunds(){
-        crowdfundCollection= new ItemCollection<>("Crowdfunds");
+        crowdfundCollection.clear();
         databaseProcessor.connectToDatabase();
 
 
@@ -37,7 +37,7 @@ public class CrowdfundDao{
         return crowdfundCollection;
     }
 
-    public void addCrowdfund(Crowdfund crowdfund){
+    private void addCrowdfund(Crowdfund crowdfund){
         crowdfundCollection.add(crowdfund);
     }
 
@@ -48,5 +48,9 @@ public class CrowdfundDao{
                                                         crowdfund.getCrowdfundAccount() + ", " +
                                                         crowdfund.getCrowdfundFounderID() +
                                                         ")");
+    }
+
+    public void updateCrowdfundAccount(int crowdfundID, int amountToAdd){
+        databaseProcessor.executeUpdateAgainstDatabase("UPDATE crowdfunds SET account = account + " + String.valueOf(amountToAdd) + " WHERE id = " + String.valueOf(crowdfundID) + ";" );
     }
 }

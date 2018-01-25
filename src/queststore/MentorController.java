@@ -3,6 +3,7 @@ import java.util.ArrayList;
 class MentorController{
 
     private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
+    private static ItemCollection<Category> categoryCollection = new ItemCollection<>("Categories");
 
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
@@ -29,13 +30,15 @@ class MentorController{
     public void handleMentorPanelOptions(){
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
+            dao.disconnectDatabase();
             System.exit(0);
+
         }
         else if (choice.equals("1")){
             createStudent();
         }
         else if (choice.equals("2")){
-            studentAssignToGroup();
+            assignStudentToGroup();
         }
         else if (choice.equals("3")){
             addNewQuest();
@@ -74,22 +77,29 @@ class MentorController{
         String studentPassword = view.getUserInput("Enter student password: ");
         Student newStudent = new Student(studentName, studentSurname, studentPassword);
         dao.addUserToDatabase(newStudent);
+        dao.addStudentWalletToDatabase(newStudent);
         //dao.saveUsersToFile();
         // dodawanie portfela!!!
     }
 
-    public void studentAssignToGroup(){
-        getAllStudents();
-        int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
-        Student student = dao.getStudentById(studentId);
-        view.clearScreen();  // clear before displaying group names
-        view.displayText("Choose group from those listed below:");
-        getAllGroupsNames();
-        String groupName = view.getUserInput("Choose group name:");
-        Group newGroup = groupDao.getGroupByName(groupName);
-        student.setStudentGroup(newGroup);
-        dao.updateUserGroupInDatabase(student);
-        //dao.saveUsersToFile();
+    public void assignStudentToGroup(){
+        try{
+            getAllStudents();
+            int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
+            Student student = dao.getStudentById(studentId);
+            view.clearScreen();  // clear before displaying group names
+            view.displayText("Choose group from those listed below:");
+            getAllGroupsNames();
+            String groupName = view.getUserInput("Choose group name:");
+            Group newGroup = groupDao.getGroupByName(groupName);
+            student.setStudentGroup(newGroup);
+            dao.updateUserGroupInDatabase(student);
+        } catch (NullPointerException e){
+            promptMessageAndStopThread("No such student or group exists!");
+        } catch (NumberFormatException e){
+            promptMessageAndStopThread("No such student or group exists!");
+        }
+
     }
 
     private void getAllStudents(){
@@ -116,11 +126,11 @@ class MentorController{
 
     public void addNewQuest(){
         String questName = view.getUserInput("Enter quest name: ");
-        int questAward = Integer.parseInt(view.getUserInput("Enter award for completing quest: "));
+        int questReward = Integer.parseInt(view.getUserInput("Enter reward for completing quest: "));
         String category = view.getUserInput("Enter category of quest: ");
-        Quest newQuest = new Quest(questName, questAward, "not done", category);
+        Quest newQuest = new Quest(questName, questReward, category);
         questDao.addQuest(newQuest);
-        questDao.exportQuests();
+        questDao.addQuestToDatabase(newQuest);
 
     }
 
@@ -128,7 +138,7 @@ class MentorController{
         String categoryName = view.getUserInput("Enter new category name: ");
         Category category = new Category(categoryName);
         categoryDao.addCategory(category);
-        categoryDao.exportCategory();
+        categoryDao.addCategoryToDatabase(category);
 
     }
 
@@ -138,9 +148,10 @@ class MentorController{
         int questId = Integer.parseInt(view.getUserInput("Enter ID of quest you want to edit: "));
         Quest quest = questDao.getQuestById(questId);
         quest.setQuestName(view.getUserInput("Enter new quest name: "));
-        quest.setQuestAward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
-        quest.setQuestStatus(view.getUserInput("Enter new quest status: "));
-        questDao.exportQuests();
+        quest.setQuestReward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
+        quest.setQuestCategory(view.getUserInput("Enter new category name: "));
+        questDao.editQuestOnDatabase(quest);
+        System.out.println("Operation was succesfull");
 
 
     }
@@ -154,13 +165,12 @@ class MentorController{
 
             String questID = Integer.toString(currentQuest.getQuestId());
             String name = currentQuest.getQuestName();
-            String award = Integer.toString(currentQuest.getQuestAward());
-            String status = currentQuest.getQuestStatus();
+            String award = Integer.toString(currentQuest.getQuestReward());
             String category = currentQuest.getQuestCategoryName();
             view.displayText("ID: "+questID +" "+name+" for:"+award+
-                " from category:"+category+" /currently:"+status);
+                " from category:"+category);
         }
-        questIterator = questCollection.getIterator();
+
 
     }
 
@@ -168,8 +178,10 @@ class MentorController{
         //int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
         String artifactName = view.getUserInput("Enter artifact name: ");
         int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
+        getAllCategories();
         String artifactCategory = view.getUserInput("Enter artifact category: ");
-        Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategory);
+        String artifactCategoryName = categoryDao.getCategoryByName(artifactCategory).getCategoryName();
+        Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategoryName);
         artifactsDao.addArtifactToDatabase(newArtifact);
         //artifactsDao.exportArtifacts();
 
@@ -179,11 +191,11 @@ class MentorController{
         getAllArtifacts();
         int id = Integer.parseInt(view.getUserInput("Enter artifact id: "));
         Artifact artifactToEdit = getArtifactById(id);
-        artifactToEdit.setId(Integer.parseInt(view.getUserInput("Enter new artifact id: ")));
+        System.out.println(artifactToEdit);
         artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
         artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
-        artifactToEdit.setCategory(addArtifactCategory());
-        artifactsDao.exportArtifacts();
+        artifactToEdit.setCategory(view.getUserInput("Enter new artifact name: "));
+        artifactsDao.updateArtifactDataInDatabase(artifactToEdit);
     }
 
     public Artifact getArtifactById(int id){
@@ -229,20 +241,19 @@ class MentorController{
     public void addNewCategory(){
         String categoryName = view.getUserInput("Enter new category name: ");
         Category category = new Category(categoryName);
+        categoryDao.addCategoryToDatabase(category);
         categoryDao.addCategory(category);
-        categoryDao.exportCategory();
-
     }
 
     private void getAllCategories(){
         ItemCollection<Category> categoryCollection = categoryDao.getCategories();
         CollectionIterator<Category> categoryIterator = categoryCollection.getIterator();
-
         while (categoryIterator.hasNext()){
             Category category = categoryIterator.next();
-            String categoryName = category.getCategoryName();
-            view.displayText(categoryName);
+            String name = category.getCategoryName();
+            view.displayText(name);
         }
+
     }
 
     public void markStudentQuest(){
@@ -255,5 +266,14 @@ class MentorController{
 
     public void displayStudentWallet(){
 
+    }
+
+    private void promptMessageAndStopThread(String message){
+        try{
+            view.displayText(message);
+            Thread.sleep(1000);
+        } catch (InterruptedException ex){
+            Thread.currentThread().interrupt();
+        }
     }
 }

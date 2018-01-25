@@ -1,6 +1,7 @@
 class StudentController{
 
     private UserView view = new UserView();
+    private UsersDao userDao = new UsersDao();
     private ArtifactsDao artifactsDao = new ArtifactsDao();
     private CrowdfundDao crowdfundsDao = new CrowdfundDao();
     private ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
@@ -43,7 +44,7 @@ class StudentController{
         }else if (choice.equals("5")){
             joinCrowdfund();
         }else if (choice.equals("6")){
-            System.out.println("Not available");
+            showStudentArtifacts();
         }else{
             System.out.println("No such choice");
         }
@@ -58,6 +59,10 @@ class StudentController{
         crowdfundsCollection = crowdfundsDao.getCrowdfunds();
 
 
+    }
+
+    private void showStudentArtifacts(){
+        artifactsDao.returnStudentArtifacts(this.student.getId());
     }
 
     private void returnAllCrowdfunds(){
@@ -133,10 +138,12 @@ class StudentController{
                 Artifact nextArtifact = artifactIterator.next();
                 if(choice.equals(String.valueOf(nextArtifact.getArtifactId()))){
                     Artifact correctArtifact = nextArtifact;
+                    artifactsDao.addArtifactToStudent(correctArtifact, this.student.getId());
+                    this.student.reduceWallet(correctArtifact.getArtifactPrice());
+                    userDao.updateStudentWalletInDatabase(this.student);
                 }
-            }
+            }break;
         }
-
     }
 
     private void joinCrowdfund(){
@@ -172,6 +179,8 @@ class StudentController{
                     }
                     student.reduceWallet(contribution);
                     crowdfundToContribute.reduceCurrentPrice(contribution);
+                    crowdfundsDao.updateCrowdfundAccount(crowdfundToContribute.getCrowdfundId(), contribution);
+
                     
                     break;
 

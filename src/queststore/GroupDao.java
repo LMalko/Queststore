@@ -1,11 +1,4 @@
-import java.io.IOException;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.util.ArrayList;
-import java.io.FileWriter;
-import java.sql.Connection;
-
 
 public class GroupDao{
 
@@ -27,7 +20,7 @@ public class GroupDao{
     public void addGroupToDatabase(Group group){
         databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO groups (name) VALUES ( " + "'" +
                 group.getGroupName() +
-                "')");
+                "');");
     }
 
     public ItemCollection<Group> getGroups(){
@@ -39,7 +32,8 @@ public class GroupDao{
     }
 
     public Group getGroupByName(String name){
-
+        groupsCollection.clear();
+        importGroups();
         CollectionIterator<Group> groupIterator = groupsCollection.getIterator();
         while(groupIterator.hasNext()){
             Group group = groupIterator.next();

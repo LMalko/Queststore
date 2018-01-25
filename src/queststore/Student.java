@@ -1,8 +1,7 @@
 public class Student extends User{
 
     private int wallet;
-    private int experience;
-    private Group group;
+    private int totalIncome;
     private ItemCollection<Integer> myArtifacts;
 
     public Student(String name, String surname, String password){
@@ -11,17 +10,18 @@ public class Student extends User{
         // this.group = null;
     }
 
-    public Student(int id, String name, String surname, String password, Group group, int wallet) {
+    public Student(int id, String name, String surname, String password, Group group, int wallet, int totalIncome) {
         super(id,name,surname,password,"student", group);
         this.wallet = wallet;
+        this.totalIncome = totalIncome;
     }
 
-    public Integer getStudentWallet(){
+    public int getStudentWallet(){
         return this.wallet;
     }
 
-    public Integer getStudentExperiance(){
-        return experience;
+    public int getStudentTotalIncome(){
+        return totalIncome;
     }
 
     public void setStudentGroup(Group group){

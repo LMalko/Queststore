@@ -11,7 +11,7 @@ public class ArtifactsDao{
 
     public void importArtifacts(){
 
-        artifactsCollection = new ItemCollection<Artifact>("Artifacts");
+        artifactsCollection.clear();
         databaseProcessor.connectToDatabase();
 
         ArrayList<ArrayList<String>> artifacts = databaseProcessor.getArrayListFromQuery("SELECT * FROM artifacts");
@@ -28,29 +28,13 @@ public class ArtifactsDao{
 
     }
 
-    public void exportArtifacts(){
-        databaseProcessor.connectToDatabase();
-
-        CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
-
-        while (artifactsIterator.hasNext()) {
-            Artifact artifact = artifactsIterator.next();
-            databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO artifacts VALUES " + 
-                                                                String.valueOf(artifact.getArtifactId()) + 
-                                                                artifact.getArtifactName() + 
-                                                                String.valueOf(artifact.getArtifactPrice()) + 
-                                                                artifact.getArtifactCategory());
-        }
-
-    }
-
     public ItemCollection<Artifact> getArtifacts(){
         return artifactsCollection;
     }
 
-    public void addArtifact(Artifact artifact){
+    private void addArtifact(Artifact artifact){
         artifactsCollection.add(artifact);
-                    
+
     }
 
     public void addArtifactToDatabase(Artifact artifact){
@@ -59,5 +43,30 @@ public class ArtifactsDao{
                                                         String.valueOf(artifact.getArtifactPrice()) + ", '" +
                                                         artifact.getArtifactCategory() +
                                                         "')");
+    }
+
+    public void addArtifactToStudent(Artifact artifact, int StudentID){
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts (artifact_id, student_id, status)" +
+                                                       "VALUES ( " + artifact.getArtifactId() + ", " +
+                                                       StudentID + ", 'bought/ not used')");
+    }
+
+    public void returnStudentArtifacts(int studentID){
+        databaseProcessor.executeQueryAgainstDatabase("SELECT name from artifacts where id IN (SELECT artifact_id " +
+                                                      " from student_artifacts where student_id="
+                                                      + studentID
+                                                      + ");");
+    }
+
+    public void updateArtifactDataInDatabase(Artifact artifact) {
+        String name = artifact.getArtifactName();
+        int price = artifact.getArtifactPrice();
+        String category = artifact.getArtifactCategory();
+
+        String query = "UPDATE artifacts SET name = '" + name + "' ," +
+                        "price = '" + price + "' ," +
+                        "category = '" + category + "' " +
+                        "WHERE id = '" + artifact.getArtifactId() + "';";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
     }
 }

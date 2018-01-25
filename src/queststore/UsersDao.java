@@ -29,7 +29,6 @@ class UsersDao {
         String password = personData.get(4);
         String status = personData.get(5);
         int groupId = 0;
-        //int walletID = Integer.parseInt(personData.get(7)); BRAK W BAZIE DANYCH
 
         if (personData.get(6) != null){
             groupId = Integer.parseInt(personData.get(6));
@@ -52,7 +51,9 @@ class UsersDao {
         else if(status.equals("student")){
             String query = "SELECT current_balance FROM wallet WHERE student_id = '" + id +"';";
             int wallet = databaseProcessor.getIntegerDataFromQuery(query, "current_balance");
-            person = new Student(id, name, surname, password, group, wallet);
+            query = "SELECT total_income FROM wallet WHERE student_id = '" + id +"';";
+            int totalIncome = databaseProcessor.getIntegerDataFromQuery(query, "total_income");
+            person = new Student(id, name, surname, password, group, wallet, totalIncome);
         }
         return person;
     }
@@ -83,6 +84,21 @@ class UsersDao {
 
     }
 
+    public void addStudentWalletToDatabase(Student student){
+        int currentBalance = student.getStudentWallet();
+        int totalIncome = student.getStudentTotalIncome();
+        String query = "SELECT id FROM users WHERE login = '" + student.getLogin() + "';";
+        int studentId = databaseProcessor.getIntegerDataFromQuery(query, "id");
+        query = "INSERT INTO wallet (current_balance, total_income, student_id) VALUES( '" +
+                currentBalance + "', '" +
+                totalIncome + "', '" +
+                studentId +
+                "');";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
+
+
+    }
+
     public String getUserGroupNameByGroupId(int groupID){
         String query = "SELECT * FROM groups WHERE id = '" + groupID +"';";
         String groupName = databaseProcessor.getStringDataFromQuery(query, "name");
@@ -95,6 +111,37 @@ class UsersDao {
 
     public void updateUserGroupInDatabase(User user){
         String query = "UPDATE users SET group_id = " + "'" + user.getUserGroupId() + "' " +
+                        "WHERE id = " + user.getId() + ";";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
+    }
+
+    public void updateStudentWalletInDatabase(Student student){
+        databaseProcessor.connectToDatabase();
+        int currentBalance = student.getStudentWallet();
+        int totalIncome = student.getStudentTotalIncome();
+        int studentId = student.getId();
+
+        String query = "UPDATE wallet SET current_balance = '" + currentBalance + "' ," +
+                        "total_income = '" + totalIncome + "' " +
+                        "WHERE student_id = '" + studentId + "';";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
+    }
+
+    public void updateUserDataInDatabase(User user) {
+        String name = user.getName();
+        String surname = user.getSurname();
+        String login = user.getLogin();
+        String password = user.getPassword();
+        String status = user.getStatus();
+        int groupId = user.getUserGroupId();
+        String experience = user.getUserExperienceLevel();
+        String query = "UPDATE users SET name = '" + name + "' ," +
+                        "surname = '" + surname + "' ," +
+                        "login = '" + login + "' ," +
+                        "password = '" + password + "' ," +
+                        "status = '" + status + "' ," +
+                        "group_id = '" + groupId + "' ," +
+                        "experience = '" + experience + "'" +
                         "WHERE id = " + user.getId() + ";";
         databaseProcessor.executeUpdateAgainstDatabase(query);
     }

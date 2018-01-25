@@ -14,8 +14,8 @@ public class CategoryDao{
     public void importCategories(){
         databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> category = databaseProcessor.getArrayListFromQuery("SELECT * FROM category");
-        String row;
+        ArrayList<ArrayList<String>> category = databaseProcessor.getArrayListFromQuery("SELECT * category");
+
         for(int i =0; i < category.size(); i++){
 
             String name = category.get(i).get(0);
@@ -24,27 +24,6 @@ public class CategoryDao{
         }
     }
 
-    public void exportCategory(){
-
-        CollectionIterator<Category> categoryIterator = allCategories.getIterator();
-
-        try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("csv/categories.csv"));
-            StringBuilder sb = new StringBuilder();
-
-            while(categoryIterator.hasNext()){
-                Category category = categoryIterator.next();
-                sb.append(category.getCategoryName());
-                sb.append("\n");
-            }
-
-            br.write(sb.toString());
-            br.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
 
     public ItemCollection<Category> getCategories(){
         return allCategories;
@@ -54,36 +33,22 @@ public class CategoryDao{
         allCategories.add(category);
     }
 
-    private void closeReader(BufferedReader br) {
-        if (br != null) {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public Category getCategoryByName(String name){
         CollectionIterator<Category> categoryIterator = allCategories.getIterator();
         while(categoryIterator.hasNext()){
             Category category = categoryIterator.next();
             if (category.getCategoryName().equals(name)){
+                System.out.println("KURWIX");
                 return category;
             }
         }
         return null;
     }
 
-    public ArrayList<String> getAllArtifacts(){
-        databaseProcessor.connectToDatabase();
-
-        ArrayList<ArrayList<String>> artifacts = databaseProcessor.getArrayListFromQuery("SELECT category FROM artifacts");
-        ArrayList<String> allArtifacts = new ArrayList<String>();
-        for(int i =0; i < artifacts.size(); i++){
-            String category = artifacts.get(i).get(3);
-            allArtifacts.add(category);
-            }
-        return allArtifacts;
+    public void addCategoryToDatabase(Category category){
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO categories (name) VALUES ( " + "'" +
+                                                        category.getCategoryName() +
+                                                        "')");
     }
+
 }
