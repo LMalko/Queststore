@@ -184,7 +184,6 @@ class MentorController{
         artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
         artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
         artifactToEdit.setCategory(addArtifactCategory());
-        artifactsDao.exportArtifacts();
     }
 
     public Artifact getArtifactById(int id){
