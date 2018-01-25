@@ -178,8 +178,7 @@ class AdminController{
             int level = Integer.parseInt(view.getUserInput("Set xp needed to reach level: "));
             ExperienceLevel newLevel = new ExperienceLevel(level, levelName);
             newLevel.addExperienceLevel(newLevel);
-            ItemCollection<ExperienceLevel> experienceLevels = newLevel.getExperienceLevels();
-            levelsDao.exportExperienceLevels(experienceLevels);
+            levelsDao.addExperienceLevelToDatabase(newLevel);
         } catch (NumberFormatException e){
             try{
                 view.displayText("Experience needed should be a number!");
