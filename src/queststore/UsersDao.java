@@ -3,11 +3,12 @@ import java.util.ArrayList;
 class UsersDao {
 
     private static ArrayList<User> usersCollection = new ArrayList<User>();
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+    private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importUsersData() {
-        databaseConnection.connectToDatabase();
-        ArrayList<ArrayList<String>> users = databaseConnection.getArrayListFromQuery("SELECT * FROM users");
+        usersCollection.clear();
+        databaseProcessor.connectToDatabase();
+        ArrayList<ArrayList<String>> users = databaseProcessor.getArrayListFromQuery("SELECT * FROM users");
         for(int i =0; i < users.size(); i++){
             ArrayList<String> personData = users.get(i);
             User person = createUserObject(personData);
@@ -28,7 +29,6 @@ class UsersDao {
         String password = personData.get(4);
         String status = personData.get(5);
         int groupId = 0;
-        //int walletID = Integer.parseInt(personData.get(7)); BRAK W BAZIE DANYCH
 
         if (personData.get(6) != null){
             groupId = Integer.parseInt(personData.get(6));
@@ -39,27 +39,33 @@ class UsersDao {
             String experienceLevel = "";
         }
 
+        String groupName = getUserGroupNameByGroupId(groupId);
+        Group group = new Group(groupId, groupName);
         User person = null;
         if(status.equals("admin")){
             person = new Admin(name, surname, password);
         }
         else if(status.equals("mentor")){
-            person = new Mentor(id, name, surname, password, groupId);
+            person = new Mentor(id, name, surname, password, group);
         }
         else if(status.equals("student")){
-            person = new Student(name, surname, password);
+            String query = "SELECT current_balance FROM wallet WHERE student_id = '" + id +"';";
+            int wallet = databaseProcessor.getIntegerDataFromQuery(query, "current_balance");
+            query = "SELECT total_income FROM wallet WHERE student_id = '" + id +"';";
+            int totalIncome = databaseProcessor.getIntegerDataFromQuery(query, "total_income");
+            person = new Student(id, name, surname, password, group, wallet, totalIncome);
         }
         return person;
     }
 
     public void addUserToDatabase(User user){
-        databaseConnection.connectToDatabase();
+        databaseProcessor.connectToDatabase();
         String name = user.getName();
         String surname = user.getSurname();
         String login = user.getLogin();
         String password = user.getPassword();
         String status = user.getStatus();
-        int groupIndex = user.getUserGroupId();
+        int groupId = user.getUserGroupId();
         String experienceLevel = user.getUserExperienceLevel();
 
         String query = "INSERT INTO users (name, surname, login, password," +
@@ -69,13 +75,34 @@ class UsersDao {
                         login + "', '" +
                         password + "', '" +
                         status + "', " +
-                        String.valueOf(groupIndex) + ", '" +
+                        String.valueOf(groupId) + ", '" +
                         experienceLevel +
                         "');";
 
         usersCollection.add(user);
-        databaseConnection.executeUpdateAgainstDatabase(query);
+        databaseProcessor.executeUpdateAgainstDatabase(query);
 
+    }
+
+    public void addStudentWalletToDatabase(Student student){
+        int currentBalance = student.getStudentWallet();
+        int totalIncome = student.getStudentTotalIncome();
+        String query = "SELECT id FROM users WHERE login = '" + student.getLogin() + "';";
+        int studentId = databaseProcessor.getIntegerDataFromQuery(query, "id");
+        query = "INSERT INTO wallet (current_balance, total_income, student_id) VALUES( '" +
+                currentBalance + "', '" +
+                totalIncome + "', '" +
+                studentId +
+                "');";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
+
+
+    }
+
+    public String getUserGroupNameByGroupId(int groupID){
+        String query = "SELECT * FROM groups WHERE id = '" + groupID +"';";
+        String groupName = databaseProcessor.getStringDataFromQuery(query, "name");
+        return groupName;
     }
 
     public void addUserToUsersCollection(User user){
@@ -85,12 +112,40 @@ class UsersDao {
     public void updateUserGroupInDatabase(User user){
         String query = "UPDATE users SET group_id = " + "'" + user.getUserGroupId() + "' " +
                         "WHERE id = " + user.getId() + ";";
-        System.out.println(query);
-        databaseConnection.executeUpdateAgainstDatabase(query);
+        databaseProcessor.executeUpdateAgainstDatabase(query);
+    }
+
+    public void updateStudentWalletInDatabase(Student student){
+        int currentBalance = student.getStudentWallet();
+        int totalIncome = student.getStudentTotalIncome();
+        int studentId = student.getId();
+
+        String query = "UPDATE wallet SET current_balance = '" + currentBalance + "' ," +
+                        "total_income = '" + totalIncome + "' " +
+                        "WHERE student_id = '" + studentId + "';";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
+    }
+
+    public void updateUserDataInDatabase(User user) {
+        String name = user.getName();
+        String surname = user.getSurname();
+        String login = user.getLogin();
+        String password = user.getPassword();
+        String status = user.getStatus();
+        int groupId = user.getUserGroupId();
+        String experience = user.getUserExperienceLevel();
+        String query = "UPDATE users SET name = '" + name + "' ," +
+                        "surname = '" + surname + "' ," +
+                        "login = '" + login + "' ," +
+                        "password = '" + password + "' ," +
+                        "status = '" + status + "' ," +
+                        "group_id = '" + groupId + "' ," +
+                        "experience = '" + experience + "'" +
+                        "WHERE id = " + user.getId() + ";";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
     }
 
     public ArrayList<User> getAllUsersByStatus(String userStatus){
-        usersCollection.clear();
         importUsersData();
         ArrayList<User> usersWithGivenStatus = new ArrayList<User>();
         for (User user : usersCollection){
@@ -117,5 +172,9 @@ class UsersDao {
             }
         }
         return null;
+    }
+
+    public void disconnectDatabase(){
+        databaseProcessor.closeDatabase();
     }
 }

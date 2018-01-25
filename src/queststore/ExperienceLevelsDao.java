@@ -1,22 +1,14 @@
-import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.util.ArrayList;
-import java.io.FileWriter;
-
 
 public class ExperienceLevelsDao{
 
 
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+    private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importExperienceLevels(){
-        databaseConnection.connectToDatabase();
+        databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> experience = databaseConnection.getArrayListFromQuery("SELECT * FROM experience_levels");
+        ArrayList<ArrayList<String>> experience = databaseProcessor.getArrayListFromQuery("SELECT * FROM experience_levels");
         String row;
         for(int i =0; i < experience.size(); i++){
 
@@ -26,28 +18,13 @@ public class ExperienceLevelsDao{
             ExperienceLevel experienceLevel = new ExperienceLevel(money_required, name);
             experienceLevel.addExperienceLevel(experienceLevel);
         }
-
     }
 
-    public void exportExperienceLevels(ItemCollection<ExperienceLevel> experienceLevelData){
-
-        try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("csv/experienceLevels.csv"));
-            StringBuilder sb = new StringBuilder();
-            CollectionIterator<ExperienceLevel> levelIterator = experienceLevelData.getIterator();
-            while(levelIterator.hasNext()) {
-                ExperienceLevel level = levelIterator.next();
-                sb.append(level.getLevel());
-                sb.append(",");
-                sb.append(level.getLevelName());
-                sb.append("\n");
-            }
-
-            br.write(sb.toString());
-            br.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+    public void addExperienceLevelToDatabase(ExperienceLevel experienceLevel){
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO experience_levels (name, money_required) VALUES (" + "'" +
+                experienceLevel.getLevelName() + "' ,'" +
+                experienceLevel.getLevelMoneyRequired() +
+                "');");
     }
+
 }

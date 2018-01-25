@@ -7,8 +7,7 @@ abstract class User{
     protected String password;
     protected String status;
     protected int groupId;
-    protected String groupName;
-    protected int wallet;
+    protected Group group;
     protected String experienceLevel;
     //public ItemCollection userArtifacts;
 
@@ -18,20 +17,18 @@ abstract class User{
         this.login = name.toLowerCase() + surname.toLowerCase() + "@cc.com";
         this.password = password;
         this.status = status;
-        this.id = 0;
-        this.groupId = 0;
-        this.wallet = 0;
+        this.group = null;
         this.experienceLevel = " ";
     }
 
-    public User(int id, String name, String surname, String password, String status, int groupId){
+    public User(int id, String name, String surname, String password, String status, Group group){
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.login = name.toLowerCase() + surname.toLowerCase() + "@cc.com";
         this.password = password;
         this.status = status;
-        this.groupId = groupId;
+        this.group = group;
     }
 
     public void setName(String name){
@@ -70,17 +67,19 @@ abstract class User{
         return this.status;
     }
 
-    public int getUserWallet(){
-        return this.wallet;
-    }
-
     public String getUserExperienceLevel(){
         return this.experienceLevel;
     }
 
     public String getUserGroupName(){
-        return this.groupName;
+        return this.group.getGroupName();
     }
 
-    public int getUserGroupId() { return this.groupId; }
+    public int getUserGroupId() {
+        if (this.group != null){
+            return this.group.getGroupId();
+        } else {
+            return 0;
+        }
+    }
 }

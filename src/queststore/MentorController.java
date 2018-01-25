@@ -3,6 +3,7 @@ import java.util.ArrayList;
 class MentorController{
 
     private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
+    private static ItemCollection<Category> categoryCollection = new ItemCollection<>("Categories");
 
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
@@ -29,7 +30,9 @@ class MentorController{
     public void handleMentorPanelOptions(){
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
+            dao.disconnectDatabase();
             System.exit(0);
+
         }
         else if (choice.equals("1")){
             createStudent();
@@ -73,8 +76,10 @@ class MentorController{
         String studentSurname = view.getUserInput("Enter student surname: ");
         String studentPassword = view.getUserInput("Enter student password: ");
         Student newStudent = new Student(studentName, studentSurname, studentPassword);
-        dao.addUserToUsersCollection(newStudent);
+        dao.addUserToDatabase(newStudent);
+        dao.addStudentWalletToDatabase(newStudent);
         //dao.saveUsersToFile();
+        // dodawanie portfela!!!
     }
 
     public void studentAssignToGroup(){
@@ -87,6 +92,7 @@ class MentorController{
         String groupName = view.getUserInput("Choose group name:");
         Group newGroup = groupDao.getGroupByName(groupName);
         student.setStudentGroup(newGroup);
+        dao.updateUserGroupInDatabase(student);
         //dao.saveUsersToFile();
     }
 
@@ -163,13 +169,15 @@ class MentorController{
     }
 
     public void addArtifact(){
-        int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
+        //int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
         String artifactName = view.getUserInput("Enter artifact name: ");
         int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
+        getAllCategories();
         String artifactCategory = view.getUserInput("Enter artifact category: ");
-        Artifact newArtifact = new Artifact(artifactId, artifactName, artifactPrice, artifactCategory);
-        artifactsDao.addArtifact(newArtifact);
-        artifactsDao.exportArtifacts();
+        String artifactCategoryName = categoryDao.getCategoryByName(artifactCategory).getCategoryName();
+        Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategoryName);
+        artifactsDao.addArtifactToDatabase(newArtifact);
+        //artifactsDao.exportArtifacts();
 
     }
 
@@ -215,7 +223,7 @@ class MentorController{
 
     public String addArtifactCategory(){
         getAllCategories();
-        view.displayText("Choose category from listed below:");
+        view.displayText("Choose category from list:");
         String categoryName = view.getUserInput("Choose category by name: ");
         Category category = categoryDao.getCategoryByName(categoryName);
         if (category.getCategoryName().equals(categoryName)){
@@ -227,24 +235,23 @@ class MentorController{
     public void addNewCategory(){
         String categoryName = view.getUserInput("Enter new category name: ");
         Category category = new Category(categoryName);
-        categoryDao.addCategory(category);
         categoryDao.addCategoryToDatabase(category);
-
+        categoryDao.addCategory(category);
     }
 
     private void getAllCategories(){
         ItemCollection<Category> categoryCollection = categoryDao.getCategories();
         CollectionIterator<Category> categoryIterator = categoryCollection.getIterator();
-
         while (categoryIterator.hasNext()){
             Category category = categoryIterator.next();
-            String categoryName = category.getCategoryName();
-            view.displayText(categoryName);
+            String name = category.getCategoryName();
+            view.displayText(name);
         }
+
     }
 
     public void markStudentQuest(){
-
+        //zaznaczyc ze quest studenta zrobiony i dodac kasen na jego konto
     }
 
     public void markStudentArtifact(){

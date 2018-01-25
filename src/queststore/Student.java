@@ -1,28 +1,32 @@
 public class Student extends User{
 
     private int wallet;
-    private int experience;
+    private int totalIncome;
     private Group group;
     private ItemCollection<Integer> myArtifacts;
 
     public Student(String name, String surname, String password){
         super(name, surname, password, "student");
-        this.wallet = 1500;
-        this.experience = 0;
-        this.group = null;
+        // this.experience = 0;
+        // this.group = null;
     }
 
-    public Integer getStudentWallet(){
-        return wallet;
+    public Student(int id, String name, String surname, String password, Group group, int wallet, int totalIncome) {
+        super(id,name,surname,password,"student", group);
+        this.wallet = wallet;
+        this.totalIncome = totalIncome;
     }
 
-    public Integer getStudentExperiance(){
-        return experience;
+    public int getStudentWallet(){
+        return this.wallet;
+    }
+
+    public int getStudentTotalIncome(){
+        return totalIncome;
     }
 
     public void setStudentGroup(Group group){
         this.group = group;
-        this.groupName = group.getGroupName();
     }
 
     public String getStudentGroupName(){

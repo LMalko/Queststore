@@ -33,7 +33,7 @@ class StudentController{
             System.exit(0);
         }else if (choice.equals("1")){
             System.out.println("\n\nWallet is:");
-            System.out.println(student.getStudentWallet());
+            System.out.println(this.student.getStudentWallet());
         }else if (choice.equals("2")){
             buyArtifact();
         }else if (choice.equals("3")){
@@ -127,7 +127,16 @@ class StudentController{
 
     private void buyArtifact(){
         returnAllArtifacts();
-        System.out.println("\n\n\nStore is currently closed due to renovation - ZMIENIAMY SIĘ DLA CIEBIE !\n\n");
+        while(true){
+            String choice = view.getUserInput("Choose your option: ");
+            while(artifactIterator.hasNext()){
+                Artifact nextArtifact = artifactIterator.next();
+                if(choice.equals(String.valueOf(nextArtifact.getArtifactId()))){
+                    Artifact correctArtifact = nextArtifact;
+                    artifactsDao.addArtifactToStudent(correctArtifact, this.student.getId());
+                }
+            }break;
+        }
     }
 
     private void joinCrowdfund(){

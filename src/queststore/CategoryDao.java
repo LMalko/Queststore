@@ -9,12 +9,12 @@ import java.util.ArrayList;
 public class CategoryDao{
 
     private static ItemCollection<Category> allCategories = new ItemCollection<>("Category");
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+    private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importCategories(){
-        databaseConnection.connectToDatabase();
+        databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> category = databaseConnection.getArrayListFromQuery("SELECT * FROM category");
+        ArrayList<ArrayList<String>> category = databaseProcessor.getArrayListFromQuery("SELECT * category");
 
         for(int i =0; i < category.size(); i++){
 
@@ -33,19 +33,22 @@ public class CategoryDao{
         allCategories.add(category);
     }
 
-    public void addCategoryToDatabase(Category category){
-      databaseConnection.executeUpdateAgainstDatabase("INSERT INTO artifacts (" + "'" +
-                                                        category.getCategoryName() + "')");
-    }
-
     public Category getCategoryByName(String name){
         CollectionIterator<Category> categoryIterator = allCategories.getIterator();
         while(categoryIterator.hasNext()){
             Category category = categoryIterator.next();
             if (category.getCategoryName().equals(name)){
+                System.out.println("KURWIX");
                 return category;
             }
         }
         return null;
     }
+
+    public void addCategoryToDatabase(Category category){
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO categories (name) VALUES ( " + "'" +
+                                                        category.getCategoryName() +
+                                                        "')");
+    }
+
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public class QuestDao{
 
     private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+    private DBStatementProcessor databaseConnection = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importQuests(){
         databaseConnection.connectToDatabase();
