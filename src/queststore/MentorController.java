@@ -191,10 +191,11 @@ class MentorController{
         getAllArtifacts();
         int id = Integer.parseInt(view.getUserInput("Enter artifact id: "));
         Artifact artifactToEdit = getArtifactById(id);
-        artifactToEdit.setId(Integer.parseInt(view.getUserInput("Enter new artifact id: ")));
+        System.out.println(artifactToEdit);
         artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
         artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
-        artifactToEdit.setCategory(addArtifactCategory());
+        artifactToEdit.setCategory(view.getUserInput("Enter new artifact name: "));
+        artifactsDao.updateArtifactDataInDatabase(artifactToEdit);
     }
 
     public Artifact getArtifactById(int id){
