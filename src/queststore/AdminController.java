@@ -80,12 +80,7 @@ class AdminController{
                 Thread.sleep(1000);
             }
         } catch (NumberFormatException e){
-            try{
-                view.displayText("No mentor with given ID exists!");
-                Thread.sleep(1000);
-            } catch (InterruptedException ex){
-                Thread.currentThread().interrupt();
-            }
+            promptMessageAndStopThread("No mentor with given ID exists!");
         } catch (InterruptedException e){
             Thread.currentThread().interrupt();
         }
@@ -104,12 +99,7 @@ class AdminController{
                 Thread.sleep(1000);
             }
         } catch (NumberFormatException e){
-            try{
-                view.displayText("No mentor with given ID exists!");
-                Thread.sleep(1000);
-            } catch (InterruptedException ex){
-                Thread.currentThread().interrupt();
-            }
+            promptMessageAndStopThread("No mentor with given ID exists!");
         } catch (InterruptedException e){
             Thread.currentThread().interrupt();
         }
@@ -153,12 +143,7 @@ class AdminController{
                 Thread.currentThread().interrupt();
             }
         } catch (NumberFormatException e){
-            try{
-                view.displayText("No such mentor or group exists!");
-                Thread.sleep(1000);
-            } catch (InterruptedException ex){
-                Thread.currentThread().interrupt();
-            }
+            promptMessageAndStopThread("No such mentor or group exists!");
         }
     }
 
@@ -180,12 +165,7 @@ class AdminController{
             newLevel.addExperienceLevel(newLevel);
             levelsDao.addExperienceLevelToDatabase(newLevel);
         } catch (NumberFormatException e){
-            try{
-                view.displayText("Experience needed should be a number!");
-                Thread.sleep(1000);
-            } catch (InterruptedException ex){
-                Thread.currentThread().interrupt();
-            }
+            promptMessageAndStopThread("Experience needed should be a number!");
         }
     }
 
@@ -197,6 +177,15 @@ class AdminController{
             String mentorName = mentor.getName();
             String mentorSurname = mentor.getSurname();
             view.displayText("ID: "+mentorId +" "+mentorName+" "+mentorSurname);
+        }
+    }
+
+    private void promptMessageAndStopThread(String message){
+        try{
+            view.displayText(message);
+            Thread.sleep(1000);
+        } catch (InterruptedException ex){
+            Thread.currentThread().interrupt();
         }
     }
 }
