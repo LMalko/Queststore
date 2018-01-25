@@ -35,7 +35,7 @@ class StudentController{
             System.exit(0);
         }else if (choice.equals("1")){
             System.out.println("\n\nWallet is:");
-            System.out.println(this.student.getUserWallet());
+            System.out.println(this.student.getStudentWallet());
         }else if (choice.equals("2")){
             buyArtifact();
         }else if (choice.equals("3")){

@@ -88,6 +88,23 @@ public class JDBConnection{
         return receivedData;
     }
 
+    public int getIntegerDataFromQuery(String query, String dataToGet){
+        int receivedData = 0;
+        try{
+            result = statement.executeQuery(query);
+            while (result.next()) {
+                receivedData = result.getInt(dataToGet);
+            }
+
+        } catch (SQLException exception) {
+            System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
+            System.out.println("\n\n\nOperation was NOT performed successfully");
+        }
+        return receivedData;
+    }
+
+
+
     public ArrayList getArrayListFromQuery(String query){
         
         ArrayList<ArrayList> arrayResult = new ArrayList<ArrayList>();
