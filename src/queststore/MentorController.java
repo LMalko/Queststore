@@ -232,8 +232,8 @@ class MentorController{
     public void addNewCategory(){
         String categoryName = view.getUserInput("Enter new category name: ");
         Category category = new Category(categoryName);
+        categoryDao.addCategoryToDatabase(category);
         categoryDao.addCategory(category);
-        categoryDao.exportCategory();
 
     }
 
