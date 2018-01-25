@@ -88,6 +88,7 @@ class MentorController{
         String groupName = view.getUserInput("Choose group name:");
         Group newGroup = groupDao.getGroupByName(groupName);
         student.setStudentGroup(newGroup);
+        dao.updateUserGroupInDatabase(student);
         //dao.saveUsersToFile();
     }
 

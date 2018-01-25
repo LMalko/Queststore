@@ -18,7 +18,6 @@ abstract class User{
         this.login = name.toLowerCase() + surname.toLowerCase() + "@cc.com";
         this.password = password;
         this.status = status;
-        this.id = 0;
         this.groupId = 0;
         this.wallet = 0;
         this.experienceLevel = " ";
