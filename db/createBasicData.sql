@@ -20,8 +20,9 @@ VALUES ('Zjeść kebsa', 1000, 'basic'),
 ('Nie jeść kebsa', 3000, 'extra');
 
 --create representational record of WALLET
-INSERT INTO wallet (user_id, current_balance)
-VALUES (1, 2500, 3000);
+INSERT INTO wallet (current_balance, total_income, student_id)
+VALUES (2500, 2500, 1);
+
 
 --create representational record of STUDENT_QUESTS
 INSERT INTO student_quests (quests_id, student_id, status)

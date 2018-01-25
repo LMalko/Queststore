@@ -6,13 +6,14 @@ import java.sql.Connection;
 public class CrowdfundDao{
 
     private static ItemCollection<Crowdfund> crowdfundCollection = new ItemCollection<>("Crowdfunds");
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+    private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importCrowdfunds(){
-        databaseConnection.connectToDatabase();
+        crowdfundCollection= new ItemCollection<>("Crowdfunds");
+        databaseProcessor.connectToDatabase();
 
 
-        ArrayList<ArrayList<String>> artifacts = databaseConnection.getArrayListFromQuery("SELECT * FROM crowdfunds");
+        ArrayList<ArrayList<String>> artifacts = databaseProcessor.getArrayListFromQuery("SELECT * FROM crowdfunds");
         for(int i =0; i < artifacts.size(); i++){
 
             int id = Integer.parseInt(artifacts.get(i).get(0));
@@ -41,7 +42,7 @@ public class CrowdfundDao{
     }
 
     public void addCrowdfundToDatabase(Crowdfund crowdfund){
-        databaseConnection.executeUpdateAgainstDatabase("INSERT INTO crowdfunds (name, total_price, account, founder_id) VALUES ( " + "'" +
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO crowdfunds (name, total_price, account, founder_id) VALUES ( " + "'" +
                                                         crowdfund.getCrowdfundName() + "', " +
                                                         crowdfund.getCrowdfundTotalPrice() + ", " +
                                                         crowdfund.getCrowdfundAccount() + ", " +

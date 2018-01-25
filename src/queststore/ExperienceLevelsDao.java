@@ -11,12 +11,12 @@ import java.io.FileWriter;
 public class ExperienceLevelsDao{
 
 
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+    private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importExperienceLevels(){
-        databaseConnection.connectToDatabase();
+        databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> experience = databaseConnection.getArrayListFromQuery("SELECT * FROM experience_levels");
+        ArrayList<ArrayList<String>> experience = databaseProcessor.getArrayListFromQuery("SELECT * FROM experience_levels");
         String row;
         for(int i =0; i < experience.size(); i++){
 

@@ -73,8 +73,9 @@ class MentorController{
         String studentSurname = view.getUserInput("Enter student surname: ");
         String studentPassword = view.getUserInput("Enter student password: ");
         Student newStudent = new Student(studentName, studentSurname, studentPassword);
-        dao.addUserToUsersCollection(newStudent);
+        dao.addUserToDatabase(newStudent);
         //dao.saveUsersToFile();
+        // dodawanie portfela!!!
     }
 
     public void studentAssignToGroup(){
@@ -87,6 +88,7 @@ class MentorController{
         String groupName = view.getUserInput("Choose group name:");
         Group newGroup = groupDao.getGroupByName(groupName);
         student.setStudentGroup(newGroup);
+        dao.updateUserGroupInDatabase(student);
         //dao.saveUsersToFile();
     }
 
@@ -163,13 +165,13 @@ class MentorController{
     }
 
     public void addArtifact(){
-        int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
+        //int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
         String artifactName = view.getUserInput("Enter artifact name: ");
         int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
         String artifactCategory = view.getUserInput("Enter artifact category: ");
-        Artifact newArtifact = new Artifact(artifactId, artifactName, artifactPrice, artifactCategory);
-        artifactsDao.addArtifact(newArtifact);
-        artifactsDao.exportArtifacts();
+        Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategory);
+        artifactsDao.addArtifactToDatabase(newArtifact);
+        //artifactsDao.exportArtifacts();
 
     }
 
@@ -215,7 +217,7 @@ class MentorController{
 
     public String addArtifactCategory(){
         getAllCategories();
-        view.displayText("Choose category from listed below:");
+        view.displayText("Choose category from list:");
         String categoryName = view.getUserInput("Choose category by name: ");
         Category category = categoryDao.getCategoryByName(categoryName);
         if (category.getCategoryName().equals(categoryName)){
@@ -244,7 +246,7 @@ class MentorController{
     }
 
     public void markStudentQuest(){
-
+        //zaznaczyc ze quest studenta zrobiony i dodac kasen na jego konto
     }
 
     public void markStudentArtifact(){

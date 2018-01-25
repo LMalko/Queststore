@@ -28,10 +28,10 @@ CREATE TABLE quests(
 	category TEXT);
 
 CREATE TABLE wallet(
-	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-	user_id INTEGER NOT NULL,
 	current_balance INTEGER NOT NULL,
-	total_income INTEGER  NOT NULL);
+	total_income INTEGER  NOT NULL,
+	student_id INTEGER NOT NULL UNIQUE, 
+			   FOREIGN KEY (student_id) REFERENCES users(id));
 
 CREATE TABLE student_quests(
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,

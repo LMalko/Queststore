@@ -10,55 +10,27 @@ import java.sql.Connection;
 public class GroupDao{
 
     private static ItemCollection<Group> groupsCollection = new ItemCollection<>("Group");
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+    private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importGroups(){
-        databaseConnection.connectToDatabase();
+        databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> group = databaseConnection.getArrayListFromQuery("SELECT * FROM groups");
-        String row;
+        ArrayList<ArrayList<String>> group = databaseProcessor.getArrayListFromQuery("SELECT * FROM groups");
         for(int i =0; i < group.size(); i++){
-
-            String groupName = group.get(i).get(0);
-            Group newGroup = new Group(groupName);
+            int groupId = Integer.parseInt(group.get(i).get(0));
+            String groupName = group.get(i).get(1);
+            Group newGroup = new Group(groupId, groupName);
             addGroup(newGroup);
         }
     }
 
-    public void exportGroups(){
-
-        CollectionIterator<Group> groupIterator = groupsCollection.getIterator();
-
-        try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("csv/groups.csv"));
-            StringBuilder sb = new StringBuilder();
-
-            while(groupIterator.hasNext()){
-                Group group = groupIterator.next();
-                sb.append(group.getGroupName());
-                sb.append("\n");
-            }
-
-            br.write(sb.toString());
-            br.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void closeReader(BufferedReader br) {
-        if (br != null) {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public void addGroupToDatabase(Group group){
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO groups (name) VALUES ( " + "'" +
+                group.getGroupName() +
+                "')");
     }
 
     public ItemCollection<Group> getGroups(){
-        //importGroups();
         return groupsCollection;
     }
 

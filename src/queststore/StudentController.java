@@ -15,6 +15,7 @@ class StudentController{
         boolean isRuntime = true;
         this.student = student;
         artifactsDao.importArtifacts();
+        crowdfundsDao.importCrowdfunds();
         
         while(isRuntime){
             view.displayUserMenu("txt/studentMenu.txt");
@@ -25,13 +26,14 @@ class StudentController{
     }
 
     private void handleStudentPanelOptions(){
+        refreshArtifactsAndCrowdfundsDB();
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
             view.clearScreen();
             System.exit(0);
         }else if (choice.equals("1")){
             System.out.println("\n\nWallet is:");
-            System.out.println(student.getStudentWallet());
+            System.out.println(this.student.getStudentWallet());
         }else if (choice.equals("2")){
             buyArtifact();
         }else if (choice.equals("3")){
@@ -45,7 +47,17 @@ class StudentController{
         }else{
             System.out.println("No such choice");
         }
+    }
+
+    private void refreshArtifactsAndCrowdfundsDB(){
+        artifactsDao = new ArtifactsDao();
         artifactsDao.importArtifacts();
+        artifactsCollection = artifactsDao.getArtifacts();
+        crowdfundsDao = new CrowdfundDao();
+        crowdfundsDao.importCrowdfunds();
+        crowdfundsCollection = crowdfundsDao.getCrowdfunds();
+
+
     }
 
     private void returnAllCrowdfunds(){
@@ -99,8 +111,8 @@ class StudentController{
                                                     artifactToCrowdfund.getArtifactPrice(), 
                                                     founderID );
                                                     
-                this.crowdfundsDao.addCrowdfund(crowdfund);
-                this.crowdfundsDao.exportCrowdfund();
+                
+                crowdfundsDao.addCrowdfundToDatabase(crowdfund);
                 break;
                 }
             }
@@ -115,7 +127,16 @@ class StudentController{
 
     private void buyArtifact(){
         returnAllArtifacts();
-        System.out.println("\n\n\nStore is currently closed due to renovation - ZMIENIAMY SIĘ DLA CIEBIE !\n\n");
+        while(true){
+            String choice = view.getUserInput("Choose your option: ");
+            while(artifactIterator.hasNext()){
+                Artifact nextArtifact = artifactIterator.next();
+                if(choice.equals(String.valueOf(nextArtifact.getArtifactId()))){
+                    Artifact correctArtifact = nextArtifact;
+                }
+            }
+        }
+
     }
 
     private void joinCrowdfund(){
@@ -161,7 +182,6 @@ class StudentController{
                     }
                 }
 
-                this.crowdfundsDao.exportCrowdfund();
                 break;
                 }
             }

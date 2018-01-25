@@ -3,29 +3,27 @@ import java.util.ArrayList;
 import java.sql.*;
 
 
-public class JDBConnection{
+public class DBStatementProcessor{
     
     private String filename;
     private Connection connection = null;
     private Statement statement = null;
     private ResultSet result;
 
-    public JDBConnection(String filename){
+    public DBStatementProcessor(String filename){
         this.filename = filename;
     }
 
-    Connection connectToDatabase() {
+    void connectToDatabase() {
         
         try {
             // Register JDBC driver.
             Class.forName("org.sqlite.JDBC");
             // Open a connection to database.
             connection = DriverManager.getConnection(filename);
-            System.out.println("Database has opened successfully");
         }catch ( Exception exception ) {
             System.err.println( exception.getClass().getName() + ": " + exception.getMessage() );
         }
-        return connection;
     }
 
     public void executeQueryAgainstDatabase(String query){
@@ -45,7 +43,6 @@ public class JDBConnection{
                 columnNames.add(columnName);
             }
 
-            System.out.println("\n\nResult: \n\n");
             while(result.next()){
                 String row = "";
             
@@ -55,7 +52,6 @@ public class JDBConnection{
                 }
                 System.out.println(row);
             }
-            System.out.println("\n\n\nQuery performed successfully");
             
 
         }catch(Exception exception){
@@ -76,6 +72,38 @@ public class JDBConnection{
         }
         
     }
+
+    public String getStringDataFromQuery(String query, String dataToGet){
+        String receivedData = "";
+        try{
+            result = statement.executeQuery(query);
+            while (result.next()) {
+                receivedData = result.getString(dataToGet);
+            }
+
+        } catch (SQLException exception) {
+            System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
+            System.out.println("\n\n\nOperation was NOT performed successfully");
+        }
+        return receivedData;
+    }
+
+    public int getIntegerDataFromQuery(String query, String dataToGet){
+        int receivedData = 0;
+        try{
+            result = statement.executeQuery(query);
+            while (result.next()) {
+                receivedData = result.getInt(dataToGet);
+            }
+
+        } catch (SQLException exception) {
+            System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
+            System.out.println("\n\n\nOperation was NOT performed successfully");
+        }
+        return receivedData;
+    }
+
+
 
     public ArrayList getArrayListFromQuery(String query){
         
@@ -107,7 +135,6 @@ public class JDBConnection{
                     }
                 arrayResult.add(rowResult);
                 }
-                System.out.println("\n\n\nOperation performed successfully");
                 
             }catch(Exception exception){
     
@@ -115,7 +142,6 @@ public class JDBConnection{
                 System.out.println("\n\n\nOperation was NOT performed successfully");
     
             }
-        System.out.println(arrayResult);
         return arrayResult;
     }
 

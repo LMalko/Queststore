@@ -7,13 +7,17 @@ public class Student extends User{
 
     public Student(String name, String surname, String password){
         super(name, surname, password, "student");
-        this.wallet = 1500;
-        this.experience = 0;
-        this.group = null;
+        // this.experience = 0;
+        // this.group = null;
+    }
+
+    public Student(int id, String name, String surname, String password, Group group, int wallet) {
+        super(id,name,surname,password,"student", group);
+        this.wallet = wallet;
     }
 
     public Integer getStudentWallet(){
-        return wallet;
+        return this.wallet;
     }
 
     public Integer getStudentExperiance(){
@@ -22,7 +26,6 @@ public class Student extends User{
 
     public void setStudentGroup(Group group){
         this.group = group;
-        this.groupName = group.getGroupName();
     }
 
     public String getStudentGroupName(){

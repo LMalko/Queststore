@@ -22,6 +22,7 @@ class AdminController{
         try{
             String choice = view.getUserInput("Choose your option: ");
             if (choice.equals("0")){
+                dao.disconnectDatabase();
                 System.exit(0);
             }
             else if (choice.equals("1")){
@@ -129,7 +130,7 @@ class AdminController{
         String groupName = view.getUserInput("Enter new group name: ");
         Group group = new Group(groupName);
         groupDao.addGroup(group);
-        groupDao.exportGroups();
+        groupDao.addGroupToDatabase(group);
     }
 
     private void assignMentorToGroup(){
@@ -143,7 +144,7 @@ class AdminController{
             String groupName = view.getUserInput("Choose group name:");
             Group newGroup = groupDao.getGroupByName(groupName);
             mentor.setMentorGroup(newGroup);
-            //dao.saveUsersToFile();
+            dao.updateUserGroupInDatabase(mentor);
         } catch (NullPointerException e){
             try{
                 view.displayText("No such mentor or group exists!");
