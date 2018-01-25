@@ -133,10 +133,10 @@ class StudentController{
                 Artifact nextArtifact = artifactIterator.next();
                 if(choice.equals(String.valueOf(nextArtifact.getArtifactId()))){
                     Artifact correctArtifact = nextArtifact;
+                    artifactsDao.addArtifactToStudent(correctArtifact, this.student.getId());
                 }
-            }
+            }break;
         }
-
     }
 
     private void joinCrowdfund(){
