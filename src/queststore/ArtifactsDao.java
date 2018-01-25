@@ -34,7 +34,7 @@ public class ArtifactsDao{
 
     private void addArtifact(Artifact artifact){
         artifactsCollection.add(artifact);
-                    
+
     }
 
     public void addArtifactToDatabase(Artifact artifact){
@@ -46,15 +46,27 @@ public class ArtifactsDao{
     }
 
     public void addArtifactToStudent(Artifact artifact, int StudentID){
-        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts (artifact_id, student_id, status)" + 
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts (artifact_id, student_id, status)" +
                                                        "VALUES ( " + artifact.getArtifactId() + ", " +
                                                        StudentID + ", 'bought/ not used')");
     }
 
     public void returnStudentArtifacts(int studentID){
-        databaseProcessor.executeQueryAgainstDatabase("SELECT name from artifacts where id IN (SELECT artifact_id " + 
+        databaseProcessor.executeQueryAgainstDatabase("SELECT name from artifacts where id IN (SELECT artifact_id " +
                                                       " from student_artifacts where student_id="
                                                       + studentID
                                                       + ");");
+    }
+
+    public void updateArtifactDataInDatabase(Artifact artifact) {
+        String name = artifact.getArtifactName();
+        int price = artifact.getArtifactPrice();
+        String category = artifact.getArtifactCategory();
+
+        String query = "UPDATE artifacts SET name = '" + name + "' ," +
+                        "price = '" + price + "' ," +
+                        "category = '" + category + "' " +
+                        "WHERE id = '" + artifact.getArtifactId() + "';";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
     }
 }
