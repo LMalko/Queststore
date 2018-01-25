@@ -9,12 +9,12 @@ import java.util.ArrayList;
 public class CategoryDao{
 
     private static ItemCollection<Category> allCategories = new ItemCollection<>("Category");
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+    private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importCategories(){
-        databaseConnection.connectToDatabase();
+        databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> category = databaseConnection.getArrayListFromQuery("SELECT * FROM category");
+        ArrayList<ArrayList<String>> category = databaseProcessor.getArrayListFromQuery("SELECT * FROM category");
         String row;
         for(int i =0; i < category.size(); i++){
 
@@ -76,9 +76,9 @@ public class CategoryDao{
     }
 
     public ArrayList<String> getAllArtifacts(){
-        databaseConnection.connectToDatabase();
+        databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> artifacts = databaseConnection.getArrayListFromQuery("SELECT category FROM artifacts");
+        ArrayList<ArrayList<String>> artifacts = databaseProcessor.getArrayListFromQuery("SELECT category FROM artifacts");
         ArrayList<String> allArtifacts = new ArrayList<String>();
         for(int i =0; i < artifacts.size(); i++){
             String category = artifacts.get(i).get(3);

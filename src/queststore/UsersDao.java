@@ -3,12 +3,12 @@ import java.util.ArrayList;
 class UsersDao {
 
     private static ArrayList<User> usersCollection = new ArrayList<User>();
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+    private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importUsersData() {
         usersCollection.clear();
-        databaseConnection.connectToDatabase();
-        ArrayList<ArrayList<String>> users = databaseConnection.getArrayListFromQuery("SELECT * FROM users");
+        databaseProcessor.connectToDatabase();
+        ArrayList<ArrayList<String>> users = databaseProcessor.getArrayListFromQuery("SELECT * FROM users");
         for(int i =0; i < users.size(); i++){
             ArrayList<String> personData = users.get(i);
             User person = createUserObject(personData);
@@ -51,14 +51,14 @@ class UsersDao {
         }
         else if(status.equals("student")){
             String query = "SELECT current_balance FROM wallet WHERE student_id = '" + id +"';";
-            int wallet = databaseConnection.getIntegerDataFromQuery(query, "current_balance");
+            int wallet = databaseProcessor.getIntegerDataFromQuery(query, "current_balance");
             person = new Student(id, name, surname, password, group, wallet);
         }
         return person;
     }
 
     public void addUserToDatabase(User user){
-        databaseConnection.connectToDatabase();
+        databaseProcessor.connectToDatabase();
         String name = user.getName();
         String surname = user.getSurname();
         String login = user.getLogin();
@@ -79,13 +79,13 @@ class UsersDao {
                         "');";
 
         usersCollection.add(user);
-        databaseConnection.executeUpdateAgainstDatabase(query);
+        databaseProcessor.executeUpdateAgainstDatabase(query);
 
     }
 
     public String getUserGroupNameByGroupId(int groupID){
         String query = "SELECT * FROM groups WHERE id = '" + groupID +"';";
-        String groupName = databaseConnection.getStringDataFromQuery(query, "name");
+        String groupName = databaseProcessor.getStringDataFromQuery(query, "name");
         return groupName;
     }
 
@@ -96,7 +96,7 @@ class UsersDao {
     public void updateUserGroupInDatabase(User user){
         String query = "UPDATE users SET group_id = " + "'" + user.getUserGroupId() + "' " +
                         "WHERE id = " + user.getId() + ";";
-        databaseConnection.executeUpdateAgainstDatabase(query);
+        databaseProcessor.executeUpdateAgainstDatabase(query);
     }
 
     public ArrayList<User> getAllUsersByStatus(String userStatus){
@@ -129,6 +129,6 @@ class UsersDao {
     }
 
     public void disconnectDatabase(){
-        databaseConnection.closeDatabase();
+        databaseProcessor.closeDatabase();
     }
 }

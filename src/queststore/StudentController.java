@@ -9,8 +9,6 @@ class StudentController{
     private CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
     private CollectionIterator<Crowdfund> crowdfundIterator = crowdfundsCollection.getIterator();
 
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
-
     private Student student;
 
     public void startStudentPanel(Student student){

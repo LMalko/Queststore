@@ -7,14 +7,14 @@ import java.util.ArrayList;
 public class ArtifactsDao{
 
     private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<Artifact>("Artifacts");
-    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+    private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importArtifacts(){
 
         artifactsCollection = new ItemCollection<Artifact>("Artifacts");
-        databaseConnection.connectToDatabase();
+        databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> artifacts = databaseConnection.getArrayListFromQuery("SELECT * FROM artifacts");
+        ArrayList<ArrayList<String>> artifacts = databaseProcessor.getArrayListFromQuery("SELECT * FROM artifacts");
         for(int i =0; i < artifacts.size(); i++){
 
             int id = Integer.parseInt(artifacts.get(i).get(0));
@@ -29,13 +29,13 @@ public class ArtifactsDao{
     }
 
     public void exportArtifacts(){
-        databaseConnection.connectToDatabase();
+        databaseProcessor.connectToDatabase();
 
         CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
 
         while (artifactsIterator.hasNext()) {
             Artifact artifact = artifactsIterator.next();
-            databaseConnection.executeUpdateAgainstDatabase("INSERT INTO artifacts VALUES " + 
+            databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO artifacts VALUES " + 
                                                                 String.valueOf(artifact.getArtifactId()) + 
                                                                 artifact.getArtifactName() + 
                                                                 String.valueOf(artifact.getArtifactPrice()) + 
@@ -54,7 +54,7 @@ public class ArtifactsDao{
     }
 
     public void addArtifactToDatabase(Artifact artifact){
-        databaseConnection.executeUpdateAgainstDatabase("INSERT INTO artifacts (name, price, category) VALUES ( " + "'" +
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO artifacts (name, price, category) VALUES ( " + "'" +
                                                         artifact.getArtifactName() + "', " +
                                                         String.valueOf(artifact.getArtifactPrice()) + ", '" +
                                                         artifact.getArtifactCategory() +

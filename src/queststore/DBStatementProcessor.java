@@ -3,14 +3,14 @@ import java.util.ArrayList;
 import java.sql.*;
 
 
-public class JDBConnection{
+public class DBStatementProcessor{
     
     private String filename;
     private Connection connection = null;
     private Statement statement = null;
     private ResultSet result;
 
-    public JDBConnection(String filename){
+    public DBStatementProcessor(String filename){
         this.filename = filename;
     }
 
