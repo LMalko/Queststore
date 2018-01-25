@@ -25,6 +25,10 @@ public class ItemCollection<T> {
         
         collection.remove(item);
     }
+
+    public void clear() {
+        collection.clear();
+    }
     
     public String getName(){
         return this.name;
