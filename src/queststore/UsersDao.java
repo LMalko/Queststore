@@ -29,7 +29,6 @@ class UsersDao {
         String password = personData.get(4);
         String status = personData.get(5);
         int groupId = 0;
-        //int walletID = Integer.parseInt(personData.get(7)); BRAK W BAZIE DANYCH
 
         if (personData.get(6) != null){
             groupId = Integer.parseInt(personData.get(6));
@@ -113,6 +112,17 @@ class UsersDao {
     public void updateUserGroupInDatabase(User user){
         String query = "UPDATE users SET group_id = " + "'" + user.getUserGroupId() + "' " +
                         "WHERE id = " + user.getId() + ";";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
+    }
+
+    public void updateStudentWalletInDatabase(Student student){
+        int currentBalance = student.getStudentWallet();
+        int totalIncome = student.getStudentTotalIncome();
+        int studentId = student.getId();
+
+        String query = "UPDATE wallet SET current_balance = '" + currentBalance + "' ," +
+                        "total_income = '" + totalIncome + "' " +
+                        "WHERE student_id = '" + studentId + "';";
         databaseProcessor.executeUpdateAgainstDatabase(query);
     }
 
