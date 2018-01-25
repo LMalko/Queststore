@@ -28,27 +28,11 @@ public class ArtifactsDao{
 
     }
 
-    public void exportArtifacts(){
-        databaseProcessor.connectToDatabase();
-
-        CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
-
-        while (artifactsIterator.hasNext()) {
-            Artifact artifact = artifactsIterator.next();
-            databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO artifacts VALUES " + 
-                                                                String.valueOf(artifact.getArtifactId()) + 
-                                                                artifact.getArtifactName() + 
-                                                                String.valueOf(artifact.getArtifactPrice()) + 
-                                                                artifact.getArtifactCategory());
-        }
-
-    }
-
     public ItemCollection<Artifact> getArtifacts(){
         return artifactsCollection;
     }
 
-    public void addArtifact(Artifact artifact){
+    private void addArtifact(Artifact artifact){
         artifactsCollection.add(artifact);
                     
     }
