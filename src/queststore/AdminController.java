@@ -22,6 +22,7 @@ class AdminController{
         try{
             String choice = view.getUserInput("Choose your option: ");
             if (choice.equals("0")){
+                dao.disconnectDatabase();
                 System.exit(0);
             }
             else if (choice.equals("1")){

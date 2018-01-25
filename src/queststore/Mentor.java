@@ -1,13 +1,11 @@
 public class Mentor extends User {
 
-    private Group group;
-
     public Mentor(String name, String surname, String password) {
         super(name, surname, password, "mentor");
     }
 
-    public Mentor(int id, String name, String surname, String password, int groupId) {
-        super(id,name,surname,password,"mentor", groupId);
+    public Mentor(int id, String name, String surname, String password, Group group) {
+        super(id,name,surname,password,"mentor", group);
     }
 
     public String getMentorGroupName(){
@@ -15,8 +13,7 @@ public class Mentor extends User {
     }
 
     public void setMentorGroup(Group group) {
-        this.groupName = group.getGroupName();
-        this.groupId = group.getGroupId();
+        this.group = group;
     }
 
     public void setMentorName(String name){
@@ -42,6 +39,6 @@ public class Mentor extends User {
                               this.name,
                               this.surname,
                               this.login,
-                              this.groupId);
+                              this.getUserGroupName());
     }
 }
