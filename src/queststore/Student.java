@@ -7,9 +7,13 @@ public class Student extends User{
 
     public Student(String name, String surname, String password){
         super(name, surname, password, "student");
-        this.wallet = 1500;
-        this.experience = 0;
-        this.group = null;
+        // this.wallet = 1500;
+        // this.experience = 0;
+        // this.group = null;
+    }
+
+    public Student(int id, String name, String surname, String password, int groupId) {
+        super(id,name,surname,password,"student", groupId);
     }
 
     public Integer getStudentWallet(){
