@@ -7,6 +7,12 @@ public class Artifact{
     private int price;
     private String category;
 
+    public Artifact(String name, int price, String category){
+        this.name = name;
+        this.price = price;
+        this.category = category;
+    }
+
 
     public Artifact(int id, String name, int price, String category){
         this.id = id;
