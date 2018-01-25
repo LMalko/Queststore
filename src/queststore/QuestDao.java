@@ -4,60 +4,46 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.io.FileWriter;
-
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QuestDao{
 
     private static ItemCollection<Quest> questsCollection = new ItemCollection<>("Quests");
+    private DBStatementProcessor databaseConnection = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importQuests(){
-        String fileName = "csv/QuestsDao.csv";
+        databaseConnection.connectToDatabase();
 
-        try{
-            BufferedReader buffer_reader = new BufferedReader(new FileReader(fileName));
-            String row;
-            while((row = buffer_reader.readLine()) != null){
-                String[] parts = row.split(",");
-                String name = parts[0];
-                int award = Integer.parseInt(parts[1]);
-                String status = parts[2];
-                String category = parts[3];
-                Quest quest = new Quest(name, award, status, category);
-                addQuest(quest);
-            }
-        }
-        catch (IOException e){
-            e.printStackTrace();
+        ArrayList<ArrayList<String>> quests = databaseConnection.getArrayListFromQuery("SELECT * FROM quests");
+
+        for(int i=0; i< quests.size(); i++){
+
+            int id = Integer.parseInt(quests.get(i).get(0));
+            String name = quests.get(i).get(1);
+            int reward = Integer.parseInt(quests.get(i).get(2));
+            String category = quests.get(i).get(3);
+
+            Quest quest = new Quest(id, name, reward, category);
+            addQuest(quest);
+
         }
     }
 
     public void exportQuests(){
+        databaseConnection.connectToDatabase();
 
         CollectionIterator<Quest> questsIterator = questsCollection.getIterator();
 
-        try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("csv/QuestsDao.csv"));
-            StringBuilder sb = new StringBuilder();
-
-            while(questsIterator.hasNext()){
-                Quest quest = questsIterator.next();
-                sb.append(quest.getQuestName());
-                sb.append(",");
-                sb.append(quest.getQuestAward());
-                sb.append(",");
-                sb.append(quest.getQuestStatus());
-                sb.append(",");
-                sb.append(quest.getQuestCategoryName());
-                sb.append("\n");
-            }
-
-            br.write(sb.toString());
-            br.close();
+        while(questsIterator.hasNext()){
+            Quest quest = questsIterator.next();
+            databaseConnection.executeUpdateAgainstDatabase("INSERT INTO quests VALUES " +
+                                                                String.valueOf(quest.getQuestId()) +
+                                                                quest.getQuestName() +
+                                                                String.valueOf(quest.getQuestReward()) +
+                                                                quest.getQuestCategoryName());
         }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-
     }
 
     public Quest getQuestById(int id){
@@ -79,5 +65,20 @@ public class QuestDao{
 
     public void addQuest(Quest quest){
         questsCollection.add(quest);
+    }
+
+    public void addQuestToDatabase(Quest quest){
+      databaseConnection.executeUpdateAgainstDatabase("INSERT INTO quests (name, reward, category) VALUES ( " + "'" +
+                                                          quest.getQuestName() + "', '" +
+                                                          String.valueOf(quest.getQuestReward()) + "', '" +
+                                                          quest.getQuestCategoryName() + "')");
+    }
+
+    public void editQuestOnDatabase(Quest quest){
+      databaseConnection.executeUpdateAgainstDatabase("UPDATE quests SET name='" + quest.getQuestName() +
+                                                                   "', reward='" + Integer.valueOf(quest.getQuestReward()) +
+                                                                   "', category='" + quest.getQuestCategoryName() +
+                                                                   "' WHERE id='" + Integer.valueOf(quest.getQuestId()) +
+                                                                   "'");
     }
 }

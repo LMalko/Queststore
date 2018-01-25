@@ -30,7 +30,9 @@ class MentorController{
     public void handleMentorPanelOptions(){
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
+            dao.disconnectDatabase();
             System.exit(0);
+
         }
         else if (choice.equals("1")){
             createStudent();
@@ -124,11 +126,11 @@ class MentorController{
 
     public void addNewQuest(){
         String questName = view.getUserInput("Enter quest name: ");
-        int questAward = Integer.parseInt(view.getUserInput("Enter award for completing quest: "));
+        int questReward = Integer.parseInt(view.getUserInput("Enter reward for completing quest: "));
         String category = view.getUserInput("Enter category of quest: ");
-        Quest newQuest = new Quest(questName, questAward, "not done", category);
+        Quest newQuest = new Quest(questName, questReward, category);
         questDao.addQuest(newQuest);
-        questDao.exportQuests();
+        questDao.addQuestToDatabase(newQuest);
 
     }
 
@@ -136,7 +138,7 @@ class MentorController{
         String categoryName = view.getUserInput("Enter new category name: ");
         Category category = new Category(categoryName);
         categoryDao.addCategory(category);
-        categoryDao.exportCategory();
+        categoryDao.addCategoryToDatabase(category);
 
     }
 
@@ -146,9 +148,10 @@ class MentorController{
         int questId = Integer.parseInt(view.getUserInput("Enter ID of quest you want to edit: "));
         Quest quest = questDao.getQuestById(questId);
         quest.setQuestName(view.getUserInput("Enter new quest name: "));
-        quest.setQuestAward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
-        quest.setQuestStatus(view.getUserInput("Enter new quest status: "));
-        questDao.exportQuests();
+        quest.setQuestReward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
+        quest.setQuestCategory(view.getUserInput("Enter new category name: "));
+        questDao.editQuestOnDatabase(quest);
+        System.out.println("Operation was succesfull");
 
 
     }
@@ -162,13 +165,12 @@ class MentorController{
 
             String questID = Integer.toString(currentQuest.getQuestId());
             String name = currentQuest.getQuestName();
-            String award = Integer.toString(currentQuest.getQuestAward());
-            String status = currentQuest.getQuestStatus();
+            String award = Integer.toString(currentQuest.getQuestReward());
             String category = currentQuest.getQuestCategoryName();
             view.displayText("ID: "+questID +" "+name+" for:"+award+
-                " from category:"+category+" /currently:"+status);
+                " from category:"+category);
         }
-        questIterator = questCollection.getIterator();
+
 
     }
 
@@ -193,7 +195,6 @@ class MentorController{
         artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
         artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
         artifactToEdit.setCategory(addArtifactCategory());
-        artifactsDao.exportArtifacts();
     }
 
     public Artifact getArtifactById(int id){
@@ -241,7 +242,6 @@ class MentorController{
         Category category = new Category(categoryName);
         categoryDao.addCategoryToDatabase(category);
         categoryDao.addCategory(category);
-
     }
 
     private void getAllCategories(){

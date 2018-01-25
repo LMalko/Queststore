@@ -14,7 +14,7 @@ public class CategoryDao{
     public void importCategories(){
         databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> category = databaseProcessor.getArrayListFromQuery("SELECT DISTINCT category FROM artifacts");
+        ArrayList<ArrayList<String>> category = databaseProcessor.getArrayListFromQuery("SELECT * category");
 
         for(int i =0; i < category.size(); i++){
 
@@ -24,27 +24,6 @@ public class CategoryDao{
         }
     }
 
-    public void exportCategory(){
-
-        CollectionIterator<Category> categoryIterator = allCategories.getIterator();
-
-        try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("csv/categories.csv"));
-            StringBuilder sb = new StringBuilder();
-
-            while(categoryIterator.hasNext()){
-                Category category = categoryIterator.next();
-                sb.append(category.getCategoryName());
-                sb.append("\n");
-            }
-
-            br.write(sb.toString());
-            br.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
 
     public ItemCollection<Category> getCategories(){
         return allCategories;
@@ -52,16 +31,6 @@ public class CategoryDao{
 
     public void addCategory(Category category){
         allCategories.add(category);
-    }
-
-    private void closeReader(BufferedReader br) {
-        if (br != null) {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public Category getCategoryByName(String name){
@@ -77,7 +46,7 @@ public class CategoryDao{
     }
 
     public void addCategoryToDatabase(Category category){
-        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO category (name) VALUES ( " + "'" +
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO categories (name) VALUES ( " + "'" +
                                                         category.getCategoryName() +
                                                         "')");
     }

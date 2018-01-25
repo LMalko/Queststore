@@ -28,27 +28,11 @@ public class ArtifactsDao{
 
     }
 
-    public void exportArtifacts(){
-        databaseProcessor.connectToDatabase();
-
-        CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
-
-        while (artifactsIterator.hasNext()) {
-            Artifact artifact = artifactsIterator.next();
-            databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO artifacts VALUES " + 
-                                                                String.valueOf(artifact.getArtifactId()) + 
-                                                                artifact.getArtifactName() + 
-                                                                String.valueOf(artifact.getArtifactPrice()) + 
-                                                                artifact.getArtifactCategory());
-        }
-
-    }
-
     public ItemCollection<Artifact> getArtifacts(){
         return artifactsCollection;
     }
 
-    public void addArtifact(Artifact artifact){
+    private void addArtifact(Artifact artifact){
         artifactsCollection.add(artifact);
                     
     }
@@ -62,9 +46,15 @@ public class ArtifactsDao{
     }
 
     public void addArtifactToStudent(Artifact artifact, int StudentID){
-        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts (artifact_id, student_id, status) VALUES ( " + 
-                                                        artifact.getArtifactId() + ", " +
-                                                        StudentID + 
-                                                        ", 'bought/ not used')");
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts (artifact_id, student_id, status)" + 
+                                                       "VALUES ( " + artifact.getArtifactId() + ", " +
+                                                       StudentID + ", 'bought/ not used')");
+    }
+
+    public void returnStudentArtifacts(int studentID){
+        databaseProcessor.executeQueryAgainstDatabase("SELECT name from artifacts where id IN (SELECT artifact_id " + 
+                                                      " from student_artifacts where student_id="
+                                                      + studentID
+                                                      + ");");
     }
 }
