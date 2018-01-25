@@ -179,6 +179,8 @@ class StudentController{
                     }
                     student.reduceWallet(contribution);
                     crowdfundToContribute.reduceCurrentPrice(contribution);
+                    crowdfundsDao.updateCrowdfundAccount(crowdfundToContribute.getCrowdfundId(), contribution);
+
                     
                     break;
 

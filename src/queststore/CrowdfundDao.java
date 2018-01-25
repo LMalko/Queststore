@@ -49,4 +49,8 @@ public class CrowdfundDao{
                                                         crowdfund.getCrowdfundFounderID() +
                                                         ")");
     }
+
+    public void updateCrowdfundAccount(int crowdfundID, int amountToAdd){
+        databaseProcessor.executeUpdateAgainstDatabase("UPDATE crowdfunds SET account = account + " + String.valueOf(amountToAdd) + " WHERE id = " + String.valueOf(crowdfundID) + ";" );
+    }
 }
