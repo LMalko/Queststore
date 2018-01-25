@@ -1,6 +1,3 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 class UsersDao {
@@ -14,7 +11,6 @@ class UsersDao {
         for(int i =0; i < users.size(); i++){
             ArrayList<String> personData = users.get(i);
             User person = createUserObject(personData);
-            System.out.println(person.getName());
             usersCollection.add(person);
             }
         }
@@ -25,16 +21,17 @@ class UsersDao {
     }
 
     private User createUserObject(ArrayList<String> personData) {
+        int id = Integer.parseInt(personData.get(0));
         String name = personData.get(1);
         String surname = personData.get(2);
         String login = personData.get(3);
         String password = personData.get(4);
         String status = personData.get(5);
-        int groupIndex = 0;
+        int groupId = 0;
         //int walletID = Integer.parseInt(personData.get(7)); BRAK W BAZIE DANYCH
 
         if (personData.get(6) != null){
-            groupIndex = Integer.parseInt(personData.get(6));
+            groupId = Integer.parseInt(personData.get(6));
         }
         if (personData.get(7) != null) {
             String experienceLevel = personData.get(7);
@@ -47,7 +44,7 @@ class UsersDao {
             person = new Admin(name, surname, password);
         }
         else if(status.equals("mentor")){
-            person = new Mentor(name, surname, password, groupIndex);
+            person = new Mentor(id, name, surname, password, groupId);
         }
         else if(status.equals("student")){
             person = new Student(name, surname, password);
@@ -62,7 +59,7 @@ class UsersDao {
         String login = user.getLogin();
         String password = user.getPassword();
         String status = user.getStatus();
-        int groupIndex = user.getUserGroupIndex();
+        int groupIndex = user.getUserGroupId();
         String experienceLevel = user.getUserExperienceLevel();
 
         String query = "INSERT INTO users (name, surname, login, password," +
@@ -85,7 +82,16 @@ class UsersDao {
         usersCollection.add(user);
     }
 
+    public void updateUserGroupInDatabase(User user){
+        String query = "UPDATE users SET group_id = " + "'" + user.getUserGroupId() + "' " +
+                        "WHERE id = " + user.getId() + ";";
+        System.out.println(query);
+        databaseConnection.executeUpdateAgainstDatabase(query);
+    }
+
     public ArrayList<User> getAllUsersByStatus(String userStatus){
+        usersCollection.clear();
+        importUsersData();
         ArrayList<User> usersWithGivenStatus = new ArrayList<User>();
         for (User user : usersCollection){
             if (user.getStatus().equals(userStatus)){

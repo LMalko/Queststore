@@ -52,7 +52,6 @@ public class JDBConnection{
                 }
                 System.out.println(row);
             }
-            System.out.println("\n\n\nQuery performed successfully");
             
 
         }catch(Exception exception){
