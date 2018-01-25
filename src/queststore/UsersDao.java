@@ -52,7 +52,9 @@ class UsersDao {
         else if(status.equals("student")){
             String query = "SELECT current_balance FROM wallet WHERE student_id = '" + id +"';";
             int wallet = databaseProcessor.getIntegerDataFromQuery(query, "current_balance");
-            person = new Student(id, name, surname, password, group, wallet);
+            query = "SELECT total_income FROM wallet WHERE student_id = '" + id +"';";
+            int totalIncome = databaseProcessor.getIntegerDataFromQuery(query, "total_income");
+            person = new Student(id, name, surname, password, group, wallet, totalIncome);
         }
         return person;
     }
@@ -80,6 +82,21 @@ class UsersDao {
 
         usersCollection.add(user);
         databaseProcessor.executeUpdateAgainstDatabase(query);
+
+    }
+
+    public void addStudentWalletToDatabase(Student student){
+        int currentBalance = student.getStudentWallet();
+        int totalIncome = student.getStudentTotalIncome();
+        String query = "SELECT id FROM users WHERE login = '" + student.getLogin() + "';";
+        int studentId = databaseProcessor.getIntegerDataFromQuery(query, "id");
+        query = "INSERT INTO wallet (current_balance, total_income, student_id) VALUES( '" +
+                currentBalance + "', '" +
+                totalIncome + "', '" +
+                studentId +
+                "');";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
+
 
     }
 
