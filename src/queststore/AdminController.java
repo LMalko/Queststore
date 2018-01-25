@@ -73,7 +73,7 @@ class AdminController{
                 mentor.setMentorSurname(newSurname);
                 mentor.setMentorPassword(newPassword);
                 mentor.setMentorLogin(newName, newSurname);
-                //dao.saveUsersToFile();
+                dao.updateUserDataInDatabase(mentor);
             }
             else{
                 view.displayText("No mentor with given ID exists!");
