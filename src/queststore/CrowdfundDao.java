@@ -37,7 +37,7 @@ public class CrowdfundDao{
         return crowdfundCollection;
     }
 
-    public void addCrowdfund(Crowdfund crowdfund){
+    private void addCrowdfund(Crowdfund crowdfund){
         crowdfundCollection.add(crowdfund);
     }
 
