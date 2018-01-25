@@ -39,12 +39,14 @@ class UsersDao {
             String experienceLevel = "";
         }
 
+        String groupName = getUserGroupNameByGroupId(groupId);
+        Group group = new Group(groupId, groupName);
         User person = null;
         if(status.equals("admin")){
             person = new Admin(name, surname, password);
         }
         else if(status.equals("mentor")){
-            person = new Mentor(id, name, surname, password, groupId);
+            person = new Mentor(id, name, surname, password, group);
         }
         else if(status.equals("student")){
             person = new Student(name, surname, password);
@@ -59,7 +61,7 @@ class UsersDao {
         String login = user.getLogin();
         String password = user.getPassword();
         String status = user.getStatus();
-        int groupIndex = user.getUserGroupId();
+        int groupId = user.getUserGroupId();
         String experienceLevel = user.getUserExperienceLevel();
 
         String query = "INSERT INTO users (name, surname, login, password," +
@@ -69,13 +71,21 @@ class UsersDao {
                         login + "', '" +
                         password + "', '" +
                         status + "', " +
-                        String.valueOf(groupIndex) + ", '" +
+                        String.valueOf(groupId) + ", '" +
                         experienceLevel +
                         "');";
 
         usersCollection.add(user);
         databaseConnection.executeUpdateAgainstDatabase(query);
 
+    }
+
+    public String getUserGroupNameByGroupId(int groupID){
+        String query = "SELECT * FROM groups WHERE id = '" + groupID +"';";
+        System.out.println(query);
+        String groupName = databaseConnection.getStringDataFromQuery(query, "name");
+        System.out.println(groupName);
+        return groupName;
     }
 
     public void addUserToUsersCollection(User user){
@@ -117,5 +127,9 @@ class UsersDao {
             }
         }
         return null;
+    }
+
+    public void disconnectDatabase(){
+        databaseConnection.closeDatabase();
     }
 }
