@@ -6,8 +6,7 @@ class UsersDao {
     private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
 
     public void importUsersData() {
-        // wyszysc liste
-
+        usersCollection.clear();
         databaseConnection.connectToDatabase();
         ArrayList<ArrayList<String>> users = databaseConnection.getArrayListFromQuery("SELECT * FROM users");
         for(int i =0; i < users.size(); i++){
@@ -51,7 +50,9 @@ class UsersDao {
             person = new Mentor(id, name, surname, password, group);
         }
         else if(status.equals("student")){
-            person = new Student(id, name, surname, password, groupId);
+            String query = "SELECT current_balance FROM wallet WHERE student_id = '" + id +"';";
+            int wallet = databaseConnection.getIntegerDataFromQuery(query, "current_balance");
+            person = new Student(id, name, surname, password, group, wallet);
         }
         return person;
     }
@@ -84,9 +85,7 @@ class UsersDao {
 
     public String getUserGroupNameByGroupId(int groupID){
         String query = "SELECT * FROM groups WHERE id = '" + groupID +"';";
-        System.out.println(query);
         String groupName = databaseConnection.getStringDataFromQuery(query, "name");
-        System.out.println(groupName);
         return groupName;
     }
 
@@ -97,12 +96,10 @@ class UsersDao {
     public void updateUserGroupInDatabase(User user){
         String query = "UPDATE users SET group_id = " + "'" + user.getUserGroupId() + "' " +
                         "WHERE id = " + user.getId() + ";";
-        System.out.println(query);
         databaseConnection.executeUpdateAgainstDatabase(query);
     }
 
     public ArrayList<User> getAllUsersByStatus(String userStatus){
-        usersCollection.clear();
         importUsersData();
         ArrayList<User> usersWithGivenStatus = new ArrayList<User>();
         for (User user : usersCollection){
