@@ -10,10 +10,11 @@ public class ArtifactsDao{
     private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
 
     public void importArtifacts(){
+
+        artifactsCollection = new ItemCollection<Artifact>("Artifacts");
         databaseConnection.connectToDatabase();
 
         ArrayList<ArrayList<String>> artifacts = databaseConnection.getArrayListFromQuery("SELECT * FROM artifacts");
-        String row;
         for(int i =0; i < artifacts.size(); i++){
 
             int id = Integer.parseInt(artifacts.get(i).get(0));

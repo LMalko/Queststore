@@ -15,6 +15,7 @@ class StudentController{
         boolean isRuntime = true;
         this.student = student;
         artifactsDao.importArtifacts();
+        crowdfundsDao.importCrowdfunds();
         
         while(isRuntime){
             view.displayUserMenu("txt/studentMenu.txt");
@@ -25,6 +26,7 @@ class StudentController{
     }
 
     private void handleStudentPanelOptions(){
+        refreshArtifactsAndCrowdfundsDB();
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
             view.clearScreen();
@@ -45,7 +47,17 @@ class StudentController{
         }else{
             System.out.println("No such choice");
         }
+    }
+
+    private void refreshArtifactsAndCrowdfundsDB(){
+        artifactsDao = new ArtifactsDao();
         artifactsDao.importArtifacts();
+        artifactsCollection = artifactsDao.getArtifacts();
+        crowdfundsDao = new CrowdfundDao();
+        crowdfundsDao.importCrowdfunds();
+        crowdfundsCollection = crowdfundsDao.getCrowdfunds();
+
+
     }
 
     private void returnAllCrowdfunds(){
@@ -89,13 +101,18 @@ class StudentController{
             if(nextArtifact.getArtifactId() == artifactID){
                 Artifact artifactToCrowdfund = nextArtifact;
                 ifExists = true;
-                contributorEmail = student.getLogin();
+                int founderID = student.getId();
+
+                
+
+
                 Crowdfund crowdfund = new Crowdfund(artifactToCrowdfund.getArtifactName(),
                                                     artifactToCrowdfund.getArtifactPrice(),
                                                     artifactToCrowdfund.getArtifactPrice(), 
-                                                    contributorEmail);
-                this.crowdfundsDao.addCrowdfund(crowdfund);
-                this.crowdfundsDao.exportCrowdfund();
+                                                    founderID );
+                                                    
+                
+                crowdfundsDao.addCrowdfundToDatabase(crowdfund);
                 break;
                 }
             }
@@ -156,7 +173,6 @@ class StudentController{
                     }
                 }
 
-                this.crowdfundsDao.exportCrowdfund();
                 break;
                 }
             }

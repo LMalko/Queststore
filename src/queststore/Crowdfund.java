@@ -3,19 +3,26 @@ import java.util.ArrayList;
 
 public class Crowdfund{
     private int id;
-    private static Integer nextID = 10;
+
     private String name;
     private int totalPrice;
     private int account;
-    private String contributorEmail;
+    private int founderID;
     private static ItemCollection<Crowdfund> crowdfundCollection = new ItemCollection<>("Crowdfunds");
 
-    public Crowdfund(String name, int totalPrice, int account, String contributorEmail){
-        this.id = getNextID();
+    public Crowdfund(int id, String name, int totalPrice, int account, int founderID){
+        this.id = id;
         this.name = name;
         this.totalPrice = totalPrice;
         this.account = account;
-        this.contributorEmail = contributorEmail;
+        this.founderID = founderID;
+    }
+
+    public Crowdfund(String name, int totalPrice, int account, int founderID){
+        this.name = name;
+        this.totalPrice = totalPrice;
+        this.account = account;
+        this.founderID = founderID;
     }
 
     public int getCrowdfundId(){
@@ -34,8 +41,8 @@ public class Crowdfund{
         return this.account;
     }
 
-    public String getCrowdfundContributorEmail(){
-        return this.contributorEmail;
+    public int getCrowdfundFounderID(){
+        return this.founderID;
     }
 
     public void setCrowdfundId(int id){
@@ -51,11 +58,11 @@ public class Crowdfund{
     }
 
     public void setCrowdfundAccount(int priceLeft){
-        this.account = account;
+        this.account = priceLeft;
     }
 
-    public void setCrowdfundId(String contributorEmail){
-        this.contributorEmail = contributorEmail;
+    public void setCrowdfundFounderID(int founderID){
+        this.founderID = founderID;
     }
 
     public static ItemCollection<Crowdfund> getCrowdfunds(){
@@ -83,13 +90,7 @@ public class Crowdfund{
                               this.name,
                               this.totalPrice,
                               this.account,
-                              this.contributorEmail);
-    }
-
-    private int getNextID() {
-        int newID = nextID;
-        nextID++;
-        return newID;
+                              this.founderID);
     }
 
     public void reduceCurrentPrice(int amount){

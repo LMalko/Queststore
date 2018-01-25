@@ -6,8 +6,8 @@ VALUES ('default', 'student', 'defaultstudent@cc.com', 'student', 'student', 1, 
     ('default', 'admin', 'defaultadmin@cc.com', 'admin', 'admin', null, null);
 
 --create representational record of CROWDFUND
-INSERT INTO crowdfunds (name, total_price, current_price, founder_id)
-VALUES ('gówno - czyli pierwsze co przychodzi do głowy', 2000, 2000, 1);
+INSERT INTO crowdfunds (name, total_price, account, founder_id)
+VALUES ('Na płyte braci Perdolec', 2000, 20, 1), ('Na kebsa', 1000, 10, 2);
 
 --create representational record of ARTIFACTS
 INSERT INTO artifacts (name, price, category)
@@ -20,8 +20,9 @@ VALUES ('Zjeść kebsa', 1000, 'basic'),
 ('Nie jeść kebsa', 3000, 'extra');
 
 --create representational record of WALLET
-INSERT INTO wallet (user_id, current_balance)
-VALUES (1, 2500, 3000);
+INSERT INTO wallet (current_balance, total_income, student_id)
+VALUES (2500, 2500, 1);
+
 
 --create representational record of STUDENT_QUESTS
 INSERT INTO student_quests (quests_id, student_id, status)
