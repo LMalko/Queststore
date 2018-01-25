@@ -9,7 +9,7 @@ public class CrowdfundDao{
     private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importCrowdfunds(){
-        crowdfundCollection= new ItemCollection<>("Crowdfunds");
+        crowdfundCollection.clear();
         databaseProcessor.connectToDatabase();
 
 

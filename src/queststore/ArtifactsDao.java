@@ -11,7 +11,7 @@ public class ArtifactsDao{
 
     public void importArtifacts(){
 
-        artifactsCollection = new ItemCollection<Artifact>("Artifacts");
+        artifactsCollection.clear();
         databaseProcessor.connectToDatabase();
 
         ArrayList<ArrayList<String>> artifacts = databaseProcessor.getArrayListFromQuery("SELECT * FROM artifacts");
@@ -59,5 +59,12 @@ public class ArtifactsDao{
                                                         String.valueOf(artifact.getArtifactPrice()) + ", '" +
                                                         artifact.getArtifactCategory() +
                                                         "')");
+    }
+
+    public void addArtifactToStudent(Artifact artifact, int StudentID){
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts (artifact_id, student_id, status) VALUES ( " + 
+                                                        artifact.getArtifactId() + ", " +
+                                                        StudentID + 
+                                                        ", 'bought/ not used')");
     }
 }
