@@ -22,7 +22,6 @@ public class Student extends User{
 
     public void setStudentGroup(Group group){
         this.group = group;
-        this.groupName = group.getGroupName();
     }
 
     public String getStudentGroupName(){
