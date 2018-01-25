@@ -126,7 +126,7 @@ class MentorController{
         String categoryName = view.getUserInput("Enter new category name: ");
         Category category = new Category(categoryName);
         categoryDao.addCategory(category);
-        categoryDao.exportCategory();
+        categoryDao.addCategoryToDatabase(category);
 
     }
 
@@ -137,7 +137,9 @@ class MentorController{
         Quest quest = questDao.getQuestById(questId);
         quest.setQuestName(view.getUserInput("Enter new quest name: "));
         quest.setQuestReward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
-        questDao.exportQuests();
+        quest.setQuestCategory(view.getUserInput("Enter new category name: "));
+        questDao.editQuestOnDatabase(quest);
+        System.out.println("Operation was succesfull");
 
 
     }
@@ -156,7 +158,7 @@ class MentorController{
             view.displayText("ID: "+questID +" "+name+" for:"+award+
                 " from category:"+category);
         }
-        questIterator = questCollection.getIterator();
+
 
     }
 
@@ -226,7 +228,7 @@ class MentorController{
         String categoryName = view.getUserInput("Enter new category name: ");
         Category category = new Category(categoryName);
         categoryDao.addCategory(category);
-        categoryDao.exportCategory();
+        categoryDao.addCategoryToDatabase(category);
 
     }
 

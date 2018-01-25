@@ -45,4 +45,8 @@ public class Quest{
         this.reward = reward;
     }
 
+    public void setQuestCategory(String category){
+      this.categoryName = category;
+    }
+
 }

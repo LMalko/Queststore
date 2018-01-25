@@ -16,7 +16,7 @@ public class QuestDao{
     public void importQuests(){
         databaseConnection.connectToDatabase();
 
-        ArrayList<ArrayList<String>> quests = databaseConnection.getArrayListFromQuery("SELECT * FROM artifacts");
+        ArrayList<ArrayList<String>> quests = databaseConnection.getArrayListFromQuery("SELECT * FROM quests");
 
         for(int i=0; i< quests.size(); i++){
 
@@ -72,5 +72,13 @@ public class QuestDao{
                                                           quest.getQuestName() + "', '" +
                                                           String.valueOf(quest.getQuestReward()) + "', '" +
                                                           quest.getQuestCategoryName() + "')");
+    }
+
+    public void editQuestOnDatabase(Quest quest){
+      databaseConnection.executeUpdateAgainstDatabase("UPDATE quests SET name='" + quest.getQuestName() +
+                                                                   "', reward='" + Integer.valueOf(quest.getQuestReward()) +
+                                                                   "', category='" + quest.getQuestCategoryName() +
+                                                                   "' WHERE id='" + Integer.valueOf(quest.getQuestId()) +
+                                                                   "'");
     }
 }
