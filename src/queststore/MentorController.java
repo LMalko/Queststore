@@ -3,6 +3,7 @@ import java.util.ArrayList;
 class MentorController{
 
     private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
+    private static ItemCollection<Category> categoryCollection = new ItemCollection<>("Categories");
 
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
@@ -168,8 +169,10 @@ class MentorController{
         //int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
         String artifactName = view.getUserInput("Enter artifact name: ");
         int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
+        getAllCategories();
         String artifactCategory = view.getUserInput("Enter artifact category: ");
-        Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategory);
+        String artifactCategoryName = categoryDao.getCategoryByName(artifactCategory).getCategoryName();
+        Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategoryName);
         artifactsDao.addArtifactToDatabase(newArtifact);
         //artifactsDao.exportArtifacts();
 
@@ -237,12 +240,12 @@ class MentorController{
     private void getAllCategories(){
         ItemCollection<Category> categoryCollection = categoryDao.getCategories();
         CollectionIterator<Category> categoryIterator = categoryCollection.getIterator();
-
         while (categoryIterator.hasNext()){
             Category category = categoryIterator.next();
-            String categoryName = category.getCategoryName();
-            view.displayText(categoryName);
+            String name = category.getCategoryName();
+            view.displayText(name);
         }
+
     }
 
     public void markStudentQuest(){
