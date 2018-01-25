@@ -116,6 +116,7 @@ class UsersDao {
     }
 
     public void updateStudentWalletInDatabase(Student student){
+        databaseProcessor.connectToDatabase();
         int currentBalance = student.getStudentWallet();
         int totalIncome = student.getStudentTotalIncome();
         int studentId = student.getId();
