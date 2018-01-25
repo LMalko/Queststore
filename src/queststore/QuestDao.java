@@ -68,9 +68,9 @@ public class QuestDao{
     }
 
     public void addQuestToDatabase(Quest quest){
-      databaseConnection.executeUpdateAgainstDatabase("INSERT INTO quests (name, price, category) VALUES ( " + "'" +
-                                                          quest.getQuestName() + "', " +
-                                                          String.valueOf(quest.getQuestReward()) + "', " +
+      databaseConnection.executeUpdateAgainstDatabase("INSERT INTO quests (name, reward, category) VALUES ( " + "'" +
+                                                          quest.getQuestName() + "', '" +
+                                                          String.valueOf(quest.getQuestReward()) + "', '" +
                                                           quest.getQuestCategoryName() + "')");
     }
 }

@@ -114,11 +114,11 @@ class MentorController{
 
     public void addNewQuest(){
         String questName = view.getUserInput("Enter quest name: ");
-        int questAward = Integer.parseInt(view.getUserInput("Enter award for completing quest: "));
+        int questReward = Integer.parseInt(view.getUserInput("Enter reward for completing quest: "));
         String category = view.getUserInput("Enter category of quest: ");
-        Quest newQuest = new Quest(questName, questAward, "not done", category);
+        Quest newQuest = new Quest(questName, questReward, category);
         questDao.addQuest(newQuest);
-        questDao.exportQuests();
+        questDao.addQuestToDatabase(newQuest);
 
     }
 
@@ -136,8 +136,7 @@ class MentorController{
         int questId = Integer.parseInt(view.getUserInput("Enter ID of quest you want to edit: "));
         Quest quest = questDao.getQuestById(questId);
         quest.setQuestName(view.getUserInput("Enter new quest name: "));
-        quest.setQuestAward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
-        quest.setQuestStatus(view.getUserInput("Enter new quest status: "));
+        quest.setQuestReward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
         questDao.exportQuests();
 
 
@@ -152,11 +151,10 @@ class MentorController{
 
             String questID = Integer.toString(currentQuest.getQuestId());
             String name = currentQuest.getQuestName();
-            String award = Integer.toString(currentQuest.getQuestAward());
-            String status = currentQuest.getQuestStatus();
+            String award = Integer.toString(currentQuest.getQuestReward());
             String category = currentQuest.getQuestCategoryName();
             view.displayText("ID: "+questID +" "+name+" for:"+award+
-                " from category:"+category+" /currently:"+status);
+                " from category:"+category);
         }
         questIterator = questCollection.getIterator();
 

@@ -14,6 +14,13 @@ public class Quest{
         this.categoryName = categoryName;
     }
 
+    public Quest(String name, int reward, String categoryName){
+        this.name = name;
+        this.reward = reward;
+        this.categoryName = categoryName;
+    }
+
+
     public String getQuestCategoryName(){
         return this.categoryName;
     }
@@ -34,8 +41,8 @@ public class Quest{
         return this.reward;
     }
 
-    public void setQuestReward(int award){
-        this.award = award;
+    public void setQuestReward(int reward){
+        this.reward = reward;
     }
 
 }
