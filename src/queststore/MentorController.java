@@ -36,7 +36,7 @@ class MentorController{
             createStudent();
         }
         else if (choice.equals("2")){
-            studentAssignToGroup();
+            assignStudentToGroup();
         }
         else if (choice.equals("3")){
             addNewQuest();
@@ -80,18 +80,24 @@ class MentorController{
         // dodawanie portfela!!!
     }
 
-    public void studentAssignToGroup(){
-        getAllStudents();
-        int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
-        Student student = dao.getStudentById(studentId);
-        view.clearScreen();  // clear before displaying group names
-        view.displayText("Choose group from those listed below:");
-        getAllGroupsNames();
-        String groupName = view.getUserInput("Choose group name:");
-        Group newGroup = groupDao.getGroupByName(groupName);
-        student.setStudentGroup(newGroup);
-        dao.updateUserGroupInDatabase(student);
-        //dao.saveUsersToFile();
+    public void assignStudentToGroup(){
+        try{
+            getAllStudents();
+            int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
+            Student student = dao.getStudentById(studentId);
+            view.clearScreen();  // clear before displaying group names
+            view.displayText("Choose group from those listed below:");
+            getAllGroupsNames();
+            String groupName = view.getUserInput("Choose group name:");
+            Group newGroup = groupDao.getGroupByName(groupName);
+            student.setStudentGroup(newGroup);
+            dao.updateUserGroupInDatabase(student);
+        } catch (NullPointerException e){
+            promptMessageAndStopThread("No such student or group exists!");
+        } catch (NumberFormatException e){
+            promptMessageAndStopThread("No such student or group exists!");
+        }
+
     }
 
     private void getAllStudents(){
@@ -259,5 +265,14 @@ class MentorController{
 
     public void displayStudentWallet(){
 
+    }
+
+    private void promptMessageAndStopThread(String message){
+        try{
+            view.displayText(message);
+            Thread.sleep(1000);
+        } catch (InterruptedException ex){
+            Thread.currentThread().interrupt();
+        }
     }
 }
