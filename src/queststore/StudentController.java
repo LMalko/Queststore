@@ -129,7 +129,16 @@ class StudentController{
 
     private void buyArtifact(){
         returnAllArtifacts();
-        System.out.println("\n\n\nStore is currently closed due to renovation - ZMIENIAMY SIĘ DLA CIEBIE !\n\n");
+        while(true){
+            String choice = view.getUserInput("Choose your option: ");
+            while(artifactIterator.hasNext()){
+                Artifact nextArtifact = artifactIterator.next();
+                if(choice.equals(String.valueOf(nextArtifact.getArtifactId()))){
+                    Artifact correctArtifact = nextArtifact;
+                }
+            }
+        }
+
     }
 
     private void joinCrowdfund(){
