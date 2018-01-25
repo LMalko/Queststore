@@ -74,6 +74,7 @@ class MentorController{
         String studentPassword = view.getUserInput("Enter student password: ");
         Student newStudent = new Student(studentName, studentSurname, studentPassword);
         dao.addUserToDatabase(newStudent);
+        dao.addStudentWalletToDatabase(newStudent);
         //dao.saveUsersToFile();
         // dodawanie portfela!!!
     }
