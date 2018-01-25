@@ -99,6 +99,25 @@ class UsersDao {
         databaseProcessor.executeUpdateAgainstDatabase(query);
     }
 
+    public void updateUserDataInDatabase(User user) {
+        String name = user.getName();
+        String surname = user.getSurname();
+        String login = user.getLogin();
+        String password = user.getPassword();
+        String status = user.getStatus();
+        int groupId = user.getUserGroupId();
+        String experience = user.getUserExperienceLevel();
+        String query = "UPDATE users SET name = '" + name + "' ," +
+                        "surname = '" + surname + "' ," +
+                        "login = '" + login + "' ," +
+                        "password = '" + password + "' ," +
+                        "status = '" + status + "' ," +
+                        "group_id = '" + groupId + "' ," +
+                        "experience = '" + experience + "'" +
+                        "WHERE id = " + user.getId() + ";";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
+    }
+
     public ArrayList<User> getAllUsersByStatus(String userStatus){
         importUsersData();
         ArrayList<User> usersWithGivenStatus = new ArrayList<User>();
