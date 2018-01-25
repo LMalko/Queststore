@@ -2,7 +2,6 @@ public class Student extends User{
 
     private int wallet;
     private int totalIncome;
-    private Group group;
     private ItemCollection<Integer> myArtifacts;
 
     public Student(String name, String surname, String password){
