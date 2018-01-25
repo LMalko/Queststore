@@ -74,4 +74,16 @@ public class CategoryDao{
         }
         return null;
     }
+
+    public ArrayList<String> getAllArtifacts(){
+        databaseConnection.connectToDatabase();
+
+        ArrayList<ArrayList<String>> artifacts = databaseConnection.getArrayListFromQuery("SELECT category FROM artifacts");
+        ArrayList<String> allArtifacts = new ArrayList<String>();
+        for(int i =0; i < artifacts.size(); i++){
+            String category = artifacts.get(i).get(3);
+            allArtifacts.add(category);
+            }
+        return allArtifacts;
+    }
 }
