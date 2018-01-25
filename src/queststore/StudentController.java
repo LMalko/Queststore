@@ -9,6 +9,8 @@ class StudentController{
     private CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
     private CollectionIterator<Crowdfund> crowdfundIterator = crowdfundsCollection.getIterator();
 
+    private JDBConnection databaseConnection = new JDBConnection("jdbc:sqlite:db/questStore.db");
+
     private Student student;
 
     public void startStudentPanel(Student student){
@@ -33,7 +35,7 @@ class StudentController{
             System.exit(0);
         }else if (choice.equals("1")){
             System.out.println("\n\nWallet is:");
-            System.out.println(student.getStudentWallet());
+            System.out.println(this.student.getUserWallet());
         }else if (choice.equals("2")){
             buyArtifact();
         }else if (choice.equals("3")){
