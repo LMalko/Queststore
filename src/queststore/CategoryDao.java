@@ -15,7 +15,7 @@ public class CategoryDao{
         databaseConnection.connectToDatabase();
 
         ArrayList<ArrayList<String>> category = databaseConnection.getArrayListFromQuery("SELECT * FROM category");
-        String row;
+
         for(int i =0; i < category.size(); i++){
 
             String name = category.get(i).get(0);
@@ -24,27 +24,6 @@ public class CategoryDao{
         }
     }
 
-    public void exportCategory(){
-
-        CollectionIterator<Category> categoryIterator = allCategories.getIterator();
-
-        try{
-            BufferedWriter br = new BufferedWriter(new FileWriter("csv/categories.csv"));
-            StringBuilder sb = new StringBuilder();
-
-            while(categoryIterator.hasNext()){
-                Category category = categoryIterator.next();
-                sb.append(category.getCategoryName());
-                sb.append("\n");
-            }
-
-            br.write(sb.toString());
-            br.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
 
     public ItemCollection<Category> getCategories(){
         return allCategories;
@@ -54,14 +33,9 @@ public class CategoryDao{
         allCategories.add(category);
     }
 
-    private void closeReader(BufferedReader br) {
-        if (br != null) {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public void addCategoryToDatabase(Category category){
+      databaseConnection.executeUpdateAgainstDatabase("INSERT INTO artifacts (" + "'" +
+                                                        category.getCategoryName() + "')");
     }
 
     public Category getCategoryByName(String name){
