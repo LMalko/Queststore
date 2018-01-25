@@ -21,7 +21,6 @@ public class JDBConnection{
             Class.forName("org.sqlite.JDBC");
             // Open a connection to database.
             connection = DriverManager.getConnection(filename);
-            System.out.println("Database has opened successfully");
         }catch ( Exception exception ) {
             System.err.println( exception.getClass().getName() + ": " + exception.getMessage() );
         }
@@ -55,7 +54,6 @@ public class JDBConnection{
                 }
                 System.out.println(row);
             }
-            System.out.println("\n\n\nQuery performed successfully");
             
 
         }catch(Exception exception){
@@ -107,7 +105,6 @@ public class JDBConnection{
                     }
                 arrayResult.add(rowResult);
                 }
-                System.out.println("\n\n\nOperation performed successfully");
                 
             }catch(Exception exception){
     
@@ -115,7 +112,6 @@ public class JDBConnection{
                 System.out.println("\n\n\nOperation was NOT performed successfully");
     
             }
-        System.out.println(arrayResult);
         return arrayResult;
     }
 
