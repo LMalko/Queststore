@@ -8,7 +8,6 @@ abstract class User{
     protected String status;
     protected int groupId;
     protected Group group;
-    protected int wallet;
     protected String experienceLevel;
     //public ItemCollection userArtifacts;
 
@@ -19,7 +18,6 @@ abstract class User{
         this.password = password;
         this.status = status;
         this.group = null;
-        this.wallet = 0;
         this.experienceLevel = " ";
     }
 
@@ -67,10 +65,6 @@ abstract class User{
 
     public String getStatus(){
         return this.status;
-    }
-
-    public int getUserWallet(){
-        return this.wallet;
     }
 
     public String getUserExperienceLevel(){

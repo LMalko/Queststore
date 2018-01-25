@@ -57,6 +57,15 @@ class LoginController{
         return null;
     }
 
+    private User getUserAccount(String userLogin, String userPassword){
+        for (User user : usersCollection) {
+            if(userLogin.equals(user.getLogin()) && userPassword.equals(user.getPassword())){
+                return user;
+            }
+        }
+        return null;
+    }
+
     private void runProperUserPanel(String userLogin, String userPassword, String userStatus){
         if(userStatus.equals("admin")){
             User user = new Admin(userLogin, userPassword, userStatus);
@@ -69,7 +78,7 @@ class LoginController{
             controller.startMentorPanel();
         }
         else if(userStatus.equals("student")){
-            Student user = new Student(userLogin, userPassword, userStatus);
+            Student user = (Student)getUserAccount(userLogin, userPassword);
             StudentController controller = new StudentController();
             controller.startStudentPanel(user);
         }
