@@ -14,8 +14,8 @@ public class CategoryDao{
     public void importCategories(){
         databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> category = databaseProcessor.getArrayListFromQuery("SELECT * FROM category");
-        String row;
+        ArrayList<ArrayList<String>> category = databaseProcessor.getArrayListFromQuery("SELECT DISTINCT category FROM artifacts");
+
         for(int i =0; i < category.size(); i++){
 
             String name = category.get(i).get(0);
@@ -69,21 +69,17 @@ public class CategoryDao{
         while(categoryIterator.hasNext()){
             Category category = categoryIterator.next();
             if (category.getCategoryName().equals(name)){
+                System.out.println("KURWIX");
                 return category;
             }
         }
         return null;
     }
 
-    public ArrayList<String> getAllArtifacts(){
-        databaseProcessor.connectToDatabase();
-
-        ArrayList<ArrayList<String>> artifacts = databaseProcessor.getArrayListFromQuery("SELECT category FROM artifacts");
-        ArrayList<String> allArtifacts = new ArrayList<String>();
-        for(int i =0; i < artifacts.size(); i++){
-            String category = artifacts.get(i).get(3);
-            allArtifacts.add(category);
-            }
-        return allArtifacts;
+    public void addCategoryToDatabase(Category category){
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO category (name) VALUES ( " + "'" +
+                                                        category.getCategoryName() +
+                                                        "')");
     }
+
 }
