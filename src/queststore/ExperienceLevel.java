@@ -9,7 +9,7 @@ public class ExperienceLevel{
         this.levelName = levelName;
     }
 
-    public int getLevel(){
+    public int getLevelMoneyRequired(){
         return this.money_required;
     }
 
