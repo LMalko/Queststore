@@ -28,46 +28,54 @@ class MentorController{
     }
 
     public void handleMentorPanelOptions(){
-        String choice = view.getUserInput("Choose your option: ");
-        if (choice.equals("0")){
-            dao.disconnectDatabase();
-            System.exit(0);
+        try{
+            String choice = view.getUserInput("Choose your option: ");
+            if (choice.equals("0")){
+                dao.disconnectDatabase();
+                System.exit(0);
 
-        }
-        else if (choice.equals("1")){
-            createStudent();
-        }
-        else if (choice.equals("2")){
-            assignStudentToGroup();
-        }
-        else if (choice.equals("3")){
-            addNewQuest();
-        }
-        else if (choice.equals("4")){
-            addQuestCategory();
-        }
-        else if (choice.equals("5")){
-            editQuest();
-        }
-        else if (choice.equals("6")){
-            addArtifact();
-        }
-        else if (choice.equals("7")){
-            editArtifact();
-            //have to implement artifact picker
-            //editArtifact(artifact);
-        }
-        else if (choice.equals("8")){
-            addNewCategory();
-        }
-        else if (choice.equals("9")){
-            markStudentQuest();
-        }
-        else if (choice.equals("10")){
-            markStudentArtifact();
-        }
-        else if (choice.equals("11")){
-            displayStudentWallet();
+            }
+            else if (choice.equals("1")){
+                createStudent();
+            }
+            else if (choice.equals("2")){
+                assignStudentToGroup();
+            }
+            else if (choice.equals("3")){
+                addNewQuest();
+            }
+            else if (choice.equals("4")){
+                addQuestCategory();
+            }
+            else if (choice.equals("5")){
+                editQuest();
+            }
+            else if (choice.equals("6")){
+                addArtifact();
+            }
+            else if (choice.equals("7")){
+                editArtifact();
+                //have to implement artifact picker
+                //editArtifact(artifact);
+            }
+            else if (choice.equals("8")){
+                addNewCategory();
+            }
+            else if (choice.equals("9")){
+                markStudentQuest();
+            }
+            else if (choice.equals("10")){
+                markStudentArtifact();
+            }
+            else if (choice.equals("11")){
+                displayStudentWallet();
+            }
+            else{
+                view.displayText("No such option exists!");
+               Thread.sleep(1000);
+            }
+        } catch (InterruptedException e){
+            Thread.currentThread().interrupt();
         }
     }
 
