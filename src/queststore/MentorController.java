@@ -72,6 +72,9 @@ class MentorController{
             else if (choice.equals("11")){
                 displayStudentWallet();
             }
+            else if (choice.equals("19")){
+                getAllCategories();
+            }
             else{
                 view.displayText("No such option exists!");
                Thread.sleep(1000);
@@ -213,16 +216,22 @@ class MentorController{
     }
 
     public void addArtifact(){
-        //int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
-        String artifactName = view.getUserInput("Enter artifact name: ");
-        int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
-        getAllCategories();
-        String artifactCategory = view.getUserInput("Enter artifact category: ");
-        String artifactCategoryName = categoryDao.getCategoryByName(artifactCategory).getCategoryName();
-        Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategoryName);
-        artifactsDao.addArtifactToDatabase(newArtifact);
-        //artifactsDao.exportArtifacts();
-
+        try{
+            //int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
+            String artifactName = view.getUserInput("Enter artifact name: ");
+            int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
+            //String artifactCategory = view.getUserInput("Enter artifact category: ");
+            String artifactCategoryName = addArtifactCategory();
+            Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategoryName);
+            artifactsDao.addArtifactToDatabase(newArtifact);
+            //artifactsDao.exportArtifacts();
+        }
+        catch (NumberFormatException e){
+            promptMessageAndStopThread("price should be number!");
+        }
+        catch (NullPointerException e){
+            promptMessageAndStopThread("Wrong category name!!!");
+        }
     }
 
     public void editArtifact(){
@@ -234,7 +243,8 @@ class MentorController{
                 System.out.println(artifactToEdit);
                 artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
                 artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
-                artifactToEdit.setCategory(view.getUserInput("Enter new artifact name: "));
+                //String artifactCategory = view.getUserInput("Enter new artifact category name: ");
+                artifactToEdit.setCategory(addArtifactCategory());
                 artifactsDao.updateArtifactDataInDatabase(artifactToEdit);
             }
             else{
@@ -242,6 +252,9 @@ class MentorController{
             }
         } catch (NumberFormatException e){
             promptMessageAndStopThread("Only number!!!");
+        }
+        catch (NullPointerException e){
+            promptMessageAndStopThread("Wrong category name!!!");
         }
     }
 
@@ -276,13 +289,17 @@ class MentorController{
 
     public String addArtifactCategory(){
         getAllCategories();
+        String correctCategoryName = null;
         view.displayText("Choose category from list:");
         String categoryName = view.getUserInput("Choose category by name: ");
         Category category = categoryDao.getCategoryByName(categoryName);
         if (category.getCategoryName().equals(categoryName)){
-            return categoryName;
+            correctCategoryName = categoryName;
         }
-        return null;
+        else{
+            view.displayText("Wrong");
+        }
+        return correctCategoryName;
     }
 
     public void addNewCategory(){

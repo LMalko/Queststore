@@ -14,7 +14,7 @@ public class CategoryDao{
     public void importCategories(){
         databaseProcessor.connectToDatabase();
 
-        ArrayList<ArrayList<String>> category = databaseProcessor.getArrayListFromQuery("SELECT * category");
+        ArrayList<ArrayList<String>> category = databaseProcessor.getArrayListFromQuery("SELECT * FROM categories");
 
         for(int i =0; i < category.size(); i++){
 
