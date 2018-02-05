@@ -72,9 +72,6 @@ class MentorController{
             else if (choice.equals("11")){
                 displayStudentWallet();
             }
-            else if (choice.equals("19")){
-                getAllCategories();
-            }
             else{
                 view.displayText("No such option exists!");
                Thread.sleep(1000);
@@ -91,7 +88,6 @@ class MentorController{
         Student newStudent = new Student(studentName, studentSurname, studentPassword);
         dao.addUserToDatabase(newStudent);
         dao.addStudentWalletToDatabase(newStudent);
-        //dao.saveUsersToFile();
         // dodawanie portfela!!!
     }
 
@@ -217,14 +213,11 @@ class MentorController{
 
     public void addArtifact(){
         try{
-            //int artifactId = Integer.parseInt(view.getUserInput("Enter artifact id: "));
             String artifactName = view.getUserInput("Enter artifact name: ");
             int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
-            //String artifactCategory = view.getUserInput("Enter artifact category: ");
             String artifactCategoryName = addArtifactCategory();
             Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategoryName);
             artifactsDao.addArtifactToDatabase(newArtifact);
-            //artifactsDao.exportArtifacts();
         }
         catch (NumberFormatException e){
             promptMessageAndStopThread("price should be number!");
@@ -243,7 +236,6 @@ class MentorController{
                 System.out.println(artifactToEdit);
                 artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
                 artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
-                //String artifactCategory = view.getUserInput("Enter new artifact category name: ");
                 artifactToEdit.setCategory(addArtifactCategory());
                 artifactsDao.updateArtifactDataInDatabase(artifactToEdit);
             }
