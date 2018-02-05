@@ -4,7 +4,7 @@ import java.sql.*;
 
 
 public class DBStatementProcessor{
-    
+
     private String filename;
     private Connection connection = null;
     private Statement statement = null;
@@ -15,7 +15,7 @@ public class DBStatementProcessor{
     }
 
     void connectToDatabase() {
-        
+
         try {
             // Register JDBC driver.
             Class.forName("org.sqlite.JDBC");
@@ -33,26 +33,26 @@ public class DBStatementProcessor{
             ResultSet result = statement.executeQuery(query);
 
             // Group all column names from query result
-            ResultSetMetaData metaData = result.getMetaData(); 
-            int columnCount = metaData.getColumnCount(); 
+            ResultSetMetaData metaData = result.getMetaData();
+            int columnCount = metaData.getColumnCount();
             List<String> columnNames = new ArrayList<String>();
 
 
-            for (int row = 1; row <= columnCount; row++){  
-                String columnName = metaData.getColumnName(row).toString();  
+            for (int row = 1; row <= columnCount; row++){
+                String columnName = metaData.getColumnName(row).toString();
                 columnNames.add(columnName);
             }
 
             while(result.next()){
                 String row = "";
-            
+
                 for (int i = 0; i < columnNames.size(); i++){
                     row += columnNames.get(i) + ": "+ result.getString(columnNames.get(i));
                     row += "  ";
                 }
                 System.out.println(row);
             }
-            
+
 
         }catch(Exception exception){
 
@@ -70,7 +70,7 @@ public class DBStatementProcessor{
             System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
             System.out.println("\n\n\nUpdate was NOT performed successfully");
         }
-        
+
     }
 
     public String getStringDataFromQuery(String query, String dataToGet){
@@ -106,50 +106,56 @@ public class DBStatementProcessor{
 
 
     public ArrayList getArrayListFromQuery(String query){
-        
+
         ArrayList<ArrayList> arrayResult = new ArrayList<ArrayList>();
 
         try{
-            
+
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             // Group all column names from query result
-            ResultSetMetaData metaData = result.getMetaData(); 
-            int columnCount = metaData.getColumnCount(); 
+            ResultSetMetaData metaData = result.getMetaData();
+            int columnCount = metaData.getColumnCount();
             List<String> columnNames = new ArrayList<String>();
 
 
-            for (int row = 1; row <= columnCount; row++){  
-                String columnName = metaData.getColumnName(row).toString();  
+            for (int row = 1; row <= columnCount; row++){
+                String columnName = metaData.getColumnName(row).toString();
                 columnNames.add(columnName);
             }
 
             while(result.next()){
-                
+
                 ArrayList<String> rowResult = new ArrayList<String>();
-            
+
                 for (int i = 0; i < columnNames.size(); i++){
-                        
+
                         rowResult.add(result.getString(columnNames.get(i)));
                     }
                 arrayResult.add(rowResult);
                 }
-                
+
             }catch(Exception exception){
-    
+
                 System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
                 System.out.println("\n\n\nOperation was NOT performed successfully");
-    
+
             }
         return arrayResult;
     }
 
     public void closeDatabase(){
         try{
-            result.close();
-            statement.close();
-            connection.close();
+            if (result != null){
+                result.close();
+            }
+            if (statement != null){
+                statement.close();
+            }
+            if (connection != null){
+                connection.close();
+            }
 
         }catch(Exception exception){
             System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );

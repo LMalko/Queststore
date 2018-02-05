@@ -212,6 +212,7 @@ class MentorController{
     }
 
     public void addArtifact(){
+        //wywala błąd jak dodamy artefakt o tej samej nazwie.
         try{
             String artifactName = view.getUserInput("Enter artifact name: ");
             int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
