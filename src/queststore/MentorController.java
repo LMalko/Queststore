@@ -265,6 +265,11 @@ class MentorController{
     }
 
     public void displayStudentWallet(){
+        getAllStudents();
+        int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
+        Student student = dao.getStudentById(studentId);
+        String wallet = String.valueOf(student.getStudentWallet());
+        view.displayText(wallet);
 
     }
 
