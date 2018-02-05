@@ -5,9 +5,11 @@ class MentorController{
     private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
     private static ItemCollection<Category> categoryCollection = new ItemCollection<>("Categories");
 
+
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
+    //private Quest quest = new Quest();
     private ArtifactsDao artifactsDao = new ArtifactsDao();
     private CategoryDao categoryDao = new CategoryDao();
     private GroupDao groupDao = new GroupDao();
@@ -151,17 +153,45 @@ class MentorController{
     }
 
     public void editQuest(){
-        view.clearScreen();
-        getAllQuests();
-        int questId = Integer.parseInt(view.getUserInput("Enter ID of quest you want to edit: "));
-        Quest quest = questDao.getQuestById(questId);
-        quest.setQuestName(view.getUserInput("Enter new quest name: "));
-        quest.setQuestReward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
-        quest.setQuestCategory(view.getUserInput("Enter new category name: "));
-        questDao.editQuestOnDatabase(quest);
-        System.out.println("Operation was succesfull");
+        try{
+            view.clearScreen();
+            getAllQuests();
+            int questId = Integer.parseInt(view.getUserInput("Enter ID of quest you want to edit: "));
+            if (checkIfGivenIdQuestExists(questId)){
+                Quest quest = questDao.getQuestById(questId);
+                quest.setQuestName(view.getUserInput("Enter new quest name: "));
+                quest.setQuestReward(Integer.parseInt(view.getUserInput("Enter new quest award: ")));
+                quest.setQuestCategory(view.getUserInput("Enter new category name: "));
+                questDao.editQuestOnDatabase(quest);
+                System.out.println("Operation was succesfull");
+            }
+            else {
+                view.displayText("No quest with given ID exists!");
+                Thread.sleep(1000);
+            }
+        }
+        catch (NullPointerException e){
+            promptMessageAndStopThread("Quest does not exists!");
+        }
+        catch (NumberFormatException e){
+            promptMessageAndStopThread("Only numbers!!!");
+        }
+        catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+    }
 
+    private boolean checkIfGivenIdQuestExists(int id){
+        ItemCollection<Quest> questsCollection = questDao.getQuests();
+        CollectionIterator<Quest> questIterator = questsCollection.getIterator();
 
+        while (questIterator.hasNext()){
+            Quest quest = questIterator.next();
+            if(quest.getQuestId() == id){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void getAllQuests(){
@@ -273,11 +303,19 @@ class MentorController{
     }
 
     public void displayStudentWallet(){
-        getAllStudents();
-        int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
-        Student student = dao.getStudentById(studentId);
-        String wallet = String.valueOf(student.getStudentWallet());
-        view.displayText(wallet);
+        try{
+            getAllStudents();
+            int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
+            Student student = dao.getStudentById(studentId);
+            String wallet = String.valueOf(student.getStudentWallet());
+            view.displayText(wallet);
+        }
+        catch (NullPointerException e){
+            promptMessageAndStopThread("No student with given ID exist");
+        }
+        catch (NumberFormatException e){
+            promptMessageAndStopThread("Only numbers in ID");
+        }
 
     }
 
