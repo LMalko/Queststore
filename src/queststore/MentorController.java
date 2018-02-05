@@ -226,14 +226,23 @@ class MentorController{
     }
 
     public void editArtifact(){
-        getAllArtifacts();
-        int id = Integer.parseInt(view.getUserInput("Enter artifact id: "));
-        Artifact artifactToEdit = getArtifactById(id);
-        System.out.println(artifactToEdit);
-        artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
-        artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
-        artifactToEdit.setCategory(view.getUserInput("Enter new artifact name: "));
-        artifactsDao.updateArtifactDataInDatabase(artifactToEdit);
+        try{
+            getAllArtifacts();
+            int id = Integer.parseInt(view.getUserInput("Enter artifact id: "));
+            Artifact artifactToEdit = getArtifactById(id);
+            if (artifactToEdit != null){
+                System.out.println(artifactToEdit);
+                artifactToEdit.setName(view.getUserInput("Enter new artifact name: "));
+                artifactToEdit.setPrice(Integer.parseInt(view.getUserInput("Enter new artifact price: ")));
+                artifactToEdit.setCategory(view.getUserInput("Enter new artifact name: "));
+                artifactsDao.updateArtifactDataInDatabase(artifactToEdit);
+            }
+            else{
+                promptMessageAndStopThread("Can not find artifact!");
+            }
+        } catch (NumberFormatException e){
+            promptMessageAndStopThread("Only number!!!");
+        }
     }
 
     public Artifact getArtifactById(int id){
