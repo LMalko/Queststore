@@ -66,13 +66,7 @@ class AdminController{
             int mentorId = Integer.parseInt(view.getUserInput("Choose mentor by ID"));
             if(checkIfGivenIdMentorExists(mentorId)){
                 Mentor mentor = dao.getMentorById(mentorId);
-                String newName = view.getUserInput("Enter mentor's new name: ");
-                String newSurname = view.getUserInput("Enter mentor's new surname: ");
-                String newPassword = view.getUserInput("Enter mentor's new password: ");
-                mentor.setMentorName(newName);
-                mentor.setMentorSurname(newSurname);
-                mentor.setMentorPassword(newPassword);
-                mentor.setMentorLogin(newName, newSurname);
+                setExistingMentorNewData(mentor);
                 dao.updateUserDataInDatabase(mentor);
             }
             else{
@@ -84,6 +78,16 @@ class AdminController{
         } catch (InterruptedException e){
             Thread.currentThread().interrupt();
         }
+    }
+
+    private void setExistingMentorNewData(Mentor mentor){
+        String newName = view.getUserInput("Enter mentor's new name: ");
+        String newSurname = view.getUserInput("Enter mentor's new surname: ");
+        String newPassword = view.getUserInput("Enter mentor's new password: ");
+        mentor.setMentorName(newName);
+        mentor.setMentorSurname(newSurname);
+        mentor.setMentorPassword(newPassword);
+        mentor.setMentorLogin(newName, newSurname);
     }
 
     private void getSpecificMentorData(){
