@@ -149,9 +149,16 @@ public class DBStatementProcessor{
 
     public void closeDatabase(){
         try{
-            result.close();
-            statement.close();
-            connection.close();
+            if (result != null){
+                result.close();
+            }
+            if (statement != null){
+                statement.close();
+            }
+            if (connection != null){
+                connection.close();
+            }
+
 
         }catch(Exception exception){
             System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
