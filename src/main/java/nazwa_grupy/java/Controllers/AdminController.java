@@ -10,11 +10,7 @@ import nazwa_grupy.java.Views.UserView;
 
 import java.util.ArrayList;
 
-<<<<<<< HEAD:src/main/java/nazwa_grupy/java/Controllers/AdminController.java
 public class AdminController {
-=======
-class AdminController {
->>>>>>> 2632635e9a3d0ac67a5e10bf82f7b2453ae0b7f8:src/main/java/nazwa_grupy/java/AdminController.java
 
     private UsersDao dao = new UsersDao();
     private UserView view = new UserView();

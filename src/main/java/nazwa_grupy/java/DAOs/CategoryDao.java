@@ -50,8 +50,4 @@ public class CategoryDao {
                 category.getCategoryName() +
                 "')");
     }
-<<<<<<< HEAD:src/main/java/nazwa_grupy/java/DAOs/CategoryDao.java
 }
-=======
-}
->>>>>>> 2632635e9a3d0ac67a5e10bf82f7b2453ae0b7f8:src/main/java/nazwa_grupy/java/CategoryDao.java
