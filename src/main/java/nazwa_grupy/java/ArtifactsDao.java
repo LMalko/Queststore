@@ -1,43 +1,42 @@
-import java.sql.Connection;
 import java.util.ArrayList;
-
-
-
 
 public class ArtifactsDao{
 
     private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<Artifact>("Artifacts");
     private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
+    private static final int artifactIdIndex = 0;
+    private static final int artifactNameIndex = 1;
+    private static final int artifactPriceIndex = 2;
+    private static final int artifactCategoryIndex = 3;
 
-    public void importArtifacts(){
+
+    public void importArtifacts() {
 
         artifactsCollection.clear();
         databaseProcessor.connectToDatabase();
 
         ArrayList<ArrayList<String>> artifacts = databaseProcessor.getArrayListFromQuery("SELECT * FROM artifacts");
-        for(int i =0; i < artifacts.size(); i++){
 
-            int id = Integer.parseInt(artifacts.get(i).get(0));
-            String name = artifacts.get(i).get(1);
-            int price = Integer.parseInt(artifacts.get(i).get(2));
-            String category = artifacts.get(i).get(3);
+        for(int i=0; i < artifacts.size(); i++) {
+            int id = Integer.parseInt(artifacts.get(i).get(artifactIdIndex));
+            String name = artifacts.get(i).get(artifactNameIndex);
+            int price = Integer.parseInt(artifacts.get(i).get(artifactPriceIndex));
+            String category = artifacts.get(i).get(artifactCategoryIndex);
 
             Artifact artifact = new Artifact(id, name, price, category);
-            addArtifact(artifact);
+            addArtifactToArtifactsCollection(artifact);
             }
-
     }
 
     public ItemCollection<Artifact> getArtifacts(){
         return artifactsCollection;
     }
 
-    private void addArtifact(Artifact artifact){
+    private void addArtifactToArtifactsCollection(Artifact artifact) {
         artifactsCollection.add(artifact);
-
     }
 
-    public void addArtifactToDatabase(Artifact artifact){
+    public void addArtifactToDatabase(Artifact artifact) {
         databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO artifacts (name, price, category) VALUES ( " + "'" +
                                                         artifact.getArtifactName() + "', " +
                                                         String.valueOf(artifact.getArtifactPrice()) + ", '" +
@@ -45,13 +44,13 @@ public class ArtifactsDao{
                                                         "')");
     }
 
-    public void addArtifactToStudent(Artifact artifact, int StudentID){
+    public void addArtifactToStudent(Artifact artifact, int StudentID) {
         databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts (artifact_id, student_id, status)" +
                                                        "VALUES ( " + artifact.getArtifactId() + ", " +
                                                        StudentID + ", 'bought/ not used')");
     }
 
-    public void returnStudentArtifacts(int studentID){
+    public void returnStudentArtifacts(int studentID) {
         databaseProcessor.executeQueryAgainstDatabase("SELECT name from artifacts where id IN (SELECT artifact_id " +
                                                       " from student_artifacts where student_id="
                                                       + studentID
