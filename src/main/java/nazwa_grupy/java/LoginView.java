@@ -11,9 +11,8 @@ class LoginView{
 
     public String getPassword(){
         Console console = System.console();
-        //char passwordArray[] = console.readPassword("Enter password: ");
-        System.out.println("Enter password");
-        String password = reader.nextLine();
+        char passwordArray[] = console.readPassword("Enter password: ");
+        String password = String.valueOf(passwordArray);
         return password;
     }
 
