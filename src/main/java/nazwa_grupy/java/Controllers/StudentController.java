@@ -185,6 +185,7 @@ public class StudentController{
     private void buyArtifact(){
         int walletBalance = this.student.getStudentWallet();
         returnAllArtifacts();
+        boolean doesArtifactExist = false;
 
         while(true) {
             String choice = view.getUserInput("Choose your option: ");
@@ -194,6 +195,8 @@ public class StudentController{
                 int artifactPrice = nextArtifact.getArtifactPrice();
 
                 if(choice.equals(String.valueOf(nextArtifact.getArtifactId()))) {
+                    doesArtifactExist = true;
+                    System.out.println("\n\nThis artifact bought! Good Job!\n\n");
                     if(walletBalance >= artifactPrice) {
                         Artifact correctArtifact = nextArtifact;
                         artifactsDao.addArtifactToStudent(correctArtifact, this.student.getId());
@@ -204,6 +207,8 @@ public class StudentController{
                     }
                 }
             } break;
+        }if(!doesArtifactExist){
+            System.out.println("\n\nNo such artifact ¯\\_(ツ)_/¯ \n\n");
         }
     }
 
