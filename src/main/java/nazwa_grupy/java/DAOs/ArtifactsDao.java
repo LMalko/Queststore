@@ -54,14 +54,21 @@ public class ArtifactsDao{
     public void addArtifactToStudent(Artifact artifact, int StudentID) {
         databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts (artifact_id, student_id, status)" +
                 "VALUES ( " + artifact.getArtifactId() + ", " +
-                StudentID + ", 'bought/ not used')");
+                StudentID + ", 'not used')");
     }
 
-    public void returnStudentArtifacts(int studentID) {
-        databaseProcessor.executeQueryAgainstDatabase("SELECT name from artifacts where id IN (SELECT artifact_id " +
-                " from student_artifacts where student_id="
-                + studentID
-                + ");");
+    public void returnSpecifiedStudentArtifacts(int studentID) {
+        databaseProcessor.executeQueryAgainstDatabase("SELECT student_artifacts.artifact_id, artifacts.name, student_artifacts.status " +
+                                                        "FROM student_artifacts " +
+                                                        "INNER JOIN artifacts ON student_artifacts.artifact_id = artifacts.id " +
+                                                        "WHERE student_artifacts.student_id=" +
+                                                        studentID + ";");
+    }
+
+    public void markGivenArtifact(int artifactID){
+        databaseProcessor.executeUpdateAgainstDatabase("UPDATE student_artifacts " +
+                                                        "SET status = 'used' " +
+                                                        "WHERE artifact_id=" + artifactID + ";");
     }
 
     public void updateArtifactDataInDatabase(Artifact artifact) {
