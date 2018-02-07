@@ -47,36 +47,49 @@ public class MentorController{
             }
             else if (choice.equals("1")){
                 createStudent();
+                view.getUserInput("ENTER to continue");
             }
             else if (choice.equals("2")){
                 assignStudentToGroup();
+                view.getUserInput("ENTER to continue");
             }
             else if (choice.equals("3")){
                 addNewQuest();
+                view.getUserInput("ENTER to continue");
             }
             else if (choice.equals("4")){
                 addQuestCategory();
+                view.getUserInput("ENTER to continue");
             }
             else if (choice.equals("5")){
                 editQuest();
+                view.getUserInput("ENTER to continue");
             }
             else if (choice.equals("6")){
                 addArtifact();
+                view.getUserInput("ENTER to continue");
             }
             else if (choice.equals("7")){
                 editArtifact();
+                view.getUserInput("ENTER to continue");
+                //have to implement artifact picker
+                //editArtifact(artifact);
             }
             else if (choice.equals("8")){
                 addNewCategory();
+                view.getUserInput("ENTER to continue");
             }
             else if (choice.equals("9")){
                 markStudentQuest();
+                view.getUserInput("ENTER to continue");
             }
             else if (choice.equals("10")){
                 markStudentArtifact();
+                view.getUserInput("ENTER to continue");
             }
             else if (choice.equals("11")){
                 displayStudentWallet();
+                view.getUserInput("ENTER to continue");
             }
             else{
                 view.displayText("No such option exists!");
@@ -321,15 +334,18 @@ public class MentorController{
 
     public void markStudentQuest(){
         //zaznaczyc ze quest studenta zrobiony i dodac kasen na jego konto
-        getAllStudents();
-        int studentID = Integer.parseInt(view.getUserInput("Choose student by ID"));
-        if (dao.getStudentById(studentID) != null){
-            questDao.chooseStudentQuest(studentID);
-            int questID = Integer.parseInt(view.getUserInput("Choose quest by ID"));
-            questDao.setQuestStatusAsDone(questID);
-            view.getUserInput("ENTER to continue");
-        }else{
-            promptMessageAndStopThread("Wrong student ID!!!");
+        try{
+            getAllStudents();
+            int studentID = Integer.parseInt(view.getUserInput("Choose student by ID"));
+            if (dao.getStudentById(studentID) != null){
+                questDao.chooseStudentQuest(studentID);
+                int questID = Integer.parseInt(view.getUserInput("Choose quest by ID"));
+                questDao.setQuestStatusAsDone(questID);
+            }else{
+                promptMessageAndStopThread("Wrong student ID!!!");
+            }
+        }catch(NumberFormatException e){
+            promptMessageAndStopThread("Please choose quest ID!!!");
         }
     }
 

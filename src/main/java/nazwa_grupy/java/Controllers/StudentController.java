@@ -169,18 +169,27 @@ public class StudentController{
     }
 
     private void buyArtifact(){
+        int walletBalance = this.student.getStudentWallet();
         returnAllArtifacts();
-        while(true){
+
+        while(true) {
             String choice = view.getUserInput("Choose your option: ");
+
             while(artifactIterator.hasNext()){
                 Artifact nextArtifact = artifactIterator.next();
-                if(choice.equals(String.valueOf(nextArtifact.getArtifactId()))){
-                    Artifact correctArtifact = nextArtifact;
-                    artifactsDao.addArtifactToStudent(correctArtifact, this.student.getId());
-                    this.student.reduceWallet(correctArtifact.getArtifactPrice());
-                    userDao.updateStudentWalletInDatabase(this.student);
+                int artifactPrice = nextArtifact.getArtifactPrice();
+
+                if(choice.equals(String.valueOf(nextArtifact.getArtifactId()))) {
+                    if(walletBalance >= artifactPrice) {
+                        Artifact correctArtifact = nextArtifact;
+                        artifactsDao.addArtifactToStudent(correctArtifact, this.student.getId());
+                        this.student.reduceWallet(correctArtifact.getArtifactPrice());
+                        userDao.updateStudentWalletInDatabase(this.student);
+                    } else {
+                        view.displayText("Not enough funds! Not very nice...");
+                    }
                 }
-            }break;
+            } break;
         }
     }
 
