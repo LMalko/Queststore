@@ -21,6 +21,7 @@ public class QuestDao{
     private DBStatementProcessor databaseConnection = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
     public void importQuests(){
+        questsCollection.clear();
         databaseConnection.connectToDatabase();
 
         ArrayList<ArrayList<String>> quests = databaseConnection.getArrayListFromQuery("SELECT * FROM quests");
@@ -67,6 +68,7 @@ public class QuestDao{
     }
 
     public ItemCollection<Quest> getQuests(){
+        importQuests();
         return questsCollection;
     }
 
