@@ -75,6 +75,18 @@ public class StudentController{
 
     private void enrollOnQuest(){
         returnAllQuests();
+        while(true) {
+            String choice = view.getUserInput("Choose your option: ");
+
+            while(questIterator.hasNext()){
+                Quest nextQuest = questIterator.next();
+
+                if(choice.equals(String.valueOf(nextQuest.getQuestId()))) {
+                    Quest correctQuest = nextQuest;
+                    questDao.addQuestToStudent(correctQuest.getQuestId() , this.student.getId());
+                }
+            } break;
+        }
     }
 
     private void refreshDB(){
