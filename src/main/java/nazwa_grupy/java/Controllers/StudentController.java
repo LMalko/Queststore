@@ -2,12 +2,10 @@ package nazwa_grupy.java.Controllers;
 
 import nazwa_grupy.java.DAOs.ArtifactsDao;
 import nazwa_grupy.java.DAOs.CrowdfundDao;
+import nazwa_grupy.java.DAOs.QuestDao;
 import nazwa_grupy.java.DAOs.UsersDao;
 import nazwa_grupy.java.Iterator_DBProcessor.CollectionIterator;
-import nazwa_grupy.java.Models.Artifact;
-import nazwa_grupy.java.Models.Crowdfund;
-import nazwa_grupy.java.Models.ItemCollection;
-import nazwa_grupy.java.Models.Student;
+import nazwa_grupy.java.Models.*;
 import nazwa_grupy.java.Views.UserView;
 
 public class StudentController{
@@ -16,11 +14,14 @@ public class StudentController{
     private UsersDao userDao = new UsersDao();
     private ArtifactsDao artifactsDao = new ArtifactsDao();
     private CrowdfundDao crowdfundsDao = new CrowdfundDao();
+    private QuestDao questDao = new QuestDao();
     private ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
     private ItemCollection<Crowdfund> crowdfundsCollection = crowdfundsDao.getCrowdfunds();
+    private ItemCollection<Quest> questsCollection = questDao.getQuests();
 
     private CollectionIterator<Artifact> artifactIterator = artifactsCollection.getIterator();
     private CollectionIterator<Crowdfund> crowdfundIterator = crowdfundsCollection.getIterator();
+    private CollectionIterator<Quest> questIterator = questsCollection.getIterator();
 
     private Student student;
 
@@ -39,7 +40,7 @@ public class StudentController{
     }
 
     private void handleStudentPanelOptions(){
-        refreshArtifactsAndCrowdfundsDB();
+        refreshDB();
         String choice = view.getUserInput("Choose your option: ");
         if (choice.equals("0")){
             view.clearScreen();
@@ -63,7 +64,8 @@ public class StudentController{
             System.out.println("\n\nExperience status is:");
             System.out.println(this.student.getStudentExperienceLevel() + "\n\nVery nice!\n\n");
         }else if (choice.equals("8")){
-
+            view.clearScreen();
+            enrollOnQuest();
         }else if (choice.equals("9")){
 
         }else{
@@ -71,14 +73,20 @@ public class StudentController{
         }
     }
 
-    private void refreshArtifactsAndCrowdfundsDB(){
+    private void enrollOnQuest(){
+        returnAllQuests();
+    }
+
+    private void refreshDB(){
         artifactsDao = new ArtifactsDao();
         artifactsDao.importArtifacts();
         artifactsCollection = artifactsDao.getArtifacts();
         crowdfundsDao = new CrowdfundDao();
         crowdfundsDao.importCrowdfunds();
         crowdfundsCollection = crowdfundsDao.getCrowdfunds();
-
+        questDao = new QuestDao();
+        questDao.importQuests();
+        questsCollection = questDao.getQuests();
 
     }
 
@@ -93,6 +101,15 @@ public class StudentController{
             System.out.println(crowdfundIterator.next());
         }
         this.crowdfundIterator = crowdfundsCollection.getIterator();
+    }
+
+    private void returnAllQuests(){
+        this.questIterator = questsCollection.getIterator();
+        System.out.println("Quests:");
+        while(questIterator.hasNext()){
+            System.out.println(questIterator.next());
+        }
+        this.questIterator = questsCollection.getIterator();
     }
 
     private void returnAllArtifacts(){
