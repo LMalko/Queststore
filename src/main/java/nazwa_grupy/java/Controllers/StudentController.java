@@ -67,6 +67,8 @@ public class StudentController{
             view.clearScreen();
             enrollOnQuest();
         }else if (choice.equals("9")){
+            view.clearScreen();
+            questDao.chooseStudentQuest(this.student.getId());
 
         }else{
             System.out.println("No such choice");
