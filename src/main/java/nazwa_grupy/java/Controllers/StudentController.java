@@ -74,7 +74,7 @@ public class StudentController{
     }
 
     private void showStudentArtifacts(){
-        artifactsDao.returnStudentArtifacts(this.student.getId());
+        artifactsDao.returnSpecifiedStudentArtifacts(this.student.getId());
     }
 
     private void returnAllCrowdfunds(){
