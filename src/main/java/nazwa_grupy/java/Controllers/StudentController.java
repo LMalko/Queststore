@@ -57,6 +57,12 @@ public class StudentController{
             joinCrowdfund();
         }else if (choice.equals("6")){
             showStudentArtifacts();
+        }else if (choice.equals("7")){
+
+        }else if (choice.equals("8")){
+
+        }else if (choice.equals("9")){
+
         }else{
             System.out.println("No such choice");
         }
