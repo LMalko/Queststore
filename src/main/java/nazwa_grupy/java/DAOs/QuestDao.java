@@ -98,4 +98,11 @@ public class QuestDao{
     public void setQuestStatusAsDone(int questID){
         databaseConnection.executeUpdateAgainstDatabase("UPDATE student_quests SET status = 'done'");
     }
+
+    public void addQuestToStudent(int questID, int studentID){
+        databaseConnection.executeUpdateAgainstDatabase("INSERT INTO student_quests (quests_id, student_id, status) VALUES ('" +
+        String.valueOf(questID) + "','" +
+        String.valueOf(studentID) + 
+        "', 'not done')");
+    }
 }
