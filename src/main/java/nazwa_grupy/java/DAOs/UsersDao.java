@@ -33,15 +33,11 @@ public class UsersDao {
         String login = personData.get(3);
         String password = personData.get(4);
         String status = personData.get(5);
+        String experience = personData.get(7);
         int groupId = 0;
 
         if (personData.get(6) != null){
             groupId = Integer.parseInt(personData.get(6));
-        }
-        if (personData.get(7) != null) {
-            String experienceLevel = personData.get(7);
-        } else {
-            String experienceLevel = "";
         }
 
         String groupName = getUserGroupNameByGroupId(groupId);
@@ -58,7 +54,7 @@ public class UsersDao {
             int wallet = databaseProcessor.getIntegerDataFromQuery(query, "current_balance");
             query = "SELECT total_income FROM wallet WHERE student_id = '" + id +"';";
             int totalIncome = databaseProcessor.getIntegerDataFromQuery(query, "total_income");
-            person = new Student(id, name, surname, password, group, wallet, totalIncome);
+            person = new Student(id, name, surname, password, group, wallet, totalIncome, experience);
         }
         return person;
     }
