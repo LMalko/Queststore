@@ -45,8 +45,9 @@ public class StudentController{
             view.clearScreen();
             System.exit(0);
         }else if (choice.equals("1")){
+            view.clearScreen();
             System.out.println("\n\nWallet is:");
-            System.out.println(this.student.getStudentWallet());
+            System.out.println(this.student.getStudentWallet() + "\n\nVery nice!\n\n");
         }else if (choice.equals("2")){
             buyArtifact();
         }else if (choice.equals("3")){
@@ -58,7 +59,9 @@ public class StudentController{
         }else if (choice.equals("6")){
             showStudentArtifacts();
         }else if (choice.equals("7")){
-
+            view.clearScreen();
+            System.out.println("\n\nExperience status is:");
+            System.out.println(this.student.getStudentExperienceLevel() + "\n\nVery nice!\n\n");
         }else if (choice.equals("8")){
 
         }else if (choice.equals("9")){
