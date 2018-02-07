@@ -33,28 +33,7 @@ public class DBStatementProcessor{
 
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
-
-            // Group all column names from query result
-            ResultSetMetaData metaData = result.getMetaData(); 
-            int columnCount = metaData.getColumnCount(); 
-            List<String> columnNames = new ArrayList<String>();
-
-
-            for (int row = 1; row <= columnCount; row++){  
-                String columnName = metaData.getColumnName(row).toString();  
-                columnNames.add(columnName);
-            }
-
-            while(result.next()){
-                String row = "";
-            
-                for (int i = 0; i < columnNames.size(); i++){
-                    row += columnNames.get(i) + ": "+ result.getString(columnNames.get(i));
-                    row += "  ";
-                }
-                System.out.println(row);
-            }
-            
+            printQueryResult(result);
 
         }catch(Exception exception){
 
@@ -63,6 +42,35 @@ public class DBStatementProcessor{
 
         }
     }
+
+    private void printQueryResult(ResultSet result){
+        try {
+            // Group all column names from query result
+            ResultSetMetaData metaData = result.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            List<String> columnNames = new ArrayList<String>();
+
+
+            for (int row = 1; row <= columnCount; row++) {
+                String columnName = metaData.getColumnName(row).toString();
+                columnNames.add(columnName);
+            }
+
+            while (result.next()) {
+                String row = "";
+
+                for (int i = 0; i < columnNames.size(); i++) {
+                    row += columnNames.get(i) + ": " + result.getString(columnNames.get(i));
+                    row += "  ";
+                }
+                System.out.println(row);
+                }
+        }catch(Exception exception){
+                System.err.println(exception.getClass().getName() + ": " + exception.getMessage());
+                System.out.println("\n\n\nQuery was NOT performed successfully");
+            }
+        }
+
 
     public void executeUpdateAgainstDatabase(String update){
         try{
