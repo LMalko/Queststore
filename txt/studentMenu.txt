@@ -9,7 +9,7 @@
 *   5. Contribute to crowdfunding.      *
 *   6. Show my artifacts.               *
 *   7. Show my experience.              *
-*   6. Choose quest to be done.         *
-*   6. Show my quests.                  *
+*   8. Choose quest to be done.         *
+*   9. Show my quests.                  *
 *   0. Exit.                            *
 *****************************************
