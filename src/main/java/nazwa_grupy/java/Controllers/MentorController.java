@@ -65,8 +65,6 @@ public class MentorController{
             }
             else if (choice.equals("7")){
                 editArtifact();
-                //have to implement artifact picker
-                //editArtifact(artifact);
             }
             else if (choice.equals("8")){
                 addNewCategory();
@@ -326,7 +324,20 @@ public class MentorController{
     }
 
     public void markStudentArtifact(){
+        try {
+            getAllStudents();
+            int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
+            Student student = dao.getStudentById(studentId);
+            artifactsDao.returnSpecifiedStudentArtifacts(studentId);
+            int artifactId = Integer.parseInt(view.getUserInput("Choose artifact to mark by ID"));
+            artifactsDao.markGivenArtifact(artifactId);
 
+        } catch (NullPointerException e){
+            promptMessageAndStopThread("No student with given ID exist");
+        }
+        catch (NumberFormatException e){
+            promptMessageAndStopThread("Only numbers in ID");
+        }
     }
 
     public void displayStudentWallet(){
