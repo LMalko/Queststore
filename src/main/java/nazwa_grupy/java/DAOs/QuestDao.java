@@ -92,7 +92,11 @@ public class QuestDao{
     }
 
     public void chooseStudentQuest(int studentID){
-        databaseConnection.executeQueryAgainstDatabase("SELECT student_quests.quests_id, student_quests.student_id, student_quests.status, quests.name AS 'quests name' FROM student_quests JOIN quests ON student_quests.quests_id=quests.id WHERE student_quests.student_id = " + String.valueOf(studentID) + ";");
+        databaseConnection.executeQueryAgainstDatabase("SELECT student_quests.quests_id, student_quests.student_id, student_quests.status, quests.name AS 'quest name' FROM student_quests JOIN quests ON student_quests.quests_id=quests.id WHERE student_quests.student_id = " + String.valueOf(studentID) + ";");
+    }
+
+    public void displayStudentQuest(int studentID){
+        databaseConnection.executeQueryAgainstDatabase("SELECT quests.name AS 'quest name', student_quests.status FROM student_quests JOIN quests ON student_quests.quests_id=quests.id WHERE student_quests.student_id = " + String.valueOf(studentID) + ";");
     }
 
     public void setQuestStatusAsDone(int questID){
