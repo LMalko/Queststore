@@ -51,4 +51,13 @@ public class Quest{
       this.categoryName = category;
     }
 
+    @Override
+    public String toString(){
+        return  String.format("ID: %d, NAME: %s, REWARD: %d, CATEGORY NAME: %s",
+                this.id,
+                this.name,
+                this.reward,
+                this.categoryName);
+    }
+
 }
