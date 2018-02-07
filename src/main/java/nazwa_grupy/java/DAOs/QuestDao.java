@@ -88,4 +88,12 @@ public class QuestDao{
                                                                    "' WHERE id='" + Integer.valueOf(quest.getQuestId()) +
                                                                    "'");
     }
+
+    public void chooseStudentQuest(int studentID){
+        databaseConnection.executeQueryAgainstDatabase("SELECT student_quests.quests_id, student_quests.student_id, student_quests.status, quests.name AS 'quests name' FROM student_quests JOIN quests ON student_quests.quests_id=quests.id WHERE student_quests.student_id = " + String.valueOf(studentID) + ";");
+    }
+
+    public void setQuestStatusAsDone(int questID){
+        databaseConnection.executeUpdateAgainstDatabase("UPDATE student_quests SET status = 'done'");
+    }
 }
