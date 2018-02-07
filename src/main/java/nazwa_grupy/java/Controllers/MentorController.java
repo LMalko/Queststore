@@ -325,10 +325,14 @@ public class MentorController{
         //zaznaczyc ze quest studenta zrobiony i dodac kasen na jego konto
         getAllStudents();
         int studentID = Integer.parseInt(view.getUserInput("Choose student by ID"));
-        questDao.chooseStudentQuest(studentID);
-        int questID = Integer.parseInt(view.getUserInput("Choose quest by ID"));
-        questDao.setQuestStatusAsDone(questID);
-        view.getUserInput("ENTER to continue");
+        if (dao.getStudentById(studentID) != null){
+            questDao.chooseStudentQuest(studentID);
+            int questID = Integer.parseInt(view.getUserInput("Choose quest by ID"));
+            questDao.setQuestStatusAsDone(questID);
+            view.getUserInput("ENTER to continue");
+        }else{
+            promptMessageAndStopThread("Wrong student ID!!!");
+        }
     }
 
     public void markStudentArtifact(){
