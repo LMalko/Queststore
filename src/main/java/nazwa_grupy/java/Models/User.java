@@ -7,10 +7,8 @@ public abstract class User{
     protected String login;
     protected String password;
     protected String status;
-    protected int groupId;
     protected Group group;
     protected String experienceLevel;
-    //public nazwa_grupy.java.Models.ItemCollection userArtifacts;
 
     public User(String name, String surname, String password, String status){
         this.name = name;
@@ -38,10 +36,6 @@ public abstract class User{
 
     public void setId(int id){
         this.id = id;
-    }
-
-    public void setPassword(String password){
-        this.password = password;
     }
 
     public String getName(){
