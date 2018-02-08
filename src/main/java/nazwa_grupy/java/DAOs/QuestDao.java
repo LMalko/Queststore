@@ -92,7 +92,7 @@ public class QuestDao{
     }
 
     public void chooseStudentQuest(int studentID){
-        databaseConnection.executeQueryAgainstDatabase("SELECT student_quests.quests_id, student_quests.student_id, student_quests.status, quests.name AS 'quest name' FROM student_quests JOIN quests ON student_quests.quests_id=quests.id WHERE student_quests.student_id = " + String.valueOf(studentID) + ";");
+        databaseConnection.executeQueryAgainstDatabase("SELECT student_quests.quests_id AS ID, student_quests.student_id AS Student, quests.name AS 'quest name', student_quests.status FROM student_quests JOIN quests ON student_quests.quests_id=quests.id WHERE student_quests.student_id = " + String.valueOf(studentID) + " AND student_quests.status = 'not done';");
     }
 
     public void displayStudentQuest(int studentID){
@@ -100,7 +100,7 @@ public class QuestDao{
     }
 
     public void setQuestStatusAsDone(int questID){
-        databaseConnection.executeUpdateAgainstDatabase("UPDATE student_quests SET status = 'done'");
+        databaseConnection.executeUpdateAgainstDatabase("UPDATE student_quests SET status = 'done' WHERE quests_id =" + questID);
     }
 
     public void addQuestToStudent(int questID, int studentID){

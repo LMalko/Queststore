@@ -333,7 +333,7 @@ public class MentorController{
     }
 
     public void markStudentQuest(){
-        //zaznaczyc ze quest studenta zrobiony i dodac kasen na jego konto
+
         try{
             getAllStudents();
             int studentID = Integer.parseInt(view.getUserInput("Choose student by ID"));
