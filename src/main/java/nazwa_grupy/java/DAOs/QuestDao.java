@@ -82,9 +82,11 @@ public class QuestDao {
     }
 
     public void displayStudentQuest(int studentID) {
+        System.out.println("\n\nQuests:\n\n\n");
         databaseConnection.executeQueryAgainstDatabase("SELECT quests.name AS 'quest name', student_quests.status " +
                                                        "FROM student_quests JOIN quests ON student_quests.quests_id=quests.id " +
                                                        "WHERE student_quests.student_id = " + String.valueOf(studentID) + ";");
+        System.out.println("\n\n");
     }
 
     public void setQuestStatusAsDone(int questID) {
