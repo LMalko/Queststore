@@ -1,27 +1,23 @@
 package nazwa_grupy.java.Models;
 
-import java.util.ArrayList;
-
-
-public class Quest{
+public class Quest {
     private String name;
     private int reward;
     private int id;
     private String categoryName;
 
-    public Quest(int id, String name, int reward, String categoryName){
+    public Quest(int id, String name, int reward, String categoryName) {
         this.name = name;
         this.id = id;
         this.reward = reward;
         this.categoryName = categoryName;
     }
 
-    public Quest(String name, int reward, String categoryName){
+    public Quest(String name, int reward, String categoryName) {
         this.name = name;
         this.reward = reward;
         this.categoryName = categoryName;
     }
-
 
     public String getQuestCategoryName(){
         return this.categoryName;
@@ -52,12 +48,11 @@ public class Quest{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return  String.format("ID: %d, NAME: %s, REWARD: %d, CATEGORY NAME: %s",
                 this.id,
                 this.name,
                 this.reward,
                 this.categoryName);
     }
-
 }

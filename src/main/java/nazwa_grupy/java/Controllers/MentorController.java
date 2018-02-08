@@ -7,12 +7,10 @@ import nazwa_grupy.java.Views.UserView;
 
 import java.util.ArrayList;
 
-public class MentorController{
-
+public class MentorController {
 
     private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
     private static ItemCollection<Category> categoryCollection = new ItemCollection<>("Categories");
-
 
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
@@ -21,7 +19,7 @@ public class MentorController{
     private CategoryDao categoryDao = new CategoryDao();
     private GroupDao groupDao = new GroupDao();
 
-    public void startMentorPanel(){
+    public void startMentorPanel() {
         boolean isRunning = true;
 
         groupDao.importGroups();
@@ -29,87 +27,73 @@ public class MentorController{
         artifactsDao.importArtifacts();
         categoryDao.importCategories();
 
-
-        while(isRunning){
+        while(isRunning) {
             view.displayUserMenu("txt/mentorMenu.txt");
             handleMentorPanelOptions();
+            view.getUserInput("ENTER to continue");
         }
     }
 
-    public void handleMentorPanelOptions(){
-        try{
+    private void handleMentorPanelOptions() {
+        try {
             String choice = view.getUserInput("Choose your option: ");
-            if (choice.equals("0")){
-                dao.disconnectDatabase();
-                System.exit(0);
-
+            switch (choice) {
+                case "0":
+                    dao.disconnectDatabase();
+                    System.exit(0);
+                case "1":
+                    createStudent();
+                    break;
+                case "2":
+                    assignStudentToGroup();
+                    break;
+                case "3":
+                    addNewQuest();
+                    break;
+                case "4":
+                    addQuestCategory();
+                    break;
+                case "5":
+                    editQuest();
+                    break;
+                case "6":
+                    addArtifact();
+                    break;
+                case "7":
+                    editArtifact();
+                    break;
+                case "8":
+                    addNewCategory();
+                    break;
+                case "9":
+                    markStudentQuest();
+                    break;
+                case "10":
+                    markStudentArtifact();
+                    break;
+                case "11":
+                    displayStudentWallet();
+                    break;
+                default:
+                    view.displayText("No such option exists!");
+                    Thread.sleep(1000);
+                    break;
             }
-            else if (choice.equals("1")){
-                createStudent();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("2")){
-                assignStudentToGroup();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("3")){
-                addNewQuest();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("4")){
-                addQuestCategory();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("5")){
-                editQuest();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("6")){
-                addArtifact();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("7")){
-                editArtifact();
-                view.getUserInput("ENTER to continue");
-                //have to implement artifact picker
-                //editArtifact(artifact);
-            }
-            else if (choice.equals("8")){
-                addNewCategory();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("9")){
-                markStudentQuest();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("10")){
-                markStudentArtifact();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("11")){
-                displayStudentWallet();
-                view.getUserInput("ENTER to continue");
-            }
-            else{
-                view.displayText("No such option exists!");
-               Thread.sleep(1000);
-            }
-        } catch (InterruptedException e){
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }
 
-    public void createStudent(){
+    private void createStudent(){
         String studentName = view.getUserInput("Enter student name: ");
         String studentSurname = view.getUserInput("Enter student surname: ");
         String studentPassword = view.getUserInput("Enter student password: ");
         Student newStudent = new Student(studentName, studentSurname, studentPassword);
         dao.addUserToDatabase(newStudent);
         dao.addStudentWalletToDatabase(newStudent);
-        // dodawanie portfela!!!
     }
 
-    public void assignStudentToGroup(){
+    private void assignStudentToGroup(){
         try{
             getAllStudents();
             int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
@@ -141,7 +125,7 @@ public class MentorController{
         }
     }
 
-    public void getAllGroupsNames(){
+    private void getAllGroupsNames(){
         ItemCollection<Group> allGroups = groupDao.getGroups();
         CollectionIterator<Group> groupIterator = allGroups.getIterator();
         while(groupIterator.hasNext()){
@@ -150,8 +134,7 @@ public class MentorController{
         }
     }
 
-
-    public void addNewQuest(){
+    private void addNewQuest(){
         try {
             String questName = view.getUserInput("Enter quest name: ");
             int questReward = Integer.parseInt(view.getUserInput("Enter reward for completing quest: "));
@@ -167,7 +150,7 @@ public class MentorController{
         }
     }
 
-    public void addQuestCategory(){
+    private void addQuestCategory(){
         String categoryName = view.getUserInput("Enter new category name: ");
         Category category = new Category(categoryName);
         categoryDao.addCategory(category);
@@ -175,7 +158,7 @@ public class MentorController{
 
     }
 
-    public void editQuest(){
+    private void editQuest(){
         try{
             view.clearScreen();
             getAllQuests();
@@ -220,7 +203,7 @@ public class MentorController{
         return false;
     }
 
-    public void getAllQuests(){
+    private void getAllQuests(){
         ItemCollection<Quest> questCollection = questDao.getQuests();
         CollectionIterator<Quest> questIterator = questCollection.getIterator();
 
@@ -238,8 +221,7 @@ public class MentorController{
 
     }
 
-    public void addArtifact() {
-        //wywala błąd jak dodamy artefakt o tej samej nazwie.
+    private void addArtifact() {
         try {
             String artifactName = view.getUserInput("Enter artifact name: ");
             int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
@@ -257,7 +239,7 @@ public class MentorController{
         }
     }
 
-    public void editArtifact() {
+    private void editArtifact() {
         try {
             getAllArtifacts();
             int id = Integer.parseInt(view.getUserInput("Enter artifact id: "));
@@ -283,7 +265,7 @@ public class MentorController{
         }
     }
 
-    public Artifact getArtifactById(int id){
+    private Artifact getArtifactById(int id){
         ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
         CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
 
@@ -296,7 +278,7 @@ public class MentorController{
         return null;
     }
 
-    public void getAllArtifacts(){
+    private void getAllArtifacts(){
 
         ItemCollection<Artifact> artifactsCollection = artifactsDao.getArtifacts();
         CollectionIterator<Artifact> artifactsIterator = artifactsCollection.getIterator();
@@ -310,7 +292,6 @@ public class MentorController{
             view.displayText(id + " " + name + " " +price + " " +category);
         }
     }
-
 
     private String setCategoryName(){
         String correctCategoryName = null;
@@ -333,7 +314,7 @@ public class MentorController{
         return correctCategoryName;
     }
 
-    public void addNewCategory(){
+    private void addNewCategory(){
         String categoryName = view.getUserInput("Enter new category name: ");
         Category category = new Category(categoryName);
         categoryDao.addCategoryToDatabase(category);
@@ -351,7 +332,7 @@ public class MentorController{
 
     }
 
-    public void markStudentQuest(){
+    private void markStudentQuest(){
 
         try{
             getAllStudents();
@@ -374,7 +355,7 @@ public class MentorController{
         }
     }
 
-    public void markStudentArtifact(){
+    private void markStudentArtifact(){
         try {
             getAllStudents();
             int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
@@ -391,7 +372,7 @@ public class MentorController{
         }
     }
 
-    public void displayStudentWallet(){
+    private void displayStudentWallet(){
         try{
             getAllStudents();
             int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
