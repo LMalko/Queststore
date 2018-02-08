@@ -238,25 +238,27 @@ public class MentorController{
 
     }
 
-    public void addArtifact(){
+    public void addArtifact() {
         //wywala błąd jak dodamy artefakt o tej samej nazwie.
-        try{
+        try {
             String artifactName = view.getUserInput("Enter artifact name: ");
             int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
             String artifactCategoryName = setCategoryName();
-            Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategoryName);
-            artifactsDao.addArtifactToDatabase(newArtifact);
+            if (artifactCategoryName != null) {
+                Artifact newArtifact = new Artifact(artifactName, artifactPrice, artifactCategoryName);
+                artifactsDao.addArtifactToDatabase(newArtifact);
+            }
         }
-        catch (NumberFormatException e){
-            promptMessageAndStopThread("price should be number!");
+        catch (NumberFormatException e) {
+            promptMessageAndStopThread("Price should be a number!");
         }
-        catch (NullPointerException e){
-            promptMessageAndStopThread("Wrong category name!!!");
+        catch (NullPointerException e) {
+            promptMessageAndStopThread("Wrong category name!");
         }
     }
 
-    public void editArtifact(){
-        try{
+    public void editArtifact() {
+        try {
             getAllArtifacts();
             int id = Integer.parseInt(view.getUserInput("Enter artifact id: "));
             Artifact artifactToEdit = getArtifactById(id);
