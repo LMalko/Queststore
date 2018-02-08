@@ -140,13 +140,13 @@ public class StudentController{
         returnAllArtifacts();
 
         int artifactID;
-        String contributorEmail;
         boolean ifExists = false;
+        boolean noError = false;
 
-        while(true){
+        while(!noError){
         try{
             artifactID = Integer.parseInt(view.getUserInput("Enter artifact ID: "));
-            break;
+            noError = true;
         }catch(NumberFormatException e){
             view.clearScreen();
             System.out.println("Wrong format.\n\n");
@@ -221,11 +221,12 @@ public class StudentController{
         int crowdfundID;
         int contribution;
         boolean ifExists = false;
+        boolean noError = false;
 
-        while(true){
-        try{
+        while(!noError){
+            try{
             crowdfundID = Integer.parseInt(view.getUserInput("Enter crowdfund ID: "));
-            break;
+            noError = true;
         }catch(NumberFormatException e){
             view.clearScreen();
             System.out.println("Wrong format.\n\n");
