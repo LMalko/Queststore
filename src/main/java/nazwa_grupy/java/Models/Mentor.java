@@ -10,10 +10,6 @@ public class Mentor extends User {
         super(id,name,surname,password,"mentor", group);
     }
 
-    public String getMentorGroupName(){
-        return group.getGroupName();
-    }
-
     public void setMentorGroup(Group group) {
         this.group = group;
     }
@@ -30,12 +26,12 @@ public class Mentor extends User {
         this.password = password;
     }
 
-    public void setMentorLogin(String name, String surname){
+    public void setMentorLogin(String name, String surname) {
         this.login = name.toLowerCase() + surname.toLowerCase() + "@cc.com";
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return  String.format("ID: %d, NAME: %s, SURNAME: %s, EMAIL: %s, GROUP: %s",
                               this.id,
                               this.name,

@@ -1,12 +1,11 @@
 package nazwa_grupy.java.Models;
 
 public class ExperienceLevel{
-    int money_required;
-    String levelName;
+    private int money_required;
+    private String levelName;
     private static ItemCollection<ExperienceLevel> experienceLevelCollection = new ItemCollection<>("nazwa_grupy.java.Models.ExperienceLevel");
 
-
-    public ExperienceLevel(int money_required, String levelName){
+    public ExperienceLevel(int money_required, String levelName) {
         this.money_required = money_required;
         this.levelName = levelName;
     }

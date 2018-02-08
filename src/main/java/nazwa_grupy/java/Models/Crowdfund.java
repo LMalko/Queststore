@@ -1,18 +1,16 @@
 package nazwa_grupy.java.Models;
 
-
 import nazwa_grupy.java.Iterator_DBProcessor.CollectionIterator;
 
-public class Crowdfund{
+public class Crowdfund {
     private int id;
-
     private String name;
     private int totalPrice;
     private int account;
     private int founderID;
     private static ItemCollection<Crowdfund> crowdfundCollection = new ItemCollection<>("Crowdfunds");
 
-    public Crowdfund(int id, String name, int totalPrice, int account, int founderID){
+    public Crowdfund(int id, String name, int totalPrice, int account, int founderID) {
         this.id = id;
         this.name = name;
         this.totalPrice = totalPrice;
@@ -20,7 +18,7 @@ public class Crowdfund{
         this.founderID = founderID;
     }
 
-    public Crowdfund(String name, int totalPrice, int account, int founderID){
+    public Crowdfund(String name, int totalPrice, int account, int founderID) {
         this.name = name;
         this.totalPrice = totalPrice;
         this.account = account;
@@ -63,7 +61,7 @@ public class Crowdfund{
         this.account = priceLeft;
     }
 
-    public void setCrowdfundFounderID(int founderID){
+    public void setCrowdfundFounderID(int founderID) {
         this.founderID = founderID;
     }
 
@@ -75,7 +73,7 @@ public class Crowdfund{
         return this.totalPrice - this.account;
     }
 
-    public Crowdfund getSpecyficCrowdfund(String name){
+    public Crowdfund getSpecyficCrowdfund(String name) {
         CollectionIterator<Crowdfund> crowdfundIterator = crowdfundCollection.getIterator();
         while(crowdfundIterator.hasNext()){
             if (name.equals(crowdfundIterator.next().getCrowdfundName())){
@@ -86,7 +84,7 @@ public class Crowdfund{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return  String.format("ID: %d, NAME: %s, PRICE: %d, CURRENT ACCOUNT: %d, CONTRIBUTOR: %s",
                               this.id,
                               this.name,
