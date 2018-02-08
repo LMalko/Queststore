@@ -98,12 +98,12 @@ public class DBStatementProcessor{
         return receivedData;
     }
 
-    public int getIntegerDataFromQuery(String query, String dataToGet){
+    public int getIntegerDataFromQuery(String query, String columnToGet){
         int receivedData = 0;
         try{
             result = statement.executeQuery(query);
             while (result.next()) {
-                receivedData = result.getInt(dataToGet);
+                receivedData = result.getInt(columnToGet);
             }
 
         } catch (SQLException exception) {
