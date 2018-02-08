@@ -33,66 +33,54 @@ public class MentorController{
         while(isRunning){
             view.displayUserMenu("txt/mentorMenu.txt");
             handleMentorPanelOptions();
+            view.getUserInput("ENTER to continue");
         }
     }
 
     public void handleMentorPanelOptions(){
         try{
             String choice = view.getUserInput("Choose your option: ");
-            if (choice.equals("0")){
-                dao.disconnectDatabase();
-                System.exit(0);
-
-            }
-            else if (choice.equals("1")){
-                createStudent();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("2")){
-                assignStudentToGroup();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("3")){
-                addNewQuest();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("4")){
-                addQuestCategory();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("5")){
-                editQuest();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("6")){
-                addArtifact();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("7")){
-                editArtifact();
-                view.getUserInput("ENTER to continue");
-                //have to implement artifact picker
-                //editArtifact(artifact);
-            }
-            else if (choice.equals("8")){
-                addNewCategory();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("9")){
-                markStudentQuest();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("10")){
-                markStudentArtifact();
-                view.getUserInput("ENTER to continue");
-            }
-            else if (choice.equals("11")){
-                displayStudentWallet();
-                view.getUserInput("ENTER to continue");
-            }
-            else{
-                view.displayText("No such option exists!");
-               Thread.sleep(1000);
+            switch (choice) {
+                case "0":
+                    dao.disconnectDatabase();
+                    System.exit(0);
+                case "1":
+                    createStudent();
+                    break;
+                case "2":
+                    assignStudentToGroup();
+                    break;
+                case "3":
+                    addNewQuest();
+                    break;
+                case "4":
+                    addQuestCategory();
+                    break;
+                case "5":
+                    editQuest();
+                    break;
+                case "6":
+                    addArtifact();
+                    break;
+                case "7":
+                    editArtifact();
+                    break;
+                case "8":
+                    addNewCategory();
+                    break;
+                case "9":
+                    markStudentQuest();
+                    break;
+                case "10":
+                    markStudentArtifact();
+                    break;
+                case "11":
+                    displayStudentWallet();
+                    break;
+                default:
+                    view.displayText("No such option exists!");
+                    Thread.sleep(1000);
+                    break;
             }
         } catch (InterruptedException e){
             Thread.currentThread().interrupt();
@@ -106,7 +94,6 @@ public class MentorController{
         Student newStudent = new Student(studentName, studentSurname, studentPassword);
         dao.addUserToDatabase(newStudent);
         dao.addStudentWalletToDatabase(newStudent);
-        // dodawanie portfela!!!
     }
 
     public void assignStudentToGroup(){
@@ -239,7 +226,6 @@ public class MentorController{
     }
 
     public void addArtifact() {
-        //wywala błąd jak dodamy artefakt o tej samej nazwie.
         try {
             String artifactName = view.getUserInput("Enter artifact name: ");
             int artifactPrice = Integer.parseInt(view.getUserInput("Enter artifact price: "));
@@ -310,7 +296,6 @@ public class MentorController{
             view.displayText(id + " " + name + " " +price + " " +category);
         }
     }
-
 
     private String setCategoryName(){
         String correctCategoryName = null;
