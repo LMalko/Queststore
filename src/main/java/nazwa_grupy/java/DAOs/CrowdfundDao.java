@@ -20,23 +20,47 @@ public class CrowdfundDao{
         databaseProcessor.connectToDatabase();
 
 
-        ArrayList<ArrayList<String>> artifacts = databaseProcessor.getArrayListFromQuery("SELECT * FROM crowdfunds");
-        for(int i =0; i < artifacts.size(); i++){
+        ArrayList<ArrayList<String>> crowdfunds = databaseProcessor.getArrayListFromQuery("SELECT * FROM crowdfunds");
+        for(int i =0; i < crowdfunds.size(); i++){
 
-            int id = Integer.parseInt(artifacts.get(i).get(0));
-            String name = artifacts.get(i).get(1);
-            int totalPrice = Integer.parseInt(artifacts.get(i).get(2));
-            int account = Integer.parseInt(artifacts.get(i).get(3));
-            int founderID = Integer.parseInt(artifacts.get(i).get(4));
+            int id = Integer.parseInt(crowdfunds.get(i).get(0));
+            String name = crowdfunds.get(i).get(1);
+            int totalPrice = Integer.parseInt(crowdfunds.get(i).get(2));
+            int account = Integer.parseInt(crowdfunds.get(i).get(3));
+            int founderID = Integer.parseInt(crowdfunds.get(i).get(4));
+            if(account >= totalPrice){
+                resolveCrowdfund(id, name, founderID);
+
+            }
 
             Crowdfund crowdfund = new Crowdfund(id, name, totalPrice, account, founderID);
             addCrowdfund(crowdfund);
             }
         }
+
                 
     public void exportCrowdfund(){
 
         CollectionIterator<Crowdfund> crowdfundIterator = crowdfundCollection.getIterator();
+    }
+
+    private void resolveCrowdfund(int crowdfundId, String crowdfundName, int founderID){
+
+        databaseProcessor.executeUpdateAgainstDatabase("DELETE FROM crowdfunds WHERE id=" +
+                String.valueOf(crowdfundId) +
+                ";");
+
+        System.out.println("\n\nCrowdfund for: " +
+                crowdfundName +
+                " has been successfully finished! Very nice !!\n\n\n");
+
+        int artifactID = databaseProcessor.getIntegerDataFromQuery("SELECT id FROM artifacts WHERE name='" + crowdfundName + "';", "id");
+
+        databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts " +
+                "(artifact_id, student_id, status) VALUES (" + String.valueOf(artifactID) + ", " +
+                String.valueOf(founderID) + ", 'not used')");
+
+        System.out.println("\nArtifact has been added to founders stash! Very good !!\n");
     }
 
     public ItemCollection<Crowdfund> getCrowdfunds(){

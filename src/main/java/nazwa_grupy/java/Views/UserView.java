@@ -56,4 +56,8 @@ public class UserView{
     public void displayText(String text){
         System.out.println(text);
     }
+
+    public void displayObject(Object object) {
+        System.out.println(object);
+    }
 }

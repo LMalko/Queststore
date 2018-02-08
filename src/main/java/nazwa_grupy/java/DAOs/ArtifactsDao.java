@@ -65,6 +65,14 @@ public class ArtifactsDao{
                                                         studentID + ";");
     }
 
+    public void returnSpecifiedStudentUnusedArtifacts (int studentID) {
+        databaseProcessor.executeQueryAgainstDatabase("SELECT student_artifacts.artifact_id, artifacts.name, student_artifacts.status " +
+                "FROM student_artifacts " +
+                "INNER JOIN artifacts ON student_artifacts.artifact_id = artifacts.id " +
+                "WHERE student_artifacts.student_id=" +
+                studentID + " AND student_artifacts.status = 'not used' ;");
+    }
+
     public void markGivenArtifact(int artifactID){
         databaseProcessor.executeUpdateAgainstDatabase("UPDATE student_artifacts " +
                                                         "SET status = 'used' " +

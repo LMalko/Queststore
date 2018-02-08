@@ -31,24 +31,24 @@ public class AdminController {
     private void handleAdminPanelOptions() {
         try {
             String choice = view.getUserInput("Choose your option: ");
-            if (choice.equals("0")) {
-                dao.disconnectDatabase();
-                System.exit(0);
-            } else if (choice.equals("1")) {
-                createNewMentor();
-            } else if (choice.equals("2")) {
-                createNewGroup();
-            } else if (choice.equals("3")) {
-                assignMentorToGroup();
-            } else if (choice.equals("4")) {
-                editMentorData();
-            } else if (choice.equals("5")) {
-                getSpecificMentorData();
-            } else if (choice.equals("6")) {
-                createNewLevelOfExperience();
-            } else {
-                view.displayText("No such option exists!");
-                Thread.sleep(1000);
+            switch (choice) {
+                case "0": dao.disconnectDatabase();
+                          System.exit(0);
+                case "1": createNewMentor();
+                          break;
+                case "2": createNewGroup();
+                          break;
+                case "3": assignMentorToGroup();
+                          break;
+                case "4": editMentorData();
+                          break;
+                case "5": getSpecificMentorData();
+                          break;
+                case "6": createNewLevelOfExperience();
+                          break;
+                default: view.displayText("No such option exists!");
+                         Thread.sleep(1000);
+                          break;
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
