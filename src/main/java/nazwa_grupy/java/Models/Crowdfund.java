@@ -1,7 +1,5 @@
 package nazwa_grupy.java.Models;
 
-import nazwa_grupy.java.Iterator_DBProcessor.CollectionIterator;
-
 public class Crowdfund {
     private int id;
     private String name;
@@ -43,44 +41,6 @@ public class Crowdfund {
 
     public int getCrowdfundFounderID(){
         return this.founderID;
-    }
-
-    public void setCrowdfundId(int id){
-        this.id = id;
-    }
-
-    public void setCrowdfundName(String name){
-        this.name = name;
-    }
-
-    public void setCrowdfundTotalPrice(int totalPrice){
-        this.totalPrice = totalPrice;
-    }
-
-    public void setCrowdfundAccount(int priceLeft){
-        this.account = priceLeft;
-    }
-
-    public void setCrowdfundFounderID(int founderID) {
-        this.founderID = founderID;
-    }
-
-    public static ItemCollection<Crowdfund> getCrowdfunds(){
-        return crowdfundCollection;
-    }
-
-    public int getPriceLeft(){
-        return this.totalPrice - this.account;
-    }
-
-    public Crowdfund getSpecyficCrowdfund(String name) {
-        CollectionIterator<Crowdfund> crowdfundIterator = crowdfundCollection.getIterator();
-        while(crowdfundIterator.hasNext()){
-            if (name.equals(crowdfundIterator.next().getCrowdfundName())){
-                return crowdfundIterator.next();
-            }
-        }
-        return null;
     }
 
     @Override
