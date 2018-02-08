@@ -39,9 +39,7 @@ public class CategoryDao {
         while(categoryIterator.hasNext()){
             Category category = categoryIterator.next();
             if (category.getCategoryName().equals(name)){
-                System.out.println("KURWIX");
-                return category;
-            }
+                return category; }
         }
         return null;
     }
