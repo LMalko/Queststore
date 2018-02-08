@@ -352,7 +352,6 @@ public class MentorController{
     }
 
     public void markStudentQuest(){
-        //zaznaczyc ze quest studenta zrobiony i dodac kasen na jego konto
         try{
             getAllStudents();
             int studentID = Integer.parseInt(view.getUserInput("Choose student by ID"));
@@ -373,7 +372,7 @@ public class MentorController{
             getAllStudents();
             int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
             Student student = dao.getStudentById(studentId);
-            artifactsDao.returnSpecifiedStudentArtifacts(studentId);
+            artifactsDao.returnSpecifiedStudentUnusedArtifacts(studentId);
             int artifactId = Integer.parseInt(view.getUserInput("Choose artifact to mark by ID"));
             artifactsDao.markGivenArtifact(artifactId);
 
