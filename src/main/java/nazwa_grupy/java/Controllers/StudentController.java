@@ -78,6 +78,7 @@ public class StudentController{
 
     private void enrollOnQuest(){
         returnAllQuests();
+        boolean isQuest = false;
 
             int choice = Integer.parseInt(view.getUserInput("Choose your option: "));
 
@@ -85,10 +86,15 @@ public class StudentController{
                 Quest nextQuest = questIterator.next();
 
                 if(choice == nextQuest.getQuestId() && questDao.userDontHaveQuest(choice, this.student.getId())) {
-                    Quest correctQuest = nextQuest;
-                    questDao.addQuestToStudent(correctQuest.getQuestId() , this.student.getId());
+                    isQuest = true;
+                    questDao.addQuestToStudent(nextQuest.getQuestId() , this.student.getId());
                 }
 
+        }if(!isQuest){
+            System.out.println("\n\nNo such kłest or You already enrolled.¯\\_(ツ)_/¯ \n\n");
+
+        }else{
+            System.out.println("\n\nQuest added, my friend.\n\n");
         }
     }
 
