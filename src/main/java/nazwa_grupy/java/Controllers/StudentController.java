@@ -77,17 +77,17 @@ public class StudentController{
 
     private void enrollOnQuest(){
         returnAllQuests();
-        while(true) {
-            String choice = view.getUserInput("Choose your option: ");
+
+            int choice = Integer.parseInt(view.getUserInput("Choose your option: "));
 
             while(questIterator.hasNext()){
                 Quest nextQuest = questIterator.next();
 
-                if(choice.equals(String.valueOf(nextQuest.getQuestId()))) {
+                if(choice == nextQuest.getQuestId() && questDao.userDontHaveQuest(choice, this.student.getId())) {
                     Quest correctQuest = nextQuest;
                     questDao.addQuestToStudent(correctQuest.getQuestId() , this.student.getId());
                 }
-            } break;
+
         }
     }
 
@@ -186,8 +186,9 @@ public class StudentController{
         int walletBalance = this.student.getStudentWallet();
         returnAllArtifacts();
         boolean doesArtifactExist = false;
+        boolean isRunning = true;
 
-        while(true) {
+        while(isRunning) {
             String choice = view.getUserInput("Choose your option: ");
 
             while(artifactIterator.hasNext()){
@@ -196,6 +197,7 @@ public class StudentController{
 
                 if(choice.equals(String.valueOf(nextArtifact.getArtifactId()))) {
                     doesArtifactExist = true;
+                    isRunning = false;
                     System.out.println("\n\nThis artifact bought! Good Job!\n\n");
                     if(walletBalance >= artifactPrice) {
                         Artifact correctArtifact = nextArtifact;

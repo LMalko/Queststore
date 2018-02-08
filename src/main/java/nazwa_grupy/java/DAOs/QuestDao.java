@@ -109,4 +109,13 @@ public class QuestDao{
         String.valueOf(studentID) + 
         "', 'not done')");
     }
+
+    public boolean userDontHaveQuest(int choice, int studentId){
+        int questId = databaseConnection.getIntegerDataFromQuery("SELECT quests_id FROM student_quests WHERE quests_id=" + choice + " AND student_id=" + studentId , "quests_id");
+        if(questId == choice){
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
