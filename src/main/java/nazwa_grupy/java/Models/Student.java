@@ -1,14 +1,13 @@
 package nazwa_grupy.java.Models;
 
-public class Student extends User{
+public class Student extends User {
 
     private int wallet;
     private int totalIncome;
     private String experience;
 
-    public Student(String name, String surname, String password){
+    public Student(String name, String surname, String password) {
         super(name, surname, password, "student");
-
     }
 
     public Student(int id, String name, String surname, String password, Group group, int wallet, int totalIncome, String experience) {
@@ -33,7 +32,6 @@ public class Student extends User{
     public String getStudentExperienceLevel(){
         return this.experience;
     }
-
 
     public void reduceWallet(int amount){
         this.wallet = this.wallet - amount;
