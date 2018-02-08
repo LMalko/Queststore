@@ -128,6 +128,23 @@ public class UsersDao {
         databaseProcessor.executeUpdateAgainstDatabase(query);
     }
 
+    public void addCurrencyToWallet(int questReward, int studentID){
+
+        int currentBalance;
+        int totalIncome;
+
+        currentBalance = databaseProcessor.getIntegerDataFromQuery("SELECT current_balance FROM wallet WHERE student_id=" + studentID, "current_balance");
+        totalIncome =  databaseProcessor.getIntegerDataFromQuery("SELECT total_income FROM wallet WHERE student_id=" + studentID, "total_income");
+
+        currentBalance += questReward;
+        totalIncome += questReward;
+
+        String query = "UPDATE wallet SET current_balance = '" + currentBalance + "' ," +
+                "total_income = '" + totalIncome + "' " +
+                "WHERE student_id = '" + studentID + "';";
+        databaseProcessor.executeUpdateAgainstDatabase(query);
+    }
+
     public void updateUserDataInDatabase(User user) {
         String name = user.getName();
         String surname = user.getSurname();

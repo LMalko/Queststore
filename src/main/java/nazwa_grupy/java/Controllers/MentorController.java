@@ -357,9 +357,15 @@ public class MentorController{
             getAllStudents();
             int studentID = Integer.parseInt(view.getUserInput("Choose student by ID"));
             if (dao.getStudentById(studentID) != null){
+
                 questDao.chooseStudentQuest(studentID);
                 int questID = Integer.parseInt(view.getUserInput("Choose quest by ID"));
                 questDao.setQuestStatusAsDone(questID);
+
+                Quest newQuest = questDao.getQuestById(questID);
+                int questReward = newQuest.getQuestReward();
+                dao.addCurrencyToWallet(questReward, studentID);
+
             }else{
                 promptMessageAndStopThread("Wrong student ID!!!");
             }
