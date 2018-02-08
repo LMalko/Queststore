@@ -23,11 +23,6 @@ public class ItemCollection<T> {
         
         collection.add(item);
     }
-    
-    public void remove(T item) {
-        
-        collection.remove(item);
-    }
 
     public void clear() {
         collection.clear();
