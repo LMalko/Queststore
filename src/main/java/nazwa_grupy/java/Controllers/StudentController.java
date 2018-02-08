@@ -150,13 +150,10 @@ public class StudentController{
                 while (artifactIterator.hasNext()) {
                     Artifact nextArtifact = artifactIterator.next();
                     if (nextArtifact.getArtifactId() == artifactID) {
-                        Artifact artifactToCrowdfund = nextArtifact;
                         ifExists = true;
                         int founderID = student.getId();
-
-
-                        Crowdfund crowdfund = new Crowdfund(artifactToCrowdfund.getArtifactName(),
-                                artifactToCrowdfund.getArtifactPrice(),
+                        Crowdfund crowdfund = new Crowdfund(nextArtifact.getArtifactName(),
+                                nextArtifact.getArtifactPrice(),
                                 0,
                                 founderID);
 
@@ -197,9 +194,8 @@ public class StudentController{
                     isRunning = false;
                     System.out.println("\n\nThis artifact bought! Good Job!\n\n");
                     if(walletBalance >= artifactPrice) {
-                        Artifact correctArtifact = nextArtifact;
-                        artifactsDao.addArtifactToStudent(correctArtifact, this.student.getId());
-                        this.student.reduceWallet(correctArtifact.getArtifactPrice());
+                        artifactsDao.addArtifactToStudent(nextArtifact, this.student.getId());
+                        this.student.reduceWallet(nextArtifact.getArtifactPrice());
                         userDao.updateStudentWalletInDatabase(this.student);
                     } else {
                         view.displayText("Not enough funds! Not very nice...");
@@ -225,9 +221,8 @@ public class StudentController{
                 while(crowdfundIterator.hasNext()) {
                     Crowdfund nextCrowdfund = crowdfundIterator.next();
                     if (nextCrowdfund.getCrowdfundId() == crowdfundID) {
-                        Crowdfund crowdfundToContribute = nextCrowdfund;
                         ifExists = true;
-                        processJoiningCrowdfund(crowdfundToContribute);
+                        processJoiningCrowdfund(nextCrowdfund);
                     }
                 }
 

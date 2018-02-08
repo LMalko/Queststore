@@ -9,9 +9,6 @@ import java.util.ArrayList;
 
 public class MentorController {
 
-    private static ItemCollection<Artifact> artifactsCollection = new ItemCollection<>("Artifacts");
-    private static ItemCollection<Category> categoryCollection = new ItemCollection<>("Categories");
-
     private UserView view = new UserView();
     private UsersDao dao = new UsersDao();
     private QuestDao questDao = new QuestDao();
@@ -105,9 +102,7 @@ public class MentorController {
             Group newGroup = groupDao.getGroupByName(groupName);
             student.setStudentGroup(newGroup);
             dao.updateUserGroupInDatabase(student);
-        } catch (NullPointerException e){
-            promptMessageAndStopThread("No such student or group exists!");
-        } catch (NumberFormatException e){
+        } catch (NullPointerException | NumberFormatException e){
             promptMessageAndStopThread("No such student or group exists!");
         }
 
@@ -359,7 +354,6 @@ public class MentorController {
         try {
             getAllStudents();
             int studentId = Integer.parseInt(view.getUserInput("Choose student by ID"));
-            Student student = dao.getStudentById(studentId);
             artifactsDao.returnSpecifiedStudentUnusedArtifacts(studentId);
             int artifactId = Integer.parseInt(view.getUserInput("Choose artifact to mark by ID"));
             artifactsDao.markGivenArtifact(artifactId);
