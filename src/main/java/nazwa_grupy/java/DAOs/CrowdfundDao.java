@@ -44,18 +44,20 @@ public class CrowdfundDao{
         CollectionIterator<Crowdfund> crowdfundIterator = crowdfundCollection.getIterator();
     }
 
-    private void resolveCrowdfund(int id, String name, int founderID){
+    private void resolveCrowdfund(int crowdfundId, String crowdfundName, int founderID){
 
         databaseProcessor.executeUpdateAgainstDatabase("DELETE FROM crowdfunds WHERE id=" +
-                String.valueOf(id) +
+                String.valueOf(crowdfundId) +
                 ";");
 
         System.out.println("\n\nCrowdfund for: " +
-                name +
-                "has been successfully finished! Very nice !!\n\n\n");
+                crowdfundName +
+                " has been successfully finished! Very nice !!\n\n\n");
+
+        int artifactID = databaseProcessor.getIntegerDataFromQuery("SELECT id FROM artifacts WHERE name='" + crowdfundName + "';", "id");
 
         databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts " +
-                "(artifact_id, student_id, status) VALUES (" + String.valueOf(id) + ", " +
+                "(artifact_id, student_id, status) VALUES (" + String.valueOf(artifactID) + ", " +
                 String.valueOf(founderID) + ", 'not used')");
 
         System.out.println("\nArtifact has been added to founders stash! Very good !!\n");
