@@ -83,12 +83,12 @@ public class DBStatementProcessor{
         
     }
 
-    public String getStringDataFromQuery(String query, String columnToGet){
+    public String getStringDataFromQuery(String query, String columnName){
         String receivedData = "";
         try{
             result = statement.executeQuery(query);
             while (result.next()) {
-                receivedData = result.getString(columnToGet);
+                receivedData = result.getString(columnName);
             }
 
         } catch (SQLException exception) {
@@ -98,12 +98,12 @@ public class DBStatementProcessor{
         return receivedData;
     }
 
-    public int getIntegerDataFromQuery(String query, String columnToGet){
+    public int getIntegerDataFromQuery(String query, String columnName){
         int receivedData = 0;
         try{
             result = statement.executeQuery(query);
             while (result.next()) {
-                receivedData = result.getInt(columnToGet);
+                receivedData = result.getInt(columnName);
             }
 
         } catch (SQLException exception) {
