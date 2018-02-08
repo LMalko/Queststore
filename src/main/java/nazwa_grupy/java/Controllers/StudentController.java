@@ -165,7 +165,7 @@ public class StudentController{
 
                 Crowdfund crowdfund = new Crowdfund(artifactToCrowdfund.getArtifactName(),
                                                     artifactToCrowdfund.getArtifactPrice(),
-                                                    artifactToCrowdfund.getArtifactPrice(), 
+                                                    0,
                                                     founderID );
                                                     
                 
@@ -244,6 +244,7 @@ public class StudentController{
                         continue;
                     }
                     student.reduceWallet(contribution);
+                    userDao.updateStudentWalletInDatabase(this.student);
                     crowdfundToContribute.reduceCurrentPrice(contribution);
                     crowdfundsDao.updateCrowdfundAccount(crowdfundToContribute.getCrowdfundId(), contribution);
 
