@@ -83,12 +83,12 @@ public class DBStatementProcessor{
         
     }
 
-    public String getStringDataFromQuery(String query, String dataToGet){
+    public String getStringDataFromQuery(String query, String columnToGet){
         String receivedData = "";
         try{
             result = statement.executeQuery(query);
             while (result.next()) {
-                receivedData = result.getString(dataToGet);
+                receivedData = result.getString(columnToGet);
             }
 
         } catch (SQLException exception) {
