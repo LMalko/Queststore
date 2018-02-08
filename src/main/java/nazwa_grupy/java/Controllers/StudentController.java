@@ -136,52 +136,48 @@ public class StudentController{
         this.artifactIterator = artifactsCollection.getIterator();
     }
 
-    private void createCrowdfund(){
+    private void createCrowdfund() {
         returnAllArtifacts();
 
         int artifactID;
         boolean ifExists = false;
         boolean noError = false;
 
-        while(!noError){
-        try{
-            artifactID = Integer.parseInt(view.getUserInput("Enter artifact ID: "));
-            noError = true;
-        }catch(NumberFormatException e){
-            view.clearScreen();
-            System.out.println("Wrong format.\n\n");
-            returnAllArtifacts();
-            }
-        }
-
-        while(artifactIterator.hasNext()){
-            Artifact nextArtifact = artifactIterator.next();
-            if(nextArtifact.getArtifactId() == artifactID){
-                Artifact artifactToCrowdfund = nextArtifact;
-                ifExists = true;
-                int founderID = student.getId();
-
-                
+        while (!noError) {
+            try {
+                artifactID = Integer.parseInt(view.getUserInput("Enter artifact ID: "));
+                noError = true;
+                while (artifactIterator.hasNext()) {
+                    Artifact nextArtifact = artifactIterator.next();
+                    if (nextArtifact.getArtifactId() == artifactID) {
+                        Artifact artifactToCrowdfund = nextArtifact;
+                        ifExists = true;
+                        int founderID = student.getId();
 
 
-                Crowdfund crowdfund = new Crowdfund(artifactToCrowdfund.getArtifactName(),
-                                                    artifactToCrowdfund.getArtifactPrice(),
-                                                    0,
-                                                    founderID );
-                                                    
-                
-                crowdfundsDao.addCrowdfundToDatabase(crowdfund);
-                break;
+                        Crowdfund crowdfund = new Crowdfund(artifactToCrowdfund.getArtifactName(),
+                                artifactToCrowdfund.getArtifactPrice(),
+                                0,
+                                founderID);
+
+
+                        crowdfundsDao.addCrowdfundToDatabase(crowdfund);
+                        break;
+                    }
                 }
+            } catch (NumberFormatException e) {
+                view.clearScreen();
+                System.out.println("Wrong format.\n\n");
+                returnAllArtifacts();
             }
-
-        if(!ifExists){
-            view.clearScreen();
-            System.out.println("No such ID\n\n");
-            createCrowdfund();
+            if (!ifExists) {
+                view.clearScreen();
+                System.out.println("No such ID\n\n");
+                createCrowdfund();
+            }
         }
-
     }
+
 
     private void buyArtifact(){
         int walletBalance = this.student.getStudentWallet();
@@ -219,7 +215,6 @@ public class StudentController{
         returnAllCrowdfunds();
 
         int crowdfundID;
-        int contribution;
         boolean ifExists = false;
         boolean noError = false;
 
@@ -227,6 +222,15 @@ public class StudentController{
             try{
             crowdfundID = Integer.parseInt(view.getUserInput("Enter crowdfund ID: "));
             noError = true;
+                while(crowdfundIterator.hasNext()) {
+                    Crowdfund nextCrowdfund = crowdfundIterator.next();
+                    if (nextCrowdfund.getCrowdfundId() == crowdfundID) {
+                        Crowdfund crowdfundToContribute = nextCrowdfund;
+                        ifExists = true;
+                        processJoiningCrowdfund(crowdfundToContribute);
+                    }
+                }
+
         }catch(NumberFormatException e){
             view.clearScreen();
             System.out.println("Wrong format.\n\n");
@@ -234,44 +238,36 @@ public class StudentController{
             }
         }
 
-        while(crowdfundIterator.hasNext()){
-            Crowdfund nextCrowdfund = crowdfundIterator.next();
-            if(nextCrowdfund.getCrowdfundId() == crowdfundID){
-                Crowdfund crowdfundToContribute = nextCrowdfund;
-                ifExists = true;
-
-                while(true){
-                try{
-                    contribution = Integer.parseInt(view.getUserInput("How much you want to contribute? "));
-                    if(contribution > student.getStudentWallet()){
-                        System.out.println("You are to poor to contribute that much, amigo \n\n\n");
-                        continue;
-                    }
-                    student.reduceWallet(contribution);
-                    userDao.updateStudentWalletInDatabase(this.student);
-                    crowdfundToContribute.reduceCurrentPrice(contribution);
-                    crowdfundsDao.updateCrowdfundAccount(crowdfundToContribute.getCrowdfundId(), contribution);
-
-                    
-                    break;
-
-                }catch(NumberFormatException e){
-                    view.clearScreen();
-                    System.out.println("Wrong format.\n\n");
-                    returnAllCrowdfunds();
-                    }
-                }
-
-                break;
-                }
-            }
-
         if(!ifExists){
             view.clearScreen();
             System.out.println("No such ID\n\n");
             joinCrowdfund();
         }
-
     }
 
+    private void processJoiningCrowdfund(Crowdfund crowdfundToContribute) {
+        int contribution;
+        boolean isRunning = true;
+
+        while(isRunning){
+            try{
+                contribution = Integer.parseInt(view.getUserInput("How much you want to contribute? "));
+                if(contribution > student.getStudentWallet()){
+                    System.out.println("You are to poor to contribute that much, amigo \n\n\n");
+                    continue;
+                }
+                isRunning = false;
+                student.reduceWallet(contribution);
+                userDao.updateStudentWalletInDatabase(this.student);
+                crowdfundToContribute.reduceCurrentPrice(contribution);
+                crowdfundsDao.updateCrowdfundAccount(crowdfundToContribute.getCrowdfundId(), contribution);
+
+
+            }catch(NumberFormatException e){
+                view.clearScreen();
+                System.out.println("Wrong format.\n\n");
+                returnAllCrowdfunds();
+            }
+        }
+    }
 }
