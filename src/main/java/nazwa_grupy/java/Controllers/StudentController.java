@@ -42,36 +42,37 @@ public class StudentController{
     private void handleStudentPanelOptions(){
         refreshDB();
         String choice = view.getUserInput("Choose your option: ");
-        if (choice.equals("0")){
-            view.clearScreen();
-            System.exit(0);
-        }else if (choice.equals("1")){
-            view.clearScreen();
-            System.out.println("\n\nWallet is:");
-            System.out.println(this.student.getStudentWallet() + "\n\nVery nice!\n\n");
-        }else if (choice.equals("2")){
-            buyArtifact();
-        }else if (choice.equals("3")){
-            createCrowdfund();
-        }else if (choice.equals("4")){
-            returnAllCrowdfunds();
-        }else if (choice.equals("5")){
-            joinCrowdfund();
-        }else if (choice.equals("6")){
-            showStudentArtifacts();
-        }else if (choice.equals("7")){
-            view.clearScreen();
-            System.out.println("\n\nExperience status is:");
-            System.out.println(this.student.getStudentExperienceLevel() + "\n\nVery nice!\n\n");
-        }else if (choice.equals("8")){
-            view.clearScreen();
-            enrollOnQuest();
-        }else if (choice.equals("9")){
-            view.clearScreen();
-            questDao.displayStudentQuest(this.student.getId());
-
-        }else{
-            System.out.println("No such choice");
+        switch(choice){
+            case "0":   view.clearScreen();
+                        System.exit(0);
+                        break;
+            case "1":   view.clearScreen();
+                        System.out.println("\n\nWallet is:");
+                        System.out.println(this.student.getStudentWallet() + "\n\nVery nice!\n\n");
+                        break;
+            case "2":   buyArtifact();
+                        break;
+            case "3":   createCrowdfund();
+                        break;
+            case "4":   returnAllCrowdfunds();
+                        break;
+            case "5":   joinCrowdfund();
+                        break;
+            case "6":   showStudentArtifacts();
+                        break;
+            case "7":   view.clearScreen();
+                        System.out.println("\n\nExperience status is:");
+                        System.out.println(this.student.getStudentExperienceLevel() +
+                                           "\n\nVery nice!\n\n");
+                        break;
+            case "8":   view.clearScreen();
+                        enrollOnQuest();
+                        break;
+            case "9":   view.clearScreen();
+                        questDao.displayStudentQuest(this.student.getId());
+                        break;
+            default:    System.out.println("No such choice");
+                        break;
         }
     }
 
