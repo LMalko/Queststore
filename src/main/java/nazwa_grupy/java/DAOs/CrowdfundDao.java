@@ -56,7 +56,7 @@ public class CrowdfundDao{
 
         databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO student_artifacts " +
                 "(artifact_id, student_id, status) VALUES (" + String.valueOf(id) + ", " +
-                String.valueOf(founderID) + ", 'Not used')");
+                String.valueOf(founderID) + ", 'not used')");
 
         System.out.println("\nArtifact has been added to founders stash! Very good !!\n");
     }
