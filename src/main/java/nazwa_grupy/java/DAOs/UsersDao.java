@@ -106,10 +106,6 @@ public class UsersDao {
         return groupName;
     }
 
-    public void addUserToUsersCollection(User user){
-        usersCollection.add(user);
-    }
-
     public void updateUserGroupInDatabase(User user){
         String query = "UPDATE users SET group_id = " + "'" + user.getUserGroupId() + "' " +
                         "WHERE id = " + user.getId() + ";";

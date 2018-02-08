@@ -38,12 +38,6 @@ public class CrowdfundDao{
             }
         }
 
-                
-    public void exportCrowdfund(){
-
-        CollectionIterator<Crowdfund> crowdfundIterator = crowdfundCollection.getIterator();
-    }
-
     private void resolveCrowdfund(int crowdfundId, String crowdfundName, int founderID){
 
         databaseProcessor.executeUpdateAgainstDatabase("DELETE FROM crowdfunds WHERE id=" +

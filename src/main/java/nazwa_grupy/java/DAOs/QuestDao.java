@@ -38,21 +38,7 @@ public class QuestDao{
 
         }
     }
-
-    public void exportQuests(){
-        databaseConnection.connectToDatabase();
-
-        CollectionIterator<Quest> questsIterator = questsCollection.getIterator();
-
-        while(questsIterator.hasNext()){
-            Quest quest = questsIterator.next();
-            databaseConnection.executeUpdateAgainstDatabase("INSERT INTO quests VALUES " +
-                                                                String.valueOf(quest.getQuestId()) +
-                                                                quest.getQuestName() +
-                                                                String.valueOf(quest.getQuestReward()) +
-                                                                quest.getQuestCategoryName());
-        }
-    }
+    
 
     public Quest getQuestById(int id){
         CollectionIterator<Quest> questIterator = questsCollection.getIterator();
