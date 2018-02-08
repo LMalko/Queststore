@@ -9,8 +9,16 @@ public class UsersDao {
 
     private static ArrayList<User> usersCollection = new ArrayList<User>();
     private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
+    private static final int idIndex = 0;
+    private static final int nameIndex = 1;
+    private static final int surnameIndex = 2;
+    private static final int passwordIndex = 4;
+    private static final int statusIndex = 5;
+    private static final int groupIdIndex = 6;
+    private static final int experienceIndex = 7;
 
-    public void importUsersData() {
+
+    private void importUsersData() {
         usersCollection.clear();
         databaseProcessor.connectToDatabase();
         ArrayList<ArrayList<String>> users = databaseProcessor.getArrayListFromQuery("SELECT * FROM users");
@@ -27,16 +35,16 @@ public class UsersDao {
     }
 
     private User createUserObject(ArrayList<String> personData) {
-        int id = Integer.parseInt(personData.get(0));
-        String name = personData.get(1);
-        String surname = personData.get(2);
-        String password = personData.get(4);
-        String status = personData.get(5);
-        String experience = personData.get(7);
+        int id = Integer.parseInt(personData.get(idIndex));
+        String name = personData.get(nameIndex);
+        String surname = personData.get(surnameIndex);
+        String password = personData.get(passwordIndex);
+        String status = personData.get(statusIndex);
+        String experience = personData.get(experienceIndex);
         int groupId = 0;
 
-        if (personData.get(6) != null){
-            groupId = Integer.parseInt(personData.get(6));
+        if (personData.get(groupIdIndex) != null){
+            groupId = Integer.parseInt(personData.get(groupIdIndex));
         }
 
         String groupName = getUserGroupNameByGroupId(groupId);
@@ -103,10 +111,6 @@ public class UsersDao {
         String query = "SELECT * FROM groups WHERE id = '" + groupID +"';";
         String groupName = databaseProcessor.getStringDataFromQuery(query, "name");
         return groupName;
-    }
-
-    public void addUserToUsersCollection(User user){
-        usersCollection.add(user);
     }
 
     public void updateUserGroupInDatabase(User user){
