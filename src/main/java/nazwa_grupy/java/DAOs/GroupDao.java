@@ -7,12 +7,12 @@ import nazwa_grupy.java.Models.ItemCollection;
 
 import java.util.ArrayList;
 
-public class GroupDao{
+public class GroupDao {
 
     private static ItemCollection<Group> groupsCollection = new ItemCollection<>("Group");
     private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
-    public void importGroups(){
+    public void importGroups() {
         databaseProcessor.connectToDatabase();
 
         ArrayList<ArrayList<String>> group = databaseProcessor.getArrayListFromQuery("SELECT * FROM groups");
@@ -24,7 +24,7 @@ public class GroupDao{
         }
     }
 
-    public void addGroupToDatabase(Group group){
+    public void addGroupToDatabase(Group group) {
         databaseProcessor.executeUpdateAgainstDatabase("INSERT INTO groups (name) VALUES ( " + "'" +
                 group.getGroupName() +
                 "');");
@@ -38,7 +38,7 @@ public class GroupDao{
         groupsCollection.add(group);
     }
 
-    public Group getGroupByName(String name){
+    public Group getGroupByName(String name) {
         groupsCollection.clear();
         importGroups();
         CollectionIterator<Group> groupIterator = groupsCollection.getIterator();
