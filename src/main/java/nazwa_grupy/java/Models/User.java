@@ -2,15 +2,15 @@ package nazwa_grupy.java.Models;
 
 public abstract class User{
     protected String name;
-    protected String surname;
+    String surname;
     protected int id;
-    protected String login;
-    protected String password;
-    protected String status;
+    String login;
+    String password;
+    private String status;
     protected Group group;
-    protected String experienceLevel;
+    private String experienceLevel;
 
-    public User(String name, String surname, String password, String status){
+    User(String name, String surname, String password, String status){
         this.name = name;
         this.surname = surname;
         this.login = name.toLowerCase() + surname.toLowerCase() + "@cc.com";
@@ -20,7 +20,7 @@ public abstract class User{
         this.experienceLevel = " ";
     }
 
-    public User(int id, String name, String surname, String password, String status, Group group){
+    User(int id, String name, String surname, String password, String status, Group group){
         this.id = id;
         this.name = name;
         this.surname = surname;

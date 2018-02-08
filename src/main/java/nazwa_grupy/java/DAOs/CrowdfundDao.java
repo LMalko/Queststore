@@ -1,28 +1,25 @@
 package nazwa_grupy.java.DAOs;
 
-import nazwa_grupy.java.Iterator_DBProcessor.CollectionIterator;
 import nazwa_grupy.java.Iterator_DBProcessor.DBStatementProcessor;
 import nazwa_grupy.java.Models.Crowdfund;
 import nazwa_grupy.java.Models.ItemCollection;
 
 import java.util.ArrayList;
-import java.sql.Connection;
 
 
 
-public class CrowdfundDao{
+public class CrowdfundDao {
 
     private static ItemCollection<Crowdfund> crowdfundCollection = new ItemCollection<>("Crowdfunds");
     private DBStatementProcessor databaseProcessor = new DBStatementProcessor("jdbc:sqlite:db/questStore.db");
 
-    public void importCrowdfunds(){
+    public void importCrowdfunds() {
         crowdfundCollection.clear();
         databaseProcessor.connectToDatabase();
 
-
         ArrayList<ArrayList<String>> crowdfunds = databaseProcessor.getArrayListFromQuery("SELECT * FROM crowdfunds");
-        for(int i =0; i < crowdfunds.size(); i++){
 
+        for(int i =0; i < crowdfunds.size(); i++){
             int id = Integer.parseInt(crowdfunds.get(i).get(0));
             String name = crowdfunds.get(i).get(1);
             int totalPrice = Integer.parseInt(crowdfunds.get(i).get(2));
@@ -30,15 +27,13 @@ public class CrowdfundDao{
             int founderID = Integer.parseInt(crowdfunds.get(i).get(4));
             if(account >= totalPrice){
                 resolveCrowdfund(id, name, founderID);
-
             }
-
             Crowdfund crowdfund = new Crowdfund(id, name, totalPrice, account, founderID);
             addCrowdfund(crowdfund);
             }
         }
 
-    private void resolveCrowdfund(int crowdfundId, String crowdfundName, int founderID){
+    private void resolveCrowdfund(int crowdfundId, String crowdfundName, int founderID) {
 
         databaseProcessor.executeUpdateAgainstDatabase("DELETE FROM crowdfunds WHERE id=" +
                 String.valueOf(crowdfundId) +
@@ -57,7 +52,7 @@ public class CrowdfundDao{
         System.out.println("\nArtifact has been added to founders stash! Very good !!\n");
     }
 
-    public ItemCollection<Crowdfund> getCrowdfunds(){
+    public ItemCollection<Crowdfund> getCrowdfunds() {
         importCrowdfunds();
         return crowdfundCollection;
     }
@@ -75,7 +70,7 @@ public class CrowdfundDao{
                                                         ")");
     }
 
-    public void updateCrowdfundAccount(int crowdfundID, int amountToAdd){
+    public void updateCrowdfundAccount(int crowdfundID, int amountToAdd) {
         databaseProcessor.executeUpdateAgainstDatabase("UPDATE crowdfunds SET account = account + " + 
                                                         String.valueOf(amountToAdd) + 
                                                         " WHERE id = " + 

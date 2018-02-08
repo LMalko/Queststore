@@ -18,8 +18,4 @@ public class Group {
     }
 
     public int getGroupId() { return this.groupId; }
-
-    public void setGroupName(String newName){
-        this.groupName = newName;
-    }
 }

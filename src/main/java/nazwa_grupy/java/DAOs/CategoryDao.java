@@ -25,7 +25,6 @@ public class CategoryDao {
         }
     }
 
-
     public ItemCollection<Category> getCategories(){
         return allCategories;
     }
@@ -49,5 +48,4 @@ public class CategoryDao {
                                                         category.getCategoryName() +
                                                         "')");
     }
-
 }

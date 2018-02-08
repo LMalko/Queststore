@@ -1,6 +1,6 @@
 package nazwa_grupy.java.Models;
 
-public class ExperienceLevel{
+public class ExperienceLevel {
     private int money_required;
     private String levelName;
     private static ItemCollection<ExperienceLevel> experienceLevelCollection = new ItemCollection<>("nazwa_grupy.java.Models.ExperienceLevel");
@@ -16,18 +16,6 @@ public class ExperienceLevel{
 
     public String getLevelName(){
         return this.levelName;
-    }
-
-    public void setLevel(int money_required){
-        this.money_required = money_required;
-    }
-
-    public void setLevelName(String levelName){
-        this.levelName = levelName;
-    }
-
-    public ItemCollection<ExperienceLevel> getExperienceLevels(){
-        return experienceLevelCollection;
     }
 
     public void addExperienceLevel(ExperienceLevel experienceLevel){
