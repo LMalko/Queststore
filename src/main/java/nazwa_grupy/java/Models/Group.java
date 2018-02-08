@@ -1,8 +1,6 @@
 package nazwa_grupy.java.Models;
 
-import java.util.ArrayList;
-
-public class Group{
+public class Group {
     private String groupName;
     private int groupId;
 
@@ -10,7 +8,7 @@ public class Group{
         this.groupName = groupName;
     }
 
-    public Group(int groupId, String name){
+    public Group(int groupId, String name) {
         this.groupId = groupId;
         this.groupName = name;
     }
@@ -19,7 +17,7 @@ public class Group{
         return this.groupName;
     }
 
-    public int getGroupId() {return this.groupId; }
+    public int getGroupId() { return this.groupId; }
 
     public void setGroupName(String newName){
         this.groupName = newName;

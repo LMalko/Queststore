@@ -1,7 +1,6 @@
 package nazwa_grupy.java.Models;
 
 import nazwa_grupy.java.Iterator_DBProcessor.CollectionIterator;
-
 import java.util.ArrayList;
 
 public class ItemCollection<T> {
